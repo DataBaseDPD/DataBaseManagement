@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseDPD
 {
-    public class Class1
+    class Table
     {
     }
 }
