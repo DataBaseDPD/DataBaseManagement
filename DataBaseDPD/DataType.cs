@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataBaseDPD
 {
-    class Connection
+    enum DataType
     {
-
+        Int,
+        String,
+        Double,
+        Float
     }
 }

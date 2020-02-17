@@ -1,8 +1,0 @@
-﻿
-
-namespace DataBaseDPD
-{
-    class Error
-    {
-    }
-}

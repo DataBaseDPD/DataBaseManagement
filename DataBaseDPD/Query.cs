@@ -8,18 +8,14 @@ namespace DataBaseDPD
 {
      class Query 
     {
-        // Constructor that takes no arguments:
-        private Query()
-        {
-            string statement = "unknown";
-        }
+        
         // Constructor that takes one argument:
-        private Query (string statement)
+        Query (string statement)
         {
             checkValidity(statement);
             
         }
-
+        //Check if the query statment is correct
         private void checkValidity(string statement)
         {
             throw new NotImplementedException();
@@ -28,6 +24,7 @@ namespace DataBaseDPD
         {
             return new Table();
         }
+        //Return the amount of row it has been modified
         int executeUpDate()
         {
             return -1;
