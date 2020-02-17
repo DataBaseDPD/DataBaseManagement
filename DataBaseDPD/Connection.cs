@@ -8,5 +8,18 @@ namespace DataBaseDPD
 {
     class Connection
     {
+        public SqlConnection connectDB(){
+        
+        
+        return connect;
+        
+        }
+
+        public SqlConnection disconnect(){
+        
+        return discDB;
+        }
+
+
     }
 }
