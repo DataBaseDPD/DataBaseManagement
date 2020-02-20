@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataBaseDPD
 {
-     class Query 
+     public class Query 
     {
         
         // Constructor that takes one argument:
-        Query (string statement)
+        public Query (string statement)
         {
             checkValidity(statement);
             
@@ -20,12 +20,12 @@ namespace DataBaseDPD
         {
             throw new NotImplementedException();
         }
-        Table executeQuery()
+        public Table executeQuery()
         {
-            return new Table();
+            return null;
         }
         //Return the amount of row it has been modified
-        int executeUpDate()
+        public int executeUpDate()
         {
             return -1;
         }

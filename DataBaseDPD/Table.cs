@@ -6,54 +6,66 @@ using System.Threading.Tasks;
 
 namespace DataBaseDPD
 {
-    class Table
+    public class Table
     {
         string name;
-        Table()
+        public Table( string tableName)
         {
-            TableColumn column = new TableColumn();
-            TableRow row = new TableRow();
+            name = tableName;
+            
         }
         //Add the tuple
-        void addRow(List<string> row)
+        public void addRow(List<string> row)
         {
 
         }
-        TableRow nextRow()
+        public TableRow nextRow()
         {
             return null;
         }
         //Before close we have to save the changes
-        Boolean close()
+        public Boolean close()
         {
             return false;
         }
         //
-        string getItem(int position)
+        public string getItem(int position)
         {
             return null;
         }
-        string getItem(string columnName)
+        public string getItem(string columnName)
         {
             return null;
         }
         //Return the amount of attributes
-        int getNumColumn()
+         public int getNumColumn()
         {
             return -1;
         }
         //Return the amount of tuples
-        int getNumRow()
+        public int getNumRow()
         {
             return -1;
         }
         //Return the type of column in the posistion posColumn
-        string getTypeColumn(int posColumn)
+        public string getTypeColumn(int posColumn)
         {
             return null;
         }
         //Save all changes
         void save()
+        {
+
+        }
+        static public Table load( string filename)
+        {
+            return null;
+        } 
+        public Table getTable()
+        {
+            return null;
+        }
+        public void remove(string tableName)
         {
 
         }
