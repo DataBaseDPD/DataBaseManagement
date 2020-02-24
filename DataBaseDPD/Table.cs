@@ -9,23 +9,35 @@ namespace DataBaseDPD
     public class Table
     {
         string name;
+        int numColumn;
+        TableColumn column;
+
         public Table( string tableName)
         {
             name = tableName;
             
         }
+        //Add the firts row, only the first time with the name of the column and the type of the column
+        public void addHeader(string nameColumn, DataType type)
+        {
+
+        }
         //Add the tuple
         public void addRow(List<string> row)
         {
-
+            //At the same time we have to adding to the column addColumn(string itemColumn)
         }
         public TableRow nextRow()
         {
             return null;
         }
-        //Before close we have to save the changes
+        private void addColumn(string itemColumn)
+        {
+            column.add(itemColumn);
+        }
         public Boolean close()
         {
+            //Before close we have to save the changes
             return false;
         }
         //

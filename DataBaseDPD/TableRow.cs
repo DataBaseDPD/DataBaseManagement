@@ -8,5 +8,9 @@ namespace DataBaseDPD
 {
     public class TableRow
     {
+        public TableRow(int num)
+        {
+
+        }
     }
 }
