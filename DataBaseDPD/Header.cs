@@ -10,11 +10,13 @@ namespace DataBaseDPD
     {
         public string name { get; set; }
         public DataType type;
+        public int numCol;
 
-        public Header(string name, DataType type)
+        public Header(string name, DataType type, int numColmn)
         {
             this.name = name;
             this.type = type;
+            int numCol = numColmn;
         }
        
     }
