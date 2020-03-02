@@ -9,51 +9,64 @@ namespace DataBaseDPD
     public class Table
     {
         string name;
-        public Table( string tableName)
+        int numCol;
+        TableColumn column;
+
+        public Table( string tableName )
         {
             name = tableName;
-            
         }
-        //Add the tuple
-        public void addRow(List<string> row)
+        //Add the firts row, only the first time with the name of the column and the type of the column
+        public void addHeader(string nameColumn, DataType type, int numColumn)
         {
 
+        }
+        //Add the tuple
+        public void addRow(TableRow row)
+        {
+            //At the same time we have to adding to the column addColumn(string itemColumn)
+        }
+        public TableRow getRow()
+        {
+            return null;
+        }
+        public TableRow getFirstRow()
+        {
+            return null;
         }
         public TableRow nextRow()
         {
             return null;
         }
-        //Before close we have to save the changes
+        private void addColumn(string itemColumn)
+        {
+            column.add(itemColumn);
+        }
         public Boolean close()
         {
+            //Before close we have to save the changes
             return false;
         }
         //
-        public string getItem(int position)
-        {
-            return null;
-        }
-        public string getItem(string columnName)
-        {
-            return null;
-        }
+       
         //Return the amount of attributes
          public int getNumColumn()
         {
-            return -1;
+            return numCol;
         }
         //Return the amount of tuples
         public int getNumRow()
         {
             return -1;
         }
+        
         //Return the type of column in the posistion posColumn
         public string getTypeColumn(int posColumn)
         {
             return null;
         }
         //Save all changes
-        void save()
+        void save(string nameFile)
         {
 
         }

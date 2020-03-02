@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseDPD
 {
-    enum DataType
+    public enum DataType
     {
         Int,
         String,

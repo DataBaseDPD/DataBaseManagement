@@ -1,12 +1,20 @@
-﻿using System;
+﻿
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBaseDPD
 {
     public class TableColumn
+
     {
+        List<string> column;
+        public TableColumn()
+        {
+            column = new List<string>();
+        }
+        public void add(string item)
+        {
+            column.Add(item);
+        }
     }
 }
