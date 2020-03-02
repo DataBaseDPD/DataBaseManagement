@@ -10,8 +10,9 @@ namespace DataBaseDPD
 {
     class Connection
     {
-      
-        public string open(){
+
+        public string open()
+        {
 
             string path = "C:/Users/docencia/source/repos/database";
             if (File.Exists(path))
@@ -24,9 +25,9 @@ namespace DataBaseDPD
             {
                 return Message.DatabaseDoesNotExist;
             }
-       
 
-            
+
+
         }
 
         public void closeDB(){
