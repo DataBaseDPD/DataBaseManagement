@@ -23,5 +23,11 @@ namespace TestDataBase
 
             Assert.AreEqual(0, table.getNumRow());
         }
+        [TestMethod]
+        public void TestConection()
+        {
+         
+
+        }
     }
 }
