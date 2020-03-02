@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,17 +39,16 @@ namespace DataBaseDPD
         {
             return null;
         }
+        //Not sure if necessary
         private void addColumn(string itemColumn)
         {
             column.add(itemColumn);
         }
-        public Boolean close()
+        private Boolean close()
         {
             //Before close we have to save the changes
             return false;
-        }
-        //
-       
+        } 
         //Return the amount of attributes
          public int getNumColumn()
         {
@@ -59,32 +59,37 @@ namespace DataBaseDPD
         {
             return -1;
         }
-        
         //Return the type of column in the posistion posColumn
         public string getTypeColumn(int posColumn)
         {
             return null;
         }
-        //Save all changes
-        void save(string nameFile)
+        //Save all changes write in a file the data of table
+        public void save(string nameFile)
         {
 
         }
         static public Table load( string filename)
         {
+            Table tabla = new Table(filename);
+            if (File.Exists(filename))
+            {
+                foreach (string line in File.ReadAllLines(filename))
+                {
+                    //Check if string split in comma
+                    string[] lineParts = line.Split(',');
+                   
+                }
+            }
             return null;
         } 
-        public Table getTable()
-        {
-            return null;
-        }
         public void remove(string tableName)
         {
-
         }
+
+
+        
+
     }
 
-
-
-    
 }

@@ -9,19 +9,16 @@ namespace DataBaseDPD
     public class TableRow
     {
         List<string> tuple;
-        public TableRow()
+        public TableRow(string[] items)
         {
             tuple = new List<string>();
-        }
-        public void add(string[] items)
-        {
-            for (int i=0;1<items.Length;i++)
+            for (int i = 0; 1 < items.Length; i++)
             {
                 string item = items[i];
                 tuple.Add(item);
             }
-            
         }
+        
         public string getItem(int position)
         {
             return null;
