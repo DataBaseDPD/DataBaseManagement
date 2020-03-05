@@ -8,16 +8,23 @@ namespace DataBaseDPD
 {
     public class Header
     {
-        public string name { get; set; }
-        public DataType type;
+        public string[] nameColumns;
+        public DataType [] type;
         public int numCol;
 
-        public Header(string name, DataType type, int numColmn)
+        public Header(string[] nameColumns, DataType [] types)
         {
-            this.name = name;
-            this.type = type;
-            int numCol = numColmn;
+            this.nameColumns = nameColumns;
+            this.type = types;
+            numCol = nameColumns.Length;
         }
-       
+        public int getNumCol()
+        {
+            return numCol;
+        }
+       public DataType getType(int pos)
+        {
+            return type[pos];
+        }
     }
 }

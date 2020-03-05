@@ -21,7 +21,7 @@ namespace DataBaseDPD
         
         public string getItem(int position)
         {
-            return null;
+            return tuple[position];
         }
         public string getItem(string columnName)
         {

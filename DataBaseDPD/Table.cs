@@ -10,22 +10,27 @@ namespace DataBaseDPD
     public class Table
     {
         string name;
-        int numCol;
-        TableColumn column;
+        List<TableRow> tuples;
+        public static int numCol;
+        Header head;
+        string sourceDir= "";
+
 
         public Table( string tableName )
         {
             name = tableName;
+            tuples = new List<TableRow>();
         }
         //Add the firts row, only the first time with the name of the column and the type of the column
-        public void addHeader(string nameColumn, DataType type, int numColumn)
+        public void addHeader(string[] nameColumns, DataType[] types)
         {
-
+            head = new Header(nameColumns, types);
+            
         }
         //Add the tuple
         public void addRow(TableRow row)
         {
-            //At the same time we have to adding to the column addColumn(string itemColumn)
+            tuples.Add(row);
         }
         public TableRow getRow()
         {
@@ -39,11 +44,7 @@ namespace DataBaseDPD
         {
             return null;
         }
-        //Not sure if necessary
-        private void addColumn(string itemColumn)
-        {
-            column.add(itemColumn);
-        }
+        
         private Boolean close()
         {
             //Before close we have to save the changes
@@ -57,17 +58,26 @@ namespace DataBaseDPD
         //Return the amount of tuples
         public int getNumRow()
         {
-            return -1;
+            return tuples.Count;
         }
         //Return the type of column in the posistion posColumn
-        public string getTypeColumn(int posColumn)
+        public DataType getTypeColumn(int posColumn)
         {
-            return null;
+            return head.getType(posColumn);
         }
         //Save all changes write in a file the data of table
         public void save(string nameFile)
         {
-
+            StreamWriter writer = File.CreateText(nameFile);
+            foreach (TableRow tuple in tuples )
+            {
+                for(int i = 0; i < numCol; i++)
+                {
+                    //write in each line
+                   writer.Write(tuple.getItem(i));
+                }
+            }
+            writer.Close();
         }
         static public Table load( string filename)
         {
@@ -78,16 +88,29 @@ namespace DataBaseDPD
                 {
                     //Check if string split in comma
                     string[] lineParts = line.Split(',');
-                   
+                    if (lineParts.Length == numCol)
+                    {
+                        //how write commas and header?
+                        TableRow tuple = new TableRow(lineParts);
+                        tabla.addRow(tuple);
+                    }
                 }
             }
-            return null;
-        } 
-        public void remove(string tableName)
-        {
+            else
+            {
+                Console.WriteLine(Message.TableDoesNotExist);
+            }
+            
+            return tabla;
         }
+        public void remove(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                File.Delete(Path.Combine(sourceDir, filename));
+            }
 
-
+        }
         
 
     }
