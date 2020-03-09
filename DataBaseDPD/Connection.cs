@@ -14,28 +14,10 @@ namespace DataBaseDPD
         public string open()
         {
 
-            string path = "C:/Users/docencia/source/repos/database";
-            if (File.Exists(path))
-            {
-                Console.WriteLine("File Exist");
-                File.OpenRead(path);
-                return path;
-            }
-            else
-            {
-                return Message.DatabaseDoesNotExist;
-            }
-
-
-
-        }
-
-        public void closeDB(){
-
             
-
-  
         }
+
+        
 
 
     }
