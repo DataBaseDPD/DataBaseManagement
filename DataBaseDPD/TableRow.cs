@@ -14,8 +14,7 @@ namespace DataBaseDPD
             tuple = new List<string>();
             for (int i = 0; 1 < items.Length; i++)
             {
-                string item = items[i];
-                tuple.Add(item);
+                tuple.Add(items[i]);
             }
         }
         
@@ -26,6 +25,10 @@ namespace DataBaseDPD
         public string getItem(string columnName)
         {
             return null;
+        }
+        public List<string> getTuple()
+        {
+            return tuple;
         }
     }
 }

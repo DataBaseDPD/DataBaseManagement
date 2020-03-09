@@ -8,15 +8,17 @@ namespace DataBaseDPD
 {
     public class Header
     {
-        public string[] nameColumns;
+        public string atributes;
         public DataType [] type;
         public int numCol;
 
         public Header(string[] nameColumns, DataType [] types)
         {
-            this.nameColumns = nameColumns;
-            this.type = types;
-            numCol = nameColumns.Length;
+            
+            for (int i = 0; 1 < nameColumns.Length; i++)
+            {
+                
+            }
         }
         public int getNumCol()
         {

@@ -25,7 +25,7 @@ namespace DataBaseDPD
         public void addHeader(string[] nameColumns, DataType[] types)
         {
             head = new Header(nameColumns, types);
-            
+            numCol = nameColumns.Length;
         }
         //Add the tuple
         public void addRow(TableRow row)

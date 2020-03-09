@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataBaseDPD;
+using System;
 
 namespace DBConsole
 {
@@ -10,6 +7,12 @@ namespace DBConsole
     {
         static void Main(string[] args)
         {
+
+            
+            Table tabla = new Table("tabla.txt");
+            tabla.save("tabla.txt");
+            Console.ReadKey();
+
         }
     }
 }
