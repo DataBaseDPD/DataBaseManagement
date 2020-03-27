@@ -9,7 +9,7 @@ namespace TestDataBase
     public class UnitTestTable
     {
        
-
+        /**
         [TestMethod]
         public void creatTableTest()
         {
@@ -136,6 +136,6 @@ namespace TestDataBase
 
 
         }
-
+    **/
     }
 }
