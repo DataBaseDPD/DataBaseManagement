@@ -1,10 +1,11 @@
 ﻿
+using System;
 using System.IO;
 namespace DataBaseDPD
 {
     public class Database
     {
-        public void createDB()
+        public string createDB()
         {
             
             string path = "C:/Users/docencia/source/repos/DataBaseDPD/DataBaseManagement/Data.txt";
