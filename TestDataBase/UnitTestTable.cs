@@ -9,7 +9,7 @@ namespace TestDataBase
     public class UnitTestTable
     {
        
-
+        /**
         [TestMethod]
         public void creatTableTest()
         {
@@ -127,5 +127,6 @@ namespace TestDataBase
 
         Assert.AreEqual(3,tabTest.getNumRow());
         }
+    **/
     }
 }
