@@ -16,11 +16,33 @@ namespace DataBaseDPD
         string sourceDir= "";
 
 
-        public Table( string tableName )
+        private Message m = new Message();
+        Dictionary<string, List<string>> columns = new Dictionary<string, List<string>>();
+
+
+        public Table( string tableName , List<TableColumn> tableColumns )
         {
             name = tableName;
-            tuples = new List<TableRow>();
+            foreach (TableColumn column in tableColumns){
+
+                string colName = column.name;
+                List<string> values = new List<string>();
+
+                if (!(columns.ContainsKey(colName))) 
+                {
+                    columns.Add(colName, values);
+                }
+                else
+                {
+                    m.print( Message.ColumnAlreadyExits);   
+                }
+
+            }
+
+            m.print(Message.CreateTableSuccess);
         }
+
+
         //Add the firts row, only the first time with the name of the column and the type of the column
         public void addHeader(string[] nameColumns, DataType[] types)
         {
@@ -79,6 +101,7 @@ namespace DataBaseDPD
             }
             writer.Close();
         }
+        /**
         static public Table load( string filename)
         {
             Table tabla = new Table(filename);
@@ -103,6 +126,7 @@ namespace DataBaseDPD
             
             return tabla;
         }
+    **/
         public void remove(string filename)
         {
             if (File.Exists(filename))
