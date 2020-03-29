@@ -8,12 +8,22 @@ namespace TestDataBase
     [TestClass]
     public class UnitTestTable
     {
-       
+
         /**
         [TestMethod]
         public void creatTableTest()
         {
-            Table tabla = new Table("tablaTest.txt");
+            TableColumn col1 = new TableColumn("id", DataType.Int, 1 );
+            TableColumn col2 = new TableColumn("nombre", DataType.String, 2);
+            TableColumn col3 = new TableColumn("email", DataType, 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest",columns);
+
+
             tabla.save("tablaTest.txt");
             Assert.IsNotNull(tabla);
         }
@@ -133,8 +143,8 @@ namespace TestDataBase
         public void dataBaseTest()
         {
 
-
-
+            //TODO test
+        
         }
     **/
 

@@ -11,6 +11,7 @@ namespace DataBaseDPD
         Int,
         String,
         Double,
-        Float
+        Float,
+        Null
     }
 }
