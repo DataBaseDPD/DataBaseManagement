@@ -4,29 +4,21 @@ using System.IO;
 namespace DataBaseDPD
 {
     public class Database
+
     {
-        public string createDB()
+        string sourceDir = "../../SGBD/";
+       
+
+        public void remove(string filename)
         {
-            
-            string path = "C:/Users/docencia/source/repos/DataBaseDPD/DataBaseManagement/Data.txt";
-
- 
-            if (File.Exists(path))
+            if (File.Exists(filename))
             {
-                Console.WriteLine("File Exist");
-                File.OpenRead(path);
-                return path;
+                File.Delete(Path.Combine(sourceDir, filename));
             }
-            else
-            {
-                
-                File.Create(path);
-                return path;
 
-            }
         }
-        
-      
+
+
 
 
     }

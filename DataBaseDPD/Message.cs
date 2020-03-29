@@ -9,6 +9,8 @@ namespace DataBaseDPD
         public const string CreateDatabaseSuccess = "Database created ...";
         public const string CreateTableSuccess = "Table created ...";
 
+        public const string TableLoadSuccess = "Table loaded ...";
+
         public const string OpenDatabaseSuccess = "Database opened ...";
         public const string DeleteDatabaseSuccess = "Database deleted";
         public const string BackupDatabaseSuccess = "Database backed up";
@@ -25,7 +27,7 @@ namespace DataBaseDPD
         public const string SecurityPrivilegeRevoked = "Security privilege revoked";
         public const string SecurityUserAdded = "User added to security profile";
 
-        //Here is all errors could happen
+        //Here are all errors could happen
         public const string Error = "ERROR: ";
       
         public const string WrongSyntax = Error + "Syntactical error";
@@ -44,10 +46,7 @@ namespace DataBaseDPD
         public const string SecurityUserDoesNotExist = Error + "Security user does not exist";
 
 
-        public void print(string message)
-        {
-            Console.WriteLine(message);
-        }
+        
 
     }
 }

@@ -32,7 +32,7 @@ namespace DataBaseDPD
             }
         }
 
-        //return the amaount of columns/atributes of the table
+        //return the amount of columns/atributes of the table
         public int len()
         {
             return columns.Count;
@@ -69,6 +69,13 @@ namespace DataBaseDPD
                 colNames.Add(column.Key);
             }
             return colNames;
+        }
+        public int index(string colName)
+        {
+            TableColumn col;
+            columns.TryGetValue(colName, out col);
+            return col.index;
+
         }
     }
 }

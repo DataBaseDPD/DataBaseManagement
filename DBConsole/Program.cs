@@ -1,6 +1,7 @@
 ﻿using DataBaseDPD;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace DBConsole
 {
@@ -9,7 +10,7 @@ namespace DBConsole
         static void Main(string[] args)
         {
 
-
+            
             TableColumn col1 = new TableColumn("id", DataType.Int, 1);
             TableColumn col2 = new TableColumn("nombre", DataType.String, 2);
             TableColumn col3 = new TableColumn("email", DataType.String, 3);
@@ -23,9 +24,10 @@ namespace DBConsole
             tabla.addRow(new TableRow(new string[3] { "01","david","david@email.com" }));
             tabla.addRow(new TableRow(new string[3] { "02", "domenico", "domenico@email.com" }));
 
+            string[] hola = new string[]{"1","2","3","4","5","6" };
 
-
-            Console.WriteLine(tabla.getFirstRow().getItem(1));
+            Console.WriteLine((hola.Length/3).GetType());
+            
 
         }
     }

@@ -14,7 +14,7 @@ namespace DataBaseDPD
         Header head;
         List<TableRow> tuples;
 
-       
+       //PUT FILES IN A DIRECTORY OF DATABASE MISSING
         string sourceDir= "";
 
 
@@ -82,6 +82,10 @@ namespace DataBaseDPD
         {
             return head.type(nameColumn);
         }
+        public int getIndex(string nameColumn)
+        {
+            return head.index(nameColumn);
+        }
 
 
         /**-------------------------------------------------
@@ -90,36 +94,93 @@ namespace DataBaseDPD
 
 
         
-        public void save(string nameFile)
+        public void save()
         {
-            StreamWriter writer = File.CreateText(nameFile);
-            foreach (TableRow tuple in tuples )
+            try
             {
-                for(int i = 0; i < this.getNumColumn(); i++)
+                //NOSE DONDE PONER LOS ARCHIVOS DEBERIAN ESTAR DENTRO DE DB
+                string fileName =  name + ".txt";
+                Console.WriteLine(fileName);
+                StreamWriter writer = File.CreateText(fileName);
+                //Write the header
+                foreach (string name in getColNames())
                 {
-                    //write in each line
-                   writer.Write(tuple.getItem(i));
+                    writer.Write("{" + name + ";" + getTypeColumn(name) + ";" + getIndex(name) + "}");
                 }
-            }
-            writer.Close();
-        }
-        /**
-        static public Table load( string filename)
-        {
-            Table tabla = new Table(filename);
-            if (File.Exists(filename))
-            {
-                foreach (string line in File.ReadAllLines(filename))
+                //Only to format the txt if is the last one add \n new line
+                writer.Write("\n");
+                foreach (TableRow tuple in tuples)
                 {
-                    //Check if string split in comma
-                    string[] lineParts = line.Split(',');
-                    if (lineParts.Length == numCol)
+                    for (int i = 0; i < this.getNumColumn(); i++)
                     {
-                        //how write commas and header?
-                        TableRow tuple = new TableRow(lineParts);
-                        tabla.addRow(tuple);
+                       
+                        if(i != this.getNumColumn() - 1)
+                        {
+                            writer.Write(tuple.getItem(i) + ",");
+                        }
+                        else
+                        {
+                            writer.Write(tuple.getItem(i) + "\n");
+                        }
+                       
                     }
                 }
+                writer.Close();
+                Console.WriteLine("Saved ...");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Not Saved ...");
+                Console.WriteLine(e.StackTrace);
+            }
+
+            
+        }
+    
+        public Table load( string fileName)
+        {
+            List<TableColumn> columns;
+            Table tabla = null;
+
+            string filename = sourceDir + fileName;
+            if (File.Exists(filename))
+            {
+                columns = new List<TableColumn>();
+                
+
+                //Read first line with the information of columns
+                StreamReader file = new StreamReader(filename);
+                string head;
+                head = file.ReadLine();
+                string[] header = head.Split(new Char[] { '{', ';', '}'});
+
+                int numCol = (header.Length/3);
+                for (int i=0; i<header.Length;i++)
+                {
+                    //ADD COLUMNS IS MISSING
+                }
+               
+
+
+
+                //Para no guarde el nombre de la tabla con la extencion quito el -> ".txt"
+                tabla = new Table(fileName.Substring(0, fileName.Length - 4), columns);//Mejorable
+                //Read the tuples
+                string line;
+                while ((line = file.ReadLine()) != null)
+                {
+
+                    string[] lineParts = line.Split(',');
+                    if (lineParts.Length == getNumColumn())
+                    {
+                        tabla.addRow(new TableRow(lineParts));
+                    }
+
+                }
+
+
+                file.Close();
+                Console.WriteLine(Message.TableLoadSuccess);
             }
             else
             {
@@ -128,15 +189,8 @@ namespace DataBaseDPD
             
             return tabla;
         }
-    **/
-        public void remove(string filename)
-        {
-            if (File.Exists(filename))
-            {
-                File.Delete(Path.Combine(sourceDir, filename));
-            }
-
-        }
+   
+        
         private Boolean close()
         {
             //Before close we have to save the changes
