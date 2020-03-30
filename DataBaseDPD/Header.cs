@@ -38,9 +38,9 @@ namespace DataBaseDPD
             return columns.Count;
         }
 
-        public DataType type(int pos)
+        public string type(int pos)
         {
-            DataType type = DataType.Null;
+            string type = "";
 
             foreach (KeyValuePair<string, TableColumn> column in columns)
             {
@@ -53,7 +53,7 @@ namespace DataBaseDPD
             }
             return type;
         }
-        public DataType type(string colName)
+        public string type(string colName)
         {
          
             TableColumn col;

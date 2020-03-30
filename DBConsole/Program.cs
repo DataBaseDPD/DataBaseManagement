@@ -11,9 +11,9 @@ namespace DBConsole
         {
 
             
-            TableColumn col1 = new TableColumn("id", DataType.Int, 1);
-            TableColumn col2 = new TableColumn("nombre", DataType.String, 2);
-            TableColumn col3 = new TableColumn("email", DataType.String, 3);
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -27,7 +27,10 @@ namespace DBConsole
             string[] hola = new string[]{"1","2","3","4","5","6" };
 
             Console.WriteLine((hola.Length/3).GetType());
-            
+
+            Table tab = tabla.load("tablaTest.txt");
+
+
 
         }
     }

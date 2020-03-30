@@ -50,6 +50,10 @@ namespace DataBaseDPD
         {
             return tuples.First();
         }
+        public List<TableRow> getTuples()
+        {
+            return tuples;
+        }
 
 
 
@@ -74,11 +78,11 @@ namespace DataBaseDPD
         {
             return tuples.Count;
         }
-        public DataType getTypeColumn(int posColumn)
+        public string getTypeColumn(int posColumn)
         {
             return head.type(posColumn);
         }
-        public DataType getTypeColumn(string nameColumn)
+        public string getTypeColumn(string nameColumn)
         {
             return head.type(nameColumn);
         }
@@ -105,7 +109,8 @@ namespace DataBaseDPD
                 //Write the header
                 foreach (string name in getColNames())
                 {
-                    writer.Write("{" + name + ";" + getTypeColumn(name) + ";" + getIndex(name) + "}");
+                    //Add a space at the end i could control it but i'm too tired
+                    writer.Write(name + ";" + getTypeColumn(name) + ";" + getIndex(name)+";");
                 }
                 //Only to format the txt if is the last one add \n new line
                 writer.Write("\n");
@@ -152,12 +157,13 @@ namespace DataBaseDPD
                 StreamReader file = new StreamReader(filename);
                 string head;
                 head = file.ReadLine();
-                string[] header = head.Split(new Char[] { '{', ';', '}'});
+                string[] header = head.Split(new Char[] {';'});
 
-                int numCol = (header.Length/3);
-                for (int i=0; i<header.Length;i++)
+                //Le quito uno por el espacio al final
+                int numCol = ((header.Length-1)/3);
+                for (int i=0; i<numCol;i=i+3)
                 {
-                    //ADD COLUMNS IS MISSING
+                    columns.Add(new TableColumn(header[i],header[i+1],Convert.ToInt32(header[i+2])));
                 }
                
 
