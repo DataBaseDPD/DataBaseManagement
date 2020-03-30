@@ -24,7 +24,18 @@ namespace DataBaseDPD
         //Pos start at 0 
         public string getItem(int position)
         {
-            return tuple[position];
+            string result = "";
+            try
+            {
+                result = tuple[position];
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error. Remenber the position start at 0 index.");
+                Console.WriteLine(e.StackTrace);
+            }
+            return result;
+            
         }
         //Not implement
         public string getItem(string columnName)

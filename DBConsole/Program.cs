@@ -26,11 +26,15 @@ namespace DBConsole
 
             string[] hola = new string[]{"1","2","3","4","5","6" };
 
-            Console.WriteLine((hola.Length/3).GetType());
-
-            Table tab = tabla.load("tablaTest.txt");
 
 
+            Database db = new Database("data");
+
+
+            tabla.addRow(new TableRow(new string[]{ "03","percy","percy@email.com"}));
+
+            tabla.save();
+           
 
         }
     }

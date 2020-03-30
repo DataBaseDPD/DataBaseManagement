@@ -197,11 +197,7 @@ namespace DataBaseDPD
         }
    
         
-        private Boolean close()
-        {
-            //Before close we have to save the changes
-            return false;
-        }
+        
 
 
     }
