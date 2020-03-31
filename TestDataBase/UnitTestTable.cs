@@ -33,47 +33,6 @@ namespace TestDataBase
         }
         
         [TestMethod]
-        public void LoadTableTest()
-        {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
-            List<TableColumn> columns = new List<TableColumn>();
-            columns.Add(col1);
-            columns.Add(col2);
-            columns.Add(col3);
-
-            Table tabla = new Table("tablaTest", columns);
-
-            tabla.addRow(new TableRow(new string[3] { "01","david","david@email.com" }));
-            tabla.addRow(new TableRow(new string[3] { "02", "domenico", "domenico@email.com" }));
-
-            tabla.save();
-
-            Table loadedTable = Table.load("tablaTest.txt");
-            Assert.AreEqual(2, loadedTable.getNumRow());
-
-        }
-        
-        [TestMethod]
-        public void LoadEmptyTableTest()
-        {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
-            List<TableColumn> columns = new List<TableColumn>();
-            columns.Add(col1);
-            columns.Add(col2);
-            columns.Add(col3);
-
-            Table tabla = new Table("tablaTest", columns);
-            tabla.save();
-            Table loadedTable = Table.load("tablaTest.txt");
-
-            Assert.AreEqual(0, loadedTable.getNumRow());
-        }
-        
-        [TestMethod]
         public void addTupleTest()
         {
             TableColumn col1 = new TableColumn("id", "int", 1);
@@ -85,17 +44,33 @@ namespace TestDataBase
             columns.Add(col3);
 
             Table tabla = new Table("tablaTest", columns);
+           
+            tabla.addRow(new TableRow(new string[3] { "01", "david", "david@email.com" }));
 
-            
-            tabla.save();
-
-            Table tabTest = Table.load("tablaTest.txt");
-            tabTest.addRow(new TableRow(new string[3] { "01", "david", "david@email.com" }));
-            Assert.AreEqual(1,tabTest.getNumRow());
+            Assert.AreEqual(1,tabla.getNumRow());
 
             
         }
-        
+        [TestMethod]
+        public void removeTupleTest()
+		{
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+            TableRow tuple = new TableRow(new string[3] { "01", "david", "david@email.com" });
+            tabla.addRow(tuple);
+
+
+            tabla.remove(tuple);
+
+            Assert.AreEqual(0, tabla.getNumRow());
+        }
         [TestMethod]
         public void getTuplesTest()
         {
@@ -150,9 +125,49 @@ namespace TestDataBase
 
             Assert.IsTrue(check1 && check2);
         }
-        
-        
-        
+        [TestMethod]
+        public void getColNamesTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+
+            List<string> names = tabla.getColNames();
+
+            Assert.IsTrue(names.Contains("id") && names.Contains("email"));
+
+        }
+        [TestMethod]
+        public void getTypeColumnTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+
+            string type = tabla.getTypeColumn(1);
+            string type2 = tabla.getTypeColumn("email");
+
+
+
+            bool check1 = String.Equals("int", type);
+            bool check2 = String.Equals("string", type2);
+
+            Assert.IsTrue(check1 && check2);
+
+        }
+
         [TestMethod]
         public void getNumColumTest()
         {
@@ -191,15 +206,79 @@ namespace TestDataBase
 
             Assert.AreEqual(2,tabTest.getNumRow());
         }
-        /**
 
         [TestMethod]
-
-        public void dataBaseTest()
+        public void getIndexColTest()
         {
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
 
-            //TODO test
+            Table tabla = new Table("tablaTest", columns);
+
+
+            Assert.AreEqual(1,tabla.geyIndexCol("id"));
+        }
+        [TestMethod]
+        public void saveTableTest()
+        {
+            //TODO
+        }
+
         
+
+
+
+
+
+        //-------------------------------------------------------------------
+
+        /**
+
+
+        //LOAD METHOD MUST BE IN DATABASE CLASS
+        [TestMethod]
+        public void LoadEmptyTableTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+            tabla.save();
+            Table loadedTable = Table.load("tablaTest.txt");
+
+            Assert.AreEqual(0, loadedTable.getNumRow());
+        }
+        [TestMethod]
+        public void LoadTableTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+
+            tabla.addRow(new TableRow(new string[3] { "01", "david", "david@email.com" }));
+            tabla.addRow(new TableRow(new string[3] { "02", "domenico", "domenico@email.com" }));
+
+            tabla.save();
+
+            Table loadedTable = Table.load("tablaTest.txt");
+            Assert.AreEqual(2, loadedTable.getNumRow());
+
         }
     **/
 
