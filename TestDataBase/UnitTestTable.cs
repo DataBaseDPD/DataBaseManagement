@@ -282,17 +282,63 @@ namespace TestDataBase
             //TODO
         }
 
-        
 
 
 
 
 
-        //-------------------------------------------------------------------
+
+        /**-------------------------------------------------
+        Test de DataBase
+        ---------------------------------------------------**/
 
         /**
+        [TestMethod]
+        public void creatDatabaseTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            List<TableColumn> columns2 = new List<TableColumn>();
+            columns.Add(col1);
+            columns2.Add(col2);
+            columns2.Add(col3);
 
+            Table tabla = new Table("tablaTest", columns);
+            Table tabla2 = new Table("tablaTest", columns2);
+        }
+        
+        [TestMethod]
+        public void addTableTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 1);
+            TableColumn col2 = new TableColumn("nombre", "string", 2);
+            TableColumn col3 = new TableColumn("email", "string", 3);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
 
+            Table tabla = new Table("tablaTest", columns);
+
+            DataBase db = new DataBase("myDB");
+
+            db.addTable(tabla);
+
+            Assert.AreEqual(1, db);
+
+        }
+        [TestMethod]
+        public void getTableTest()
+        {
+        }
+        [TestMethod]
+        public void deleteTableTest()
+        {
+        }
+
+        **/
         //LOAD METHOD MUST BE IN DATABASE CLASS
         [TestMethod]
         public void LoadEmptyTableTest()
@@ -307,7 +353,8 @@ namespace TestDataBase
 
             Table tabla = new Table("tablaTest", columns);
             tabla.save();
-            Table loadedTable = Table.load("tablaTest.txt");
+            Table db = new Database("myDB");
+            Table loadedTable = db.load("tablaTest.txt");
 
             Assert.AreEqual(0, loadedTable.getNumRow());
         }
@@ -329,11 +376,14 @@ namespace TestDataBase
 
             tabla.save();
 
-            Table loadedTable = Table.load("tablaTest.txt");
+            Table db = new Database("myDB");
+
+            Table loadedTable = db.load("tablaTest.txt");
+          
             Assert.AreEqual(2, loadedTable.getNumRow());
 
         }
-    **/
+    
 
     }
 }
