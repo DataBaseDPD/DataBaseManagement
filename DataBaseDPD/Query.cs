@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace DataBaseDPD
 {
-     public class Query 
+     public abstract class Query 
+
+
     {
-        
+
+        public abstract String Run(Database database);
+
+
+
+        /*
         // Constructor that takes one argument:
         public Query (string statement)
         {
@@ -30,7 +37,7 @@ namespace DataBaseDPD
             return -1;
         }
     }
-   
+   */
     
     
 }
