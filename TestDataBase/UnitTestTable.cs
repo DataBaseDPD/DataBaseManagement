@@ -353,7 +353,7 @@ namespace TestDataBase
 
             Table tabla = new Table("tablaTest", columns);
             tabla.save();
-            Table db = new Database("myDB");
+            DataBase db = new DataBase("myDB");
             Table loadedTable = db.load("tablaTest.txt");
 
             Assert.AreEqual(0, loadedTable.getNumRow());
@@ -376,7 +376,7 @@ namespace TestDataBase
 
             tabla.save();
 
-            Table db = new Database("myDB");
+            DataBase db = new DataBase("myDB");
 
             Table loadedTable = db.load("tablaTest.txt");
           
