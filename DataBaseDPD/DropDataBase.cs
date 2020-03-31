@@ -5,7 +5,7 @@ using DataBaseDPD;
 public class DropDataBase : Query
 {
 
-    String Base;
+    String dBase;
 
     public DropDataBase(String database)
     {
@@ -14,7 +14,7 @@ public class DropDataBase : Query
 
     }
 
-    public override String Run()
+    public override String Run(DataBase db)
     {
 
         throw new NotImplementedException();
@@ -24,7 +24,7 @@ public class DropDataBase : Query
     public string getBase()
     {
 
-        return Base;
+        return dBase;
     }
 
 
