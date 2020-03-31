@@ -18,9 +18,9 @@ namespace TestDataBase
         [TestMethod]
         public void creatTableTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -35,9 +35,9 @@ namespace TestDataBase
         [TestMethod]
         public void addTupleTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -54,9 +54,9 @@ namespace TestDataBase
         [TestMethod]
         public void removeTupleTest()
 		{
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -74,9 +74,9 @@ namespace TestDataBase
         [TestMethod]
         public void getTuplesTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -97,13 +97,40 @@ namespace TestDataBase
 
             Assert.IsTrue(tuples.Contains(tuple1) && tuples.Contains(tuple2) );
         }
-        
+        [TestMethod]
+        public void getColumnTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+
+            TableRow tuple1 = new TableRow(new string[3] { "01", "david", "david@email.com" });
+            TableRow tuple2 = new TableRow(new string[3] { "02", "domenico", "domenico@email.com" });
+
+            tabla.addRow(tuple1);
+            tabla.addRow(tuple2);
+
+
+
+            List<string> column = tabla.getColumn("id");
+
+
+            Assert.IsTrue(column.Contains("01") && column.Contains("02"));
+         
+        }
+
         [TestMethod]
         public void getFirstTupleTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -128,9 +155,9 @@ namespace TestDataBase
         [TestMethod]
         public void getColNamesTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -146,9 +173,9 @@ namespace TestDataBase
         [TestMethod]
         public void getTypeColumnTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -171,9 +198,9 @@ namespace TestDataBase
         [TestMethod]
         public void getNumColumTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -187,9 +214,9 @@ namespace TestDataBase
         [TestMethod]
         public void getNumRowTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -210,9 +237,9 @@ namespace TestDataBase
         [TestMethod]
         public void getIndexColTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -223,6 +250,32 @@ namespace TestDataBase
 
             Assert.AreEqual(1,tabla.geyIndexCol("id"));
         }
+        public void modifyTupleTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+
+            TableRow tuple1 = new TableRow(new string[3] { "01", "david", "david@email.com" });
+            TableRow tuple2 = new TableRow(new string[3] { "02", "domenico", "domenico@email.com" });
+
+            tabla.addRow(tuple1);
+            tabla.addRow(tuple2);
+
+
+            tabla.modifyTuple(tuple2, "id", "33");
+                
+          
+
+            Assert.IsTrue(String.Equals("33", tuple2.getItem(0)));
+        }
+
         [TestMethod]
         public void saveTableTest()
         {

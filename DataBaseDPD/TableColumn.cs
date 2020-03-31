@@ -21,7 +21,7 @@ namespace DataBaseDPD
                 Console.WriteLine(Message.ColumnNameIsNull);
             }
             type = pType;
-            this.index = index;
+            this.index = index;//MUST START BY 0
 
         }
     }

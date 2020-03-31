@@ -25,23 +25,58 @@ namespace DataBaseDPD
 
         //Methods to manipulate class
 
-        public Table createTable(string tableName, List<TableColumn>  columns )
+        public Table addTable(string tableName, List<TableColumn>  columns )
         {
 
-            Table table = null;
             if (!tables.ContainsKey(name))
             {
-                table = new Table(tableName, columns);
+                Table table = new Table(tableName, columns);
+                table.save();
                 tables.Add(name, table);
                 Console.WriteLine( Message.CreateTableSuccess);
+                return table;
             }
             else
             {
+                Table table;
                 Console.WriteLine(Message.TableAlreadyExists);
+                tables.TryGetValue(tableName, out table);
+                return table;
             }
-            return table;
+            
         }
-
+        public Table getTable(string nameTable)
+        {
+            Table tabla;
+            if (!tables.ContainsKey(nameTable))
+            {
+                Console.WriteLine(Message.TableDoesNotExist);
+            }
+            tables.TryGetValue(nameTable, out tabla);
+            return tabla;
+        }
+        public void deleteTable(string nameTable)
+        {
+            if (!tables.ContainsKey(nameTable))
+            {
+                Console.WriteLine(Message.TableDoesNotExist);
+            }
+            else
+            {
+                tables.Remove(nameTable);
+            }
+        }
+        
+        public void loadTables()
+        {
+            //TODO
+            /**Si se puede recorrer el directoria cargando todas las tablas
+             * pero no estoy seguro de que en el directorio actual sola haya
+             * tablas.txt
+             *
+             * Se cargarian todas al cargar la base de datos
+             * */
+        }
 
 
         /**-------------------------------------------------

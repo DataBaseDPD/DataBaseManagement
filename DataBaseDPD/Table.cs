@@ -25,6 +25,7 @@ namespace DataBaseDPD
             name = tableName;
             this.addHeader(tableColumns);
             tuples = new List<TableRow>();
+            
 
            Console.WriteLine(Message.CreateTableSuccess);
         }
@@ -50,9 +51,43 @@ namespace DataBaseDPD
         {
             return tuples.First();
         }
+        //Return the tuples with the spicify value
+        public List<TableRow> getTuples(string nameCol, string value)
+        {
+            List<TableRow> tuplas = new List<TableRow>();
+            int pos = head.index(nameCol);
+            foreach (TableRow row in tuples)
+            {
+                if (row.getItem(pos)== value)
+                {
+                    tuplas.Add(row);
+                }
+            }
+            return tuplas;
+        }
+        //Modify the column of the tuple spicify with the value specify
+        public void modifyTuple(TableRow tuple, string nameCol, string value)
+        {
+            int pos = head.index(nameCol);
+            tuple.setItem(pos,value);
+        }
         public List<TableRow> getTuples()
         {
             return tuples;
+        }
+        public List<string> getColumn(string colName)
+        {
+            List<string> column = new List<string>();
+
+            int pos = head.index(colName);
+
+            foreach (TableRow row in tuples)
+            {
+                column.Add(row.getItem(pos));
+            }
+
+
+            return column;
         }
 
 
@@ -142,7 +177,7 @@ namespace DataBaseDPD
             
         }
     
-        public Table load( string fileName)
+        private Table load( string fileName)
         {
             List<TableColumn> columns;
             Table tabla = null;

@@ -37,13 +37,29 @@ namespace DataBaseDPD
             return result;
             
         }
-        //Not implement
-        public string getItem(string columnName)
+        public void setItem(int position , string value)
         {
-            return null;
+            tuple[position] = value;
+
+        }
+        //Not implement
+        public void getItem(string columnName)
+        {
+            
+            
         }
 
-        public List<string> getTuple()
+        public override string ToString()
+        {
+            string result = "{";
+            
+            for (int i = 0; i < tuple.Count; i++) result += " " + tuple[i]+ " ";
+            result += "}";
+            
+            return result;
+        }
+
+            public List<string> getTuple()
         {
             return tuple;
         }
