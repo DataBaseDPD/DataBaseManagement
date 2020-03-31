@@ -67,7 +67,7 @@ namespace TestDataBase
             tabla.addRow(tuple);
 
 
-            tabla.remove(tuple);
+            tabla.removeTuple(tuple);
 
             Assert.AreEqual(0, tabla.getNumRow());
         }
@@ -231,7 +231,7 @@ namespace TestDataBase
             tabla.addRow(tuple2);
 
 
-            Assert.AreEqual(2,tabTest.getNumRow());
+            Assert.AreEqual(2,tabla.getNumRow());
         }
 
         [TestMethod]
@@ -248,7 +248,7 @@ namespace TestDataBase
             Table tabla = new Table("tablaTest", columns);
 
 
-            Assert.AreEqual(1,tabla.geyIndexCol("id"));
+            Assert.AreEqual(0,tabla.getIndex("id"));
         }
         public void modifyTupleTest()
         {

@@ -89,8 +89,10 @@ namespace DataBaseDPD
 
             return column;
         }
-
-
+        public void removeTuple(TableRow row)
+        {
+            tuples.Remove(row);
+        }
 
         //Not implement
         public TableRow nextRow()
