@@ -23,7 +23,7 @@ namespace DataBaseDPD
         public Table( string tableName , List<TableColumn> tableColumns )
         {
             name = tableName;
-            addHeader(tableColumns);
+            this.addHeader(tableColumns);
             tuples = new List<TableRow>();
 
            Console.WriteLine(Message.CreateTableSuccess);
