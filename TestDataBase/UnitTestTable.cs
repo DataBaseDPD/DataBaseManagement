@@ -183,7 +183,7 @@ namespace TestDataBase
 
             Table tabla = new Table("tablaTest", columns);
 
-            string type = tabla.getTypeColumn(1);
+            string type = tabla.getTypeColumn(0);
             string type2 = tabla.getTypeColumn("email");
 
 
