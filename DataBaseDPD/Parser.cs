@@ -12,13 +12,17 @@ namespace DataBaseDPD
 		{
 			Match match;
 
-			//Create Table
+			//Create Table  
 			const string createTable = @"CREATE TABLE\s+(\w+)\s+\(([^\)]+)\)\s*\;";
+			//Drop Table
+			const string dropTable = @"DROP\s+TABLE\s+(\w+);";
 			// Select
 			const string select1 = @"SELECT\s+(\*)\s+FROM\s+(\w+);";
-			const string select2 = @"SELECT\s+(\w+)\s+FROM\s+(\w+);";
-            
-			
+			const string select2 = @"SELECT\s+(\w+)\s+FROM\s+(\w+)\s*;";
+
+            //Update
+            const string update1 = @"UPDATE\s+(\w)\s+SET\s+[(\w)\=(\w)]+\s*\;";
+
 			//Insert
 			const string insert1 = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([\w\'\s+\.]+)\);"; //CON TODOS SUS VALUES(1)
 
@@ -26,19 +30,14 @@ namespace DataBaseDPD
 			const string delete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*(\w+);";
 
 			//Update
-			const string update1 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*(\w+)(\,\s+(\w+)\s*(\=)\s*(\w+)\s+)WHERE\s+(\w+)\s*(=|<|>)\s*(\w+);"; //no traga comillas en los attbs ni espacios
+			//const string update1 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*(\w+)(\,\s+(\w+)\s*(\=)\s*(\w+)\s+)WHERE\s+(\w+)\s*(=|<|>)\s*(\w+);"; //no traga comillas en los attbs ni espacios
 
 			
 
-			//Drop DB 
-			const string dropDB = @"DROP\s+DATABASE\s+(\w+);";
-
-			//Create DB
-			const string createDB = @"CREATE\s+DATABASE\s+(\w+);";
+			
 
 			
-			//Drop Table
-			const string dropTable = @"DROP\s+TABLE\s+(\w+);";
+			
 
            ////__-------------------------------------------------------------------------------------------
 
@@ -53,10 +52,20 @@ namespace DataBaseDPD
 			match = Regex.Match(query, createTable);
 			if (match.Success)
 			{
-                //TODO 3 grooups table NAME, NOMBREATRIBUTO TIPO VALOR
+                //TODO  NAME, NOMBREATRIBUTO , TIPO VALOR
 				String nombreTabla = match.Groups[1].Value;
 				String tipoDato = match.Groups[2].Value;
 				return new CreateTable(nombreTabla, tipoDato);
+			}
+
+
+
+			match = Regex.Match(query, dropTable);
+			if (match.Success)
+			{
+				String nombreTabla = match.Groups[1].Value;
+				return new DropTable(nombreTabla );
+
 			}
 			//Select all from table
 			match = Regex.Match(query, select1);
@@ -83,23 +92,20 @@ namespace DataBaseDPD
 				return new Insert(nameTable, values);
 
 			}
-
-
-			// Delete
-			match = Regex.Match(query, insert1);
+            //Update solo igualdad de atributos
+			match = Regex.Match(query, update1);
 			if (match.Success)
 			{
-				//TODO
-				return null;
+				String nombreTabla = match.Groups[1].Value;
+				List<string> columns = CommaSeparatedNames(match.Groups[2].Value);
+				List<string> values = CommaSeparatedNames(match.Groups[3].Value);
+				return new Update(nombreTabla,columns,values);
 
 			}
-			match = Regex.Match(query, insert1);
-			if (match.Success)
-			{
-				//TODO
-				return null;
 
-			}
+
+
+
 			match = Regex.Match(query, insert1);
 			if (match.Success)
 			{
