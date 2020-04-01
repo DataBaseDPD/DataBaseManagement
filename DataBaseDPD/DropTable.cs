@@ -23,11 +23,20 @@ namespace DataBaseDPD
         public override String Run(DataBase database)
         {
 
-            
+            database.getTable(theTable);
+            if (theTable == null)
+            {
+                return Messages.TableDoesNotExist;
+            }
+            database.DropTabla(theTable);
 
 
         }
 
+        public string getTable()
+        {
+            return theTable;
+        }
 
     }
 
