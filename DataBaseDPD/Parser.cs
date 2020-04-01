@@ -13,7 +13,8 @@ namespace DataBaseDPD
 			const string update = @"UPDATE\s+(\w+)\s+SET\s+([\w\,\=\@\.]+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*(\w+);";
 			const string delete = @"DELETE\s+FROM\s+(\w+)(?:\s+WHERE\s+(\w+)\s+(\=|<|>)\s+(\w+))?(\;)";
 			const string insert = @"INSERT\s+INTO\s+(\w+)\s+\(([^\)]+)\)\s+VALUES\s+\(([^\)]+)\);";
-			
+			 
+
 
 			const string createDataBase = @"CREATE DATABASE\s+(|\w+)(\;)";
 			const string dropDataBase = @"DROP DATABASE\s+(\w+)(\;)";
@@ -36,7 +37,7 @@ namespace DataBaseDPD
 				return new Select();
 			}
 
-			//Insert
+			//Insert con columnas
 			match = Regex.Match(query, insert);
 			if (match.Success)
 			{
@@ -47,6 +48,9 @@ namespace DataBaseDPD
 				return new Insert(table, columns, values);
 			}
 
+			//Insert sin columnas
+
+
 
 
 			//Delete
@@ -55,7 +59,9 @@ namespace DataBaseDPD
             {
 				string table = match.Groups[1].Value;
 				string left = match.Groups[2].Value;
-
+				string op = match.Groups[3].Value;
+				string right = match.Groups[4].Value;
+				return new Delete();
             }
 
 			//CreateTable
