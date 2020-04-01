@@ -294,7 +294,7 @@ namespace TestDataBase
 
        
         [TestMethod]
-        public void creatTableTest()
+        public void CreatTableTest()
         {
             List<string> columns = new List<string>();
             columns.Add("id");
@@ -354,8 +354,7 @@ namespace TestDataBase
            
 
         }
-       
-        [TestMethod]
+      
         
         [TestMethod]
         public void dropTableTest()
