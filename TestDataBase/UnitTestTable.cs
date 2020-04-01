@@ -292,29 +292,32 @@ namespace TestDataBase
         Test de DataBase
         ---------------------------------------------------**/
 
-        /**
+       
         [TestMethod]
-        public void creatDatabaseTest()
+        public void creatTableTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
-            List<TableColumn> columns = new List<TableColumn>();
-            List<TableColumn> columns2 = new List<TableColumn>();
-            columns.Add(col1);
-            columns2.Add(col2);
-            columns2.Add(col3);
+            List<string> columns = new List<string>();
+            columns.Add("id");
+            columns.Add("nombre");
+            columns.Add("email");
+            List<string> types = new List<string>();
+            types.Add("int");
+            types.Add("string");
+            types.Add("string");
 
-            Table tabla = new Table("tablaTest", columns);
-            Table tabla2 = new Table("tablaTest", columns2);
+
+            Database db = new Database();
+
+            Table tabla = db.CreateTable("tablaTest",columns,types);
+
+            Assert.IsNotNull(tabla);
         }
-        
         [TestMethod]
-        public void addTableTest()
+        public void getTableTest()
         {
-            TableColumn col1 = new TableColumn("id", "int", 1);
-            TableColumn col2 = new TableColumn("nombre", "string", 2);
-            TableColumn col3 = new TableColumn("email", "string", 3);
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
             List<TableColumn> columns = new List<TableColumn>();
             columns.Add(col1);
             columns.Add(col2);
@@ -322,23 +325,110 @@ namespace TestDataBase
 
             Table tabla = new Table("tablaTest", columns);
 
-            DataBase db = new DataBase("myDB");
+            Database db = new Database();
 
-            db.addTable(tabla);
+            db.AddTable(tabla);
 
-            Assert.AreEqual(1, db);
-
+            Assert.IsNotNull(db.getTable("tablaTest"));
+     
         }
+
         [TestMethod]
-        public void getTableTest()
+        public void addTableTest()
         {
-        }
-        [TestMethod]
-        public void deleteTableTest()
-        {
-        }
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
 
-        **/
+            Table tabla = new Table("tablaTest", columns);
+
+            Database db = new Database();
+
+            db.AddTable(tabla);
+
+            Assert.IsTrue(db.getTables().ContainsKey("tablaTest"));
+           
+
+        }
+       
+        [TestMethod]
+        
+        [TestMethod]
+        public void dropTableTest()
+        {
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+            Table tabla2 = new Table("tablaTest2", columns);
+
+            Database db = new Database();
+
+            db.AddTable(tabla);
+            db.AddTable(tabla2);
+
+            db.DropTabla("tablaTest");
+
+            Assert.IsTrue(!db.getTables().ContainsKey("tablaTest"));
+        }
+        
+       [TestMethod]
+       public void insertTest()
+       {
+            TableColumn col1 = new TableColumn("id", "int", 0);
+            TableColumn col2 = new TableColumn("nombre", "string", 1);
+            TableColumn col3 = new TableColumn("email", "string", 2);
+            List<TableColumn> columns = new List<TableColumn>();
+            columns.Add(col1);
+            columns.Add(col2);
+            columns.Add(col3);
+
+            Table tabla = new Table("tablaTest", columns);
+
+            Database db = new Database();
+
+            db.AddTable(tabla);
+
+            List<string> valores = new List<string>();
+            valores.Add("33");
+            valores.Add("pepito");
+            valores.Add("pepito@email.com");
+
+            string result = db.Insert("tablaTest",valores);
+
+            Assert.AreEqual(String.Equals("Tuple added", result));
+
+        }
+        /**
+       [TestMethod]
+       public void dropTableTest()
+       {
+       }
+        
+       [TestMethod]
+       public void dropTableTest()
+       {
+       }
+       [TestMethod]
+       public void dropTableTest()
+       {
+       }
+       [TestMethod]
+       public void dropTableTest()
+       {
+       }
+
+       **/
+
         //LOAD METHOD MUST BE IN DATABASE CLASS
         [TestMethod]
         public void LoadEmptyTableTest()

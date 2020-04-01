@@ -42,8 +42,12 @@ namespace DataBaseDPD
                 tables.Add(name,tabla);
             }
         }
-        
-        
+        public Dictionary<string, Table> getTables()
+        {
+            return tables;
+        }
+
+
         public void loadTables()
         {
             //TODO
@@ -110,7 +114,7 @@ namespace DataBaseDPD
             {
                 Table tab = getTable(nameTable);
                 int len = tab.getNumColumn();
-                if (values.Count== len)
+                if (values.Count == len)
                 {
                     tab.addRow(values);
                     return Message.InsertSuccess;
@@ -119,9 +123,6 @@ namespace DataBaseDPD
                 {
                     return Message.WrongSyntax;
                 }
-                
-
-                
             }
             else
             {
@@ -131,36 +132,56 @@ namespace DataBaseDPD
 
                
         }
-        //Insert some columns
-        public string Insert(string nameTable, List<string> colNames, List<string> values)
+        //Update some columns
+        public string Update(string nameTable, List<string> colNames, List<string> values)
         {
-            //TODO
+            if (tables.ContainsKey(nameTable) && colNames.Count == values.Count)
+            {
+                Table tab = getTable(nameTable);
+                foreach (TableRow row in tab.getTuples())
+                {
+                    for (int i=0;i< colNames.Count;i++)
+                    {
+                        tab.modifyTuple(row,colNames[i],values[i] );
+                    }
+                   
+                }
 
-            return "";
-        }
-        //Insert with where
-        public string Insert(string nameTable, List<string> colNames, string condition)
-        {
-            //TODO
+                return Message.TupleDeleteSuccess;
 
-            return "";
-        }
-        public string Update()
-        {
-            //TODO
+            }
+            else
+            {
+                return Message.TableDoesNotExist;
+            }
 
-            return "";
         }
+        
+        
         //Select simple
         public string Select( string nameTable, string column)
         {
             Table tab = getTable(nameTable);
             List<string> columns = tab.getColumn(column);
+            string result = "[ "+ column + " ]";
+            for (int i = 0; i < columns.Count; i++) result += "{ " + columns[i] + " }";
+
+            result += "";
+            return result;
+        }
+        public string Select(string nameTable, List<string> columns)
+        {
+            Table tab = getTable(nameTable);
+            
             string result = "";
 
-            for (int i = 0; i < columns.Count; i++) result += columns[i] + "\n";
-
-            result += "\n";
+            for(int i=0; i < columns.Count; i++)
+            {
+                result += Select(nameTable, columns[i]);
+                
+            }
+           
+            result += "";
             return result;
         }
         
@@ -168,7 +189,7 @@ namespace DataBaseDPD
         {
             List<string> tuplas = new List<string>();
             Table tab = getTable(nameTabla);
-            //tuplas.Add(tab.getHeader().ToString()); Si se quisiera ver las columnas y su tipo
+            tuplas.Add(tab.getHeader().ToString()); //Si se quisiera ver las columnas y su tipo
             foreach (TableRow tupla in tab.getTuples())
             {
                 tuplas.Add(tupla.ToString());
@@ -180,13 +201,27 @@ namespace DataBaseDPD
             result += "\n";
             return result;
         }
-        //With a condition
+
+
+
+
+        //Select with where
         public string Select(string nameTabla, string columns, string value)
         {
-
-
             //TODO
-            return null;
+            return "Not implement";
+        }
+        //Insert with where
+        public string Insert(string nameTable, List<string> colNames, string condition)
+        {
+            //TODO
+
+            return "Not implement";
+        }
+        //Update with where
+        public string Update()
+        {
+            return "Not implement";
         }
 
 
