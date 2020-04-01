@@ -28,7 +28,11 @@ namespace DataBaseDPD
 			if (match.Success)
 			{
 				//mirar la lista
-
+				string columns = match.Groups[1].Value;
+				string table = match.Groups[2].Value;
+				string left = match.Groups[3].Value;
+				string op = match.Groups[4].Value;
+				string right = match.Groups[5].Value;
 				return new Select();
 			}
 
@@ -36,9 +40,9 @@ namespace DataBaseDPD
 			match = Regex.Match(query, insert);
 			if (match.Success)
 			{
-				String table = match.Groups[1].Value;
-				String columns = match.Groups[2].Value;
-				String values = match.Groups[3].Value;
+				string table = match.Groups[1].Value;
+				string columns = match.Groups[2].Value;
+				string values = match.Groups[3].Value;
 
 				return new Insert(table, columns, values);
 			}
@@ -46,7 +50,13 @@ namespace DataBaseDPD
 
 
 			//Delete
+			match = Regex.Match(query, delete);
+            if (match.Success)
+            {
+				string table = match.Groups[1].Value;
+				string left = match.Groups[2].Value;
 
+            }
 
 			//CreateTable
 
@@ -54,8 +64,8 @@ namespace DataBaseDPD
             if(match.Success)
 				{
 
-				String nombreTabla = match.Groups[1].Value;
-				String tipoDato = match.Groups[2].Value;
+				string nombreTabla = match.Groups[1].Value;
+				string tipoDato = match.Groups[2].Value;
 				return new CreateTable(nombreTabla, tipoDato);
 
             }
@@ -76,7 +86,7 @@ namespace DataBaseDPD
                 if (match.Success)
                 {
 
-					String nombreDB = match.Groups[0].Value;
+					string nombreDB = match.Groups[0].Value;
 					return new CreateDataBase(nombreDB);
 
                 }
@@ -91,7 +101,7 @@ namespace DataBaseDPD
 			if(match.Success)
             {
 
-				String nombreDB = match.Groups[0].Value;
+				string nombreDB = match.Groups[0].Value;
 				return new DropDataBase(nombreDB);
 
             }
