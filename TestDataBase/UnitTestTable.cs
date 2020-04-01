@@ -327,7 +327,7 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            db.addTable(tabla);
+            db.addTable("tablaTest", tabla);
 
             Assert.IsNotNull(db.getTable("tablaTest"));
      
@@ -348,7 +348,7 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            db.addTable(tabla);
+            db.addTable("tablaTest", tabla);
 
             Assert.IsTrue(db.getTables().ContainsKey("tablaTest"));
            
@@ -372,8 +372,8 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            db.addTable(tabla);
-            db.addTable(tabla2);
+            db.addTable("tablaTest", tabla);
+            db.addTable("tablaTest2", tabla2);
 
             db.DropTabla("tablaTest");
 
@@ -395,7 +395,7 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            db.addTable(tabla);
+            db.addTable("tablaTest", tabla);
 
             List<string> valores = new List<string>();
             valores.Add("33");
