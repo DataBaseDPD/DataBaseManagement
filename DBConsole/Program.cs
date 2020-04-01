@@ -7,35 +7,48 @@ namespace DBConsole
 {
     class Program
     {
+        
+        //minisql-tester.exe -i input-file.txt -o output-file.txt
+        enum Parameter { Unset, InputFile, OutputFile };
         static void Main(string[] args)
         {
-
-            
-            TableColumn col1 = new TableColumn("id", "int", 0);
-            TableColumn col2 = new TableColumn("nombre", "string", 1);
-            TableColumn col3 = new TableColumn("email", "string", 2);
-            List<TableColumn> columns = new List<TableColumn>();
-            columns.Add(col1);
-            columns.Add(col2);
-            columns.Add(col3);
-
-            Table tabla = new Table("tablaTest", columns);
-
-            tabla.addRow(new TableRow(new string[3] { "01","'david'","david@email.com" }));
-            tabla.addRow(new TableRow(new string[3] { "02", "'domenico'", "domenico@email.com" }));
-            tabla.addRow(new TableRow(new string[] { "03", "'percy'", "percy@email.com" }));
-
-            tabla.save();
+            string inputFile = "input-file.txt";
+            string outputFile = "output-file.txt";
+            Parameter lastParameter = Parameter.Unset;
+            foreach (string arg in args)
+            {
+                if (arg == "-i") lastParameter = Parameter.InputFile;
+                else if (arg == "-o") lastParameter = Parameter.OutputFile;
+                else if (lastParameter == Parameter.InputFile) inputFile = arg;
+                else if (lastParameter == Parameter.OutputFile) outputFile = arg;
+            }
 
 
             Database db = new Database();
-            db.addTable("tablaTest", tabla);
+            StreamReader file = new StreamReader(inputFile);
+            StreamWriter writer = File.CreateText(outputFile);
 
-           
-                Console.WriteLine(db.SelectAll("tablaTest"));
-            
-            
 
+
+            writer.Write("\n");
+            string query;
+            while ((query = file.ReadLine()) != null)
+            {
+                DateTime start = DateTime.Now;
+                string result = db.RunQuery(query);
+                DateTime end = DateTime.Now;
+
+                TimeSpan time = end - start;
+
+                double seconds = time.Milliseconds / 1000.0;
+
+                writer.Write( result + " ( " + seconds+ " )");
+                writer.Write("\n");
+
+            }
+            writer.Write("\n");
+            writer.Close();
+            file.Close();
         }
     }
 }
