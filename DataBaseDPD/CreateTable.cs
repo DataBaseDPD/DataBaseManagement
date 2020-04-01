@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using DataBaseDPD;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -33,9 +35,36 @@ namespace DataBaseDPD
 
         public override string Run(DataBase bd)
         {
+            if(bd.getTable(theTable))
+            {
+                return Message.TableAlreadyExists;
+            }
+            if(dataType.Count != columnNames.Count)
+            {
             
+                return Message.WrongSyntax;
+            }
+            
+            int cont=0;
+            List<TableColumn> listOfCreation = new List<TableColumn>();
+            
+            foreach (string type in dataType)
+                {
+            TableColumn column;
+                if(String.IsNullOrWhiteSpace(columnNames[cont]) && String.IsNullOrEmpty(columnNames[cont]))
+                {
+            
+                    return Message.WrongSyntax;
 
-
+                }
+                if(String.Equals(type,"TEXT",StringComparison.OrdinalIgnoreCase))
+                {
+                    
+                  
+                
+                }
+            
+            }
         }
 
         public string getTable()
