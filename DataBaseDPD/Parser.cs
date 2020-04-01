@@ -48,10 +48,24 @@ namespace DataBaseDPD
 			//Delete
 
 
+			//CreateTable
 
+			match = Regex.Match(query, createTable);
+            if(match.Success)
+				{
 
+				String nombreTabla = match.Groups[1].Value;
+				String tipoDato = match.Groups[2].Value;
+				return new CreateTable(nombreTabla, tipoDato);
+
+            }
 
 			//DropTable
+
+
+
+
+
 
 
 			//CreateDatabase
@@ -66,9 +80,6 @@ namespace DataBaseDPD
 					return new CreateDataBase(nombreDB);
 
                 }
-
-
-
 
             }
 

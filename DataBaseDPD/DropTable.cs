@@ -1,11 +1,17 @@
 ﻿using System;
 using DataBaseDPD;
 
-    public class DropTable : Query
+
+namespace DataBaseDPD
 {
+	
+	public class DropTable : Query
+    {
 
 
 
+
+
+    }
 
 }
-
