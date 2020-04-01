@@ -187,7 +187,7 @@ namespace DataBaseDPD
             return result;
         }
         
-        public string SelectAll(string nameTabla)
+        public string Select(string nameTabla)
         {
             List<string> tuplas = new List<string>();
             Table tab = getTable(nameTabla);

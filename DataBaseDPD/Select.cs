@@ -14,10 +14,22 @@ namespace DataBaseDPD
             Table = nameTable;
             Columns = column;
         }
+        public Select(string nameTable)
+        {
+            Table = nameTable;
+        }
 
         public override string Run(Database database)
         {
-            return database.Select(Table,Columns);
+            if (Columns.Count==0)
+            {
+                return database.Select(Table);
+            }
+            else
+            {
+                return database.Select(Table, Columns);
+            }
+            
         }
     }
 }

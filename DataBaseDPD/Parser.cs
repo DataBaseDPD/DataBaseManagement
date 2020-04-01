@@ -10,9 +10,11 @@ namespace DataBaseDPD
 
         public static Query Parse(string query)
 		{
+			Match match;
 
-			// SELECT
-			//Con *:
+			//Create Table
+			const string createTable = @"CREATE TABLE\s+(\w+)\s+\(([^\)]+)\)\s*\;";
+			// Select
 			const string select1 = @"SELECT\s+(\*)\s+FROM\s+(\w+);";
 			const string select2 = @"SELECT\s+(\w+)\s+FROM\s+(\w+);";
             
@@ -34,10 +36,7 @@ namespace DataBaseDPD
 			//Create DB
 			const string createDB = @"CREATE\s+DATABASE\s+(\w+);";
 
-			//Create Table
-			//string createTable = @"(CREATE\s+TABLE)\s+(\w+)\s+\((\w+)\s+(INT|DOUBLE|TEXT)(\s+|\,\s+\w+\s+(INT|DOUBLE|TEXT))+)\,\s+(PRIMARY\s+KEY)\s+\((\w+)\)\,\s+(FOREIGN\s+KEY)\s+\((\w+)\)\s+REFERENCES\s+(\w+)\s+\((\w+)\);";
-			const string createTable1 = @"CREATE\s+TABLE\s+(\w+)\s+\((\w+)\s+(INT|DOUBLE|TEXT)\);";
-			const string createTable2 = @"CREATE\s+TABLE\s+(\w+)\s+\((\w+)\s+(INT|DOUBLE|TEXT)(\,\s+(\w+)\s+(INT|DOUBLE|TEXT))+\);";
+			
 			//Drop Table
 			const string dropTable = @"DROP\s+TABLE\s+(\w+);";
 
@@ -50,31 +49,41 @@ namespace DataBaseDPD
 
 
 
+			//CreateTable
+			match = Regex.Match(query, createTable);
+			if (match.Success)
+			{
+                //TODO 3 grooups table NAME, NOMBREATRIBUTO TIPO VALOR
+				String nombreTabla = match.Groups[1].Value;
+				String tipoDato = match.Groups[2].Value;
+				return new CreateTable(nombreTabla, tipoDato);
+			}
 			//Select all from table
-			Match match = Regex.Match(query, select1);
+			match = Regex.Match(query, select1);
 			if (match.Success)
 			{
 				string table = match.Groups[2].Value;
-				return new SelectAll(table);
+				return new Select(table);
 			}
             //Select columns
 			match = Regex.Match(query, select2);
-			if(match.Success)
-            {
+			if (match.Success)
+			{
 				List<string> columnNames = CommaSeparatedNames(match.Groups[1].Value);
 				string table = match.Groups[2].Value;
 				return new Select(table, columnNames);
 
 			}
-
 			// Insert todos valores
 			 match = Regex.Match(query, insert1);
 			if (match.Success)
 			{
-                //TODO
-				return null;
+				string nameTable = match.Groups[1].Value;
+				List<string> values = CommaSeparatedNames(match.Groups[2].Value);
+				return new Insert(nameTable, values);
 
 			}
+
 
 			// Delete
 			match = Regex.Match(query, insert1);
