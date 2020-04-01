@@ -52,10 +52,21 @@ namespace DataBaseDPD
         public override string ToString()
         {
             string result = "{";
-            
-            for (int i = 0; i < tuple.Count; i++) result += " " + tuple[i]+ " ";
+
+            for (int i = 0; i < tuple.Count; i++)
+            {
+                if (i==tuple.Count-1)
+                {
+                    result += " " + tuple[i];
+                }
+                else
+                {
+                    result += " " + tuple[i] + ",";
+                }
+                
+                
+            }
             result += "}";
-            
             return result;
         }
 

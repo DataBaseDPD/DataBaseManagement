@@ -29,6 +29,23 @@ namespace DataBaseDPD
 
            Console.WriteLine(Message.CreateTableSuccess);
         }
+        //C2 Overload
+        public Table(string tableName, List<string> colNames, List<string> types)
+        {
+            name = tableName;
+            List<TableColumn> columns = new List<TableColumn>();
+            if (colNames.Count== types.Count)
+            {
+                for (int i = 0; i < colNames.Count; i++)
+                {
+                    columns.Add(new TableColumn(colNames[i],types[i], i));
+                }
+            }
+            this.addHeader(columns);
+            tuples = new List<TableRow>();
+
+            Console.WriteLine(Message.CreateTableSuccess);
+        }
         //Add the firts row, only the first time with the name of the column and the type of the column
         private void addHeader(List<TableColumn> tableColumns)
         {

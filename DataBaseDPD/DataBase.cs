@@ -10,41 +10,21 @@ namespace DataBaseDPD
 
         //Atributes
         public Dictionary<string, Table> tables;
-        string name;
+        
 
         string sourceDir = "";
 
 
         //Constructor
-        public Database(string name)
+        public Database()
         {
             tables = new Dictionary<string, Table>();
-            this.name = name;
+           
         }
 
 
         //Methods to manipulate class
 
-        public Table addTable(string tableName, List<TableColumn>  columns )
-        {
-
-            if (!tables.ContainsKey(name))
-            {
-                Table table = new Table(tableName, columns);
-                table.save();
-                tables.Add(name, table);
-                Console.WriteLine( Message.CreateTableSuccess);
-                return table;
-            }
-            else
-            {
-                Table table;
-                Console.WriteLine(Message.TableAlreadyExists);
-                tables.TryGetValue(tableName, out table);
-                return table;
-            }
-            
-        }
         public Table getTable(string nameTable)
         {
             Table tabla;
@@ -77,8 +57,50 @@ namespace DataBaseDPD
              * Se cargarian todas al cargar la base de datos
              * */
         }
+        /**-------------------------------------------------
+      Metodos de respuesta a las queries
+      ---------------------------------------------------**/
+        public string RunQuery(string query)
+        {
+            Query request = null; //= Parser.Parse(query);
+            if (request==null)
+            {
+                return Message.WrongSyntax;
+            }
+            else
+            {
+                return request.Run(this);
+            }
+            
+        }
+
+        public string CreateTable(string tableName, List<string> colNames, List<string> types)
+        {
+            if (!tables.ContainsKey(tableName))
+            {
+                Table table = new Table(tableName, colNames,types);
+                table.save();
+                tables.Add(tableName, table);
+                Console.WriteLine(Message.CreateTableSuccess);
+                return Message.CreateTableSuccess;
+            }
+            else
+            {
+                Table table;
+                Console.WriteLine(Message.TableAlreadyExists);
+                tables.TryGetValue(tableName, out table);
+                return Message.TableAlreadyExists;
+            }
 
 
+        }
+        public string Update(String columns, String tableName, String left, String op, String right)
+        {
+            //TODO
+
+            return "";
+        }
+        
         /**-------------------------------------------------
        Metodos de lectura escritura en archivos
        ---------------------------------------------------**/

@@ -38,6 +38,9 @@ namespace DataBaseDPD
         public const string ColumnDoesNotExist = Error + "Column does not exist";
         public const string ColumnNameIsNull = Error + "Column can not be null.";
         public const string IncorrectDataType = Error + "Incorrect data type";
+
+
+
         public const string SecurityIncorrectLogin = Error + "Incorrect login";
         public const string SecurityNotSufficientPrivileges = Error + "Not sufficient privileges";
         public const string SecurityProfileAlreadyExists = Error + "Security profile already exists";

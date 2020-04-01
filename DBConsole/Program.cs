@@ -21,22 +21,20 @@ namespace DBConsole
 
             Table tabla = new Table("tablaTest", columns);
 
-            tabla.addRow(new TableRow(new string[3] { "01","david","david@email.com" }));
-            tabla.addRow(new TableRow(new string[3] { "02", "domenico", "domenico@email.com" }));
-            tabla.addRow(new TableRow(new string[] { "01", "percy", "percy@email.com" }));
+            tabla.addRow(new TableRow(new string[3] { "01","'david'","david@email.com" }));
+            tabla.addRow(new TableRow(new string[3] { "02", "'domenico'", "domenico@email.com" }));
+            tabla.addRow(new TableRow(new string[] { "01", "'percy'", "percy@email.com" }));
 
             tabla.save();
 
 
-            List<TableRow> lista = tabla.getTuples("id","01");
+            List<TableRow> lista = tabla.getTuples();
 
-            foreach (TableRow col in lista)
-            {
-                tabla.modifyTuple(col,"id", "33");
-                Console.WriteLine(col.ToString());
+            foreach (TableRow row in lista)
+            { 
+                //Console.WriteLine(row.ToString());
             }
-
-
+            
 
         }
     }
