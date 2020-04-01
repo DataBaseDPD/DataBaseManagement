@@ -8,6 +8,7 @@ namespace DataBaseDPD
 {
     public class TableRow
     {
+        //BAD DESIGN NOT NECESARY
         //Atributes
         List<string> tuple;
 
@@ -19,6 +20,10 @@ namespace DataBaseDPD
             {
                 tuple.Add(items[i]);
             }
+        }
+        public TableRow()
+        {
+            tuple = new List<string>();
         }
 
         //Pos start at 0 
@@ -66,7 +71,7 @@ namespace DataBaseDPD
                 
                 
             }
-            result += "}";
+            result += " }";
             return result;
         }
 

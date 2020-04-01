@@ -23,17 +23,17 @@ namespace DBConsole
 
             tabla.addRow(new TableRow(new string[3] { "01","'david'","david@email.com" }));
             tabla.addRow(new TableRow(new string[3] { "02", "'domenico'", "domenico@email.com" }));
-            tabla.addRow(new TableRow(new string[] { "01", "'percy'", "percy@email.com" }));
+            tabla.addRow(new TableRow(new string[] { "03", "'percy'", "percy@email.com" }));
 
             tabla.save();
 
 
-            List<TableRow> lista = tabla.getTuples();
+            Database db = new Database();
+            db.addTable("tablaTest", tabla);
 
-            foreach (TableRow row in lista)
-            { 
-                //Console.WriteLine(row.ToString());
-            }
+           
+                Console.WriteLine(db.SelectAll("tablaTest"));
+            
             
 
         }

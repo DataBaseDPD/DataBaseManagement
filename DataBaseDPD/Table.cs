@@ -52,6 +52,10 @@ namespace DataBaseDPD
             head = new Header(tableColumns);
            
         }
+        public Header getHeader()
+        {
+            return head;
+        }
 
 
 
@@ -59,6 +63,16 @@ namespace DataBaseDPD
         public void addRow(TableRow row)
         {
             tuples.Add(row);
+        }
+        public void addRow(List<string> values)
+        {
+            TableRow row = new TableRow();
+            for (int i=0; i< getNumColumn();i++)
+            {
+                row.setItem(i,values[i]);
+            }
+            tuples.Add(row);
+            
         }
         public void removeRow(TableRow row)
         {

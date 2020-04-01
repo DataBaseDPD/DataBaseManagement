@@ -77,5 +77,16 @@ namespace DataBaseDPD
             return col.index;
 
         }
+        public override string ToString()
+        {
+            string result = "[";
+            foreach (KeyValuePair<string, TableColumn>  col in columns)
+            {
+                result += string.Format( "{0} of type {1}",col.Key, col.Value.type);
+            }
+
+            result += "]";
+            return result;
+        }
     }
 }

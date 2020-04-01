@@ -13,6 +13,7 @@ namespace DataBaseDPD
 
         public const string OpenDatabaseSuccess = "Database opened ...";
         public const string DeleteDatabaseSuccess = "Database deleted";
+        public const string DeleteTablaSuccess = "Tabla deleted";
         public const string BackupDatabaseSuccess = "Database backed up";
         
         public const string InsertSuccess = "Tuple added";

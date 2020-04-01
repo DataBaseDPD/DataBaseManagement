@@ -35,17 +35,14 @@ namespace DataBaseDPD
             tables.TryGetValue(nameTable, out tabla);
             return tabla;
         }
-        public void deleteTable(string nameTable)
+        public void addTable(string name, Table tabla)
         {
-            if (!tables.ContainsKey(nameTable))
+            if (!tables.ContainsKey(name))
             {
-                Console.WriteLine(Message.TableDoesNotExist);
-            }
-            else
-            {
-                tables.Remove(nameTable);
+                tables.Add(name,tabla);
             }
         }
+        
         
         public void loadTables()
         {
@@ -86,21 +83,113 @@ namespace DataBaseDPD
             }
             else
             {
-                Table table;
-                Console.WriteLine(Message.TableAlreadyExists);
-                tables.TryGetValue(tableName, out table);
                 return Message.TableAlreadyExists;
             }
 
 
         }
-        public string Update(String columns, String tableName, String left, String op, String right)
+        public string DropTabla(string nameTable)
+        {
+            if (!tables.ContainsKey(nameTable))
+            {
+                return Message.TableDoesNotExist;
+            }
+            else
+            {
+                tables.Remove(nameTable);
+                remove(nameTable+".txt");
+                return Message.DeleteTablaSuccess;
+            }
+
+           
+        }
+        //Insert simple
+        public string Insert(string nameTable,List<string> values)
+        {
+            if (!tables.ContainsKey(nameTable))
+            {
+                Table tab = getTable(nameTable);
+                int len = tab.getNumColumn();
+                if (values.Count== len)
+                {
+                    tab.addRow(values);
+                    return Message.InsertSuccess;
+                }
+                else
+                {
+                    return Message.WrongSyntax;
+                }
+                
+
+                
+            }
+            else
+            {
+                return Message.TableDoesNotExist;
+            }
+
+
+               
+        }
+        //Insert some columns
+        public string Insert(string nameTable, List<string> colNames, List<string> values)
         {
             //TODO
 
             return "";
         }
+        //Insert with where
+        public string Insert(string nameTable, List<string> colNames, string condition)
+        {
+            //TODO
+
+            return "";
+        }
+        public string Update()
+        {
+            //TODO
+
+            return "";
+        }
+        //Select simple
+        public string Select( string nameTable, string column)
+        {
+            Table tab = getTable(nameTable);
+            List<string> columns = tab.getColumn(column);
+            string result = "";
+
+            for (int i = 0; i < columns.Count; i++) result += columns[i] + "\n";
+
+            result += "\n";
+            return result;
+        }
         
+        public string SelectAll(string nameTabla)
+        {
+            List<string> tuplas = new List<string>();
+            Table tab = getTable(nameTabla);
+            //tuplas.Add(tab.getHeader().ToString()); Si se quisiera ver las columnas y su tipo
+            foreach (TableRow tupla in tab.getTuples())
+            {
+                tuplas.Add(tupla.ToString());
+            }
+            string result = "";
+
+            for(int i= 0; i<tuplas.Count;i++) result += tuplas[i] + "\n";
+
+            result += "\n";
+            return result;
+        }
+        //With a condition
+        public string Select(string nameTabla, string columns, string value)
+        {
+
+
+            //TODO
+            return null;
+        }
+
+
         /**-------------------------------------------------
        Metodos de lectura escritura en archivos
        ---------------------------------------------------**/
@@ -112,7 +201,6 @@ namespace DataBaseDPD
             if (File.Exists(filename))
             {
                 File.Delete(Path.Combine(sourceDir, filename));
-                tables.Remove(filename.Substring(0, filename.Length - 4));
             }
 
         }
