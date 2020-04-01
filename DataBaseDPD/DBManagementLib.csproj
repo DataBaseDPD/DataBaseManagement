@@ -52,6 +52,14 @@
     <Compile Include="Table.cs" />
     <Compile Include="TableRow.cs" />
     <Compile Include="TableColumn.cs" />
+    <Compile Include="Select.cs" />
+    <Compile Include="Update.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="CreateTable.cs" />
+    <Compile Include="DropDataBase.cs" />
+    <Compile Include="DropTable.cs" />
+    <Compile Include="Insert.cs" />
+    <Compile Include="SelectAll.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,11 +11,7 @@ namespace DataBaseDPD
     class Connection
     {
 
-        public string open()
-        {
-            return null;
-            
-        }
+        
 
         
 
