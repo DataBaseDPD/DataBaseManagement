@@ -308,9 +308,9 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            Table tabla = db.CreateTable("tablaTest",columns,types);
+            string result = db.CreateTable("tablaTest",columns,types);
 
-            Assert.IsNotNull(tabla);
+            Assert.IsTrue(String.Equals("Table created ...", result));
         }
         [TestMethod]
         public void getTableTest()
@@ -327,7 +327,7 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            db.AddTable(tabla);
+            db.addTable(tabla);
 
             Assert.IsNotNull(db.getTable("tablaTest"));
      
@@ -348,7 +348,7 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            db.AddTable(tabla);
+            db.addTable(tabla);
 
             Assert.IsTrue(db.getTables().ContainsKey("tablaTest"));
            
@@ -372,8 +372,8 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            db.AddTable(tabla);
-            db.AddTable(tabla2);
+            db.addTable(tabla);
+            db.addTable(tabla2);
 
             db.DropTabla("tablaTest");
 
@@ -395,7 +395,7 @@ namespace TestDataBase
 
             Database db = new Database();
 
-            db.AddTable(tabla);
+            db.addTable(tabla);
 
             List<string> valores = new List<string>();
             valores.Add("33");
@@ -404,7 +404,7 @@ namespace TestDataBase
 
             string result = db.Insert("tablaTest",valores);
 
-            Assert.AreEqual(String.Equals("Tuple added", result));
+            Assert.IsTrue(String.Equals("Tuple added", result));
 
         }
         /**
