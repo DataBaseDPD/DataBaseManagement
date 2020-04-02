@@ -19,13 +19,11 @@ namespace DataBaseDPD
             theTable = table;
             string[] splitParameters = data.Split(',');
 
-            foreach (string toSplit in splitParameters)
+            string[] split = data.Split(' ');
+            for (int i = 0; i < split.Length; i = i + 2)
             {
-
-                string trimmedToSplit = toSplit.Trim(' ');
-                dataType.Add(trimmedToSplit.Split(' ')[1]);
-                columnNames.Add(trimmedToSplit.Split(' ')[0]);
-
+                columnNames.Add(split[i]);
+                dataType.Add(split[i + 1].Trim(','));
             }
 
 
@@ -33,45 +31,15 @@ namespace DataBaseDPD
         }
 
 
-        public override string Run(DataBase bd)
+        public override string Run(Database bd)
         {
-            if(bd.getTable(theTable))
-            {
-                return Message.TableAlreadyExists;
-            }
-            if(dataType.Count != columnNames.Count)
-            {
-            
-                return Message.WrongSyntax;
-            }
-            
-            int cont=0;
-            List<TableColumn> listOfCreation = new List<TableColumn>();
-            
-            foreach (string type in dataType)
-                {
-            TableColumn column;
-                if(String.IsNullOrWhiteSpace(columnNames[cont]) && String.IsNullOrEmpty(columnNames[cont]))
-                {
-            
-                    return Message.WrongSyntax;
 
-                }
-                if(String.Equals(type,"TEXT",StringComparison.OrdinalIgnoreCase))
-                {
-                    
-                  
-                
-                }
-            
-            }
+
+            return bd.CreateTable(theTable, columnNames, dataType);
+
         }
 
-        public string getTable()
-        {
-            return theTable;
-        }
-
+        
 
     }
 }

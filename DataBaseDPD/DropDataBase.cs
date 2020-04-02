@@ -1,31 +1,33 @@
 ﻿using System;
 using DataBaseDPD;
 
-
-public class DropDataBase : Query
+namespace DataBaseDPD
 {
-
-    String dBase;
-
-    public DropDataBase(String database)
+    public class DropDataBase : Query
     {
 
-        Base = database;
+        String Base;
+
+        public DropDataBase(String database)
+        {
+
+            Base = database;
+
+        }
+
+        public override String Run(Database db)
+        {
+
+            return "Not Implement";
+
+        }
+
+        public string getBase()
+        {
+
+            return Base;
+        }
+
 
     }
-
-    public override String Run(DataBase db)
-    {
-
-        throw new NotImplementedException();
-
-    }
-
-    public string getBase()
-    {
-
-        return dBase;
-    }
-
-
 }

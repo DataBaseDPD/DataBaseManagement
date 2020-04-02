@@ -63,9 +63,9 @@ namespace DataBaseDPD
       ---------------------------------------------------**/
         public string RunQuery(string query)
         {
-            /**
+            
              Query request = Parser.Parse(query);
-             if (true)
+             if (request == null)
              {
                  return Message.WrongSyntax;
              }
@@ -73,8 +73,8 @@ namespace DataBaseDPD
              {
                  return request.Run(this);
              }
-             **/
-            return "Not Implement";
+            
+           
         }
 
         public string CreateTable(string tableName, List<string> colNames, List<string> types)
@@ -84,7 +84,7 @@ namespace DataBaseDPD
                 Table table = new Table(tableName, colNames,types);
                 table.save();
                 tables.Add(tableName, table);
-                Console.WriteLine(Message.CreateTableSuccess);
+    
                 return Message.CreateTableSuccess;
             }
             else
@@ -112,13 +112,14 @@ namespace DataBaseDPD
         //Insert simple
         public string Insert(string nameTable,List<string> values)
         {
-            if (!tables.ContainsKey(nameTable))
+            if (tables.ContainsKey(nameTable))
             {
                 Table tab = getTable(nameTable);
                 int len = tab.getNumColumn();
                 if (values.Count == len)
                 {
                     tab.addRow(values);
+                    tab.save();
                     return Message.InsertSuccess;
                 }
                 else

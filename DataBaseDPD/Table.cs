@@ -27,7 +27,7 @@ namespace DataBaseDPD
             tuples = new List<TableRow>();
             
 
-           Console.WriteLine(Message.CreateTableSuccess);
+           //Console.WriteLine(Message.CreateTableSuccess);
         }
         //C2 Overload
         public Table(string tableName, List<string> colNames, List<string> types)
@@ -66,7 +66,7 @@ namespace DataBaseDPD
         }
         public void addRow(List<string> values)
         {
-            TableRow row = new TableRow();
+            TableRow row = new TableRow(getNumColumn());
             for (int i=0; i< getNumColumn();i++)
             {
                 row.setItem(i,values[i]);

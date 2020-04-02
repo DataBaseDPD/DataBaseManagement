@@ -12,43 +12,70 @@ namespace DBConsole
         enum Parameter { Unset, InputFile, OutputFile };
         static void Main(string[] args)
         {
-            string inputFile = "input-file.txt";
-            string outputFile = "output-file.txt";
-            Parameter lastParameter = Parameter.Unset;
-            foreach (string arg in args)
-            {
-                if (arg == "-i") lastParameter = Parameter.InputFile;
-                else if (arg == "-o") lastParameter = Parameter.OutputFile;
-                else if (lastParameter == Parameter.InputFile) inputFile = arg;
-                else if (lastParameter == Parameter.OutputFile) outputFile = arg;
-            }
+            /**
+           List<string> columnNames = new List<string>(3);
+           List<string> dataType = new List<string>();
+
+          
+
+           string data = "Name TEXT, Age INT, Address TEXT";
+           string query = "CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);";
+           string query2 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
+
+           Database db = new Database();
 
 
-            Database db = new Database();
-            StreamReader file = new StreamReader(inputFile);
-            StreamWriter writer = File.CreateText(outputFile);
+           db.RunQuery(query);
+           Console.WriteLine(db.RunQuery(query2));
+    **/
 
 
 
-            writer.Write("\n");
-            string query;
-            while ((query = file.ReadLine()) != null)
-            {
-                DateTime start = DateTime.Now;
-                string result = db.RunQuery(query);
-                DateTime end = DateTime.Now;
 
-                TimeSpan time = end - start;
+           string inputFile = "input-file.txt";
+           string outputFile = "output-file.txt";
+           Parameter lastParameter = Parameter.Unset;
+           foreach (string arg in args)
+           {
+               if (arg == "-i") lastParameter = Parameter.InputFile;
+               else if (arg == "-o") lastParameter = Parameter.OutputFile;
+               else if (lastParameter == Parameter.InputFile) inputFile = arg;
+               else if (lastParameter == Parameter.OutputFile) outputFile = arg;
+           }
 
-                double seconds = time.Milliseconds / 1000.0;
 
-                writer.Write( result + " ( " + seconds+ " )");
-                writer.Write("\n");
+           Database db = new Database();
+           StreamReader file = new StreamReader(inputFile);
+           StreamWriter writer = File.CreateText(outputFile);
 
-            }
-            writer.Write("\n");
-            writer.Close();
-            file.Close();
+
+
+           writer.Write("\n");
+           string query;
+           while ((query = file.ReadLine()) != null)
+           {
+                string result;
+                double seconds;
+
+                
+                    DateTime start = DateTime.Now;
+                    result = db.RunQuery(query);
+                    DateTime end = DateTime.Now;
+
+                    TimeSpan time = end - start;
+
+                    seconds = time.Milliseconds / 1000.0;
+
+                    writer.Write(result + " ( " + seconds + " )");
+                    writer.Write("\n");
+                
+               
+
+           }
+           writer.Write("\n");
+           writer.Close();
+           file.Close();
+   
         }
     }
 }
