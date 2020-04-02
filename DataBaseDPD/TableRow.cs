@@ -8,24 +8,80 @@ namespace DataBaseDPD
 {
     public class TableRow
     {
+        
+        //Atributes
         List<string> tuple;
+
+        //Constructor 
         public TableRow(string[] items)
         {
             tuple = new List<string>();
-            for (int i = 0; 1 < items.Length; i++)
+            for (int i = 0; i < items.Length; i++)
             {
-                string item = items[i];
-                tuple.Add(item);
+                tuple.Add(items[i]);
             }
         }
-        
+        public TableRow(int numCol)
+        {
+            tuple = new List<string>();
+            for (int i =0; i<numCol; i++)
+            {
+                tuple.Add("");
+            }
+        }
+
+        //Pos start at 0 
         public string getItem(int position)
         {
-            return tuple[position];
+            string result = "";
+            try
+            {
+                result = tuple[position];
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error. Remenber the position start at 0 index.");
+                Console.WriteLine(e.StackTrace);
+            }
+            return result;
+            
         }
-        public string getItem(string columnName)
+        public void setItem(int position , string value)
         {
-            return null;
+            tuple[position] = value;
+
+        }
+        //Not implement
+        public void getItem(string columnName)
+        {
+            
+            
+        }
+
+        public override string ToString()
+        {
+            string result = "{";
+
+            for (int i = 0; i < tuple.Count; i++)
+            {
+                if (i==tuple.Count-1)
+                {
+                    result += " " + tuple[i];
+                }
+                else
+                {
+                    result += " " + tuple[i] + ",";
+                }
+                
+                
+            }
+            result += " }";
+            return result;
+        }
+
+            public List<string> getTuple()
+        {
+            return tuple;
         }
     }
 }

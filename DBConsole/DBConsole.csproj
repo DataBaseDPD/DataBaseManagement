@@ -50,5 +50,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataBaseDPD\DBManagementLib.csproj">
+      <Project>{7DEC059B-C2D8-42A6-A890-B71FC88B4C78}</Project>
+      <Name>DBManagementLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

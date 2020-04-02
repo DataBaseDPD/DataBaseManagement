@@ -8,23 +8,85 @@ namespace DataBaseDPD
 {
     public class Header
     {
-        public string[] nameColumns;
-        public DataType [] type;
-        public int numCol;
+        //As key the name of the column and value the info of the column -->type, name, and pos
+        Dictionary<string, TableColumn> columns = new Dictionary<string, TableColumn>();
 
-        public Header(string[] nameColumns, DataType [] types)
+
+        public Header(List<TableColumn> tableColumns)
         {
-            this.nameColumns = nameColumns;
-            this.type = types;
-            numCol = nameColumns.Length;
+
+            foreach (TableColumn column in tableColumns)
+            {
+
+                string colName = column.name;
+
+                if (!(columns.ContainsKey(colName)))
+                {
+                    columns.Add(colName, column);
+                }
+                else
+                {
+                    Console.WriteLine(Message.ColumnAlreadyExits);
+                }
+
+            }
         }
-        public int getNumCol()
+
+        //return the amount of columns/atributes of the table
+        public int len()
         {
-            return numCol;
+            return columns.Count;
         }
-       public DataType getType(int pos)
+
+        public string type(int pos)
         {
-            return type[pos];
+            string type = "";
+
+            foreach (KeyValuePair<string, TableColumn> column in columns)
+            {
+                int current = column.Value.index;
+                if (current == pos)
+                {
+                    type = column.Value.type;
+               
+                }
+            }
+            return type;
+        }
+        public string type(string colName)
+        {
+         
+            TableColumn col;
+            columns.TryGetValue(colName, out col);
+            return col.type;
+
+        }
+        public List<string> colNames()
+        {
+            List<string> colNames = new List<string>();
+            foreach (KeyValuePair<string, TableColumn> column in columns)
+            {
+                colNames.Add(column.Key);
+            }
+            return colNames;
+        }
+        public int index(string colName)
+        {
+            TableColumn col;
+            columns.TryGetValue(colName, out col);
+            return col.index;
+
+        }
+        public override string ToString()
+        {
+            string result = "[";
+            foreach (KeyValuePair<string, TableColumn>  col in columns)
+            {
+                result += string.Format( "{0} of type {1}",col.Key, col.Value.type);
+            }
+
+            result += "]";
+            return result;
         }
     }
 }
