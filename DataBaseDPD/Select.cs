@@ -9,6 +9,9 @@ namespace DataBaseDPD
     {
         string Table;
         List<string> Columns = new List<string>();
+        string Col;
+        string Operation;
+        string Value ="";
 
         public Select(string nameTable, List<string> column) {
             Table = nameTable;
@@ -18,16 +21,34 @@ namespace DataBaseDPD
         {
             Table = nameTable;
         }
+        public Select(string nameTable, List<string> column, string col, string operation, string value)
+        {
+            Table = nameTable;
+            Columns = column;
+            Col = col;
+            Operation = operation;
+            Value = value;
+        }
+
+
 
         public override string Run(Database database)
         {
-            if (Columns.Count==0)
+            if (Columns.Count==0 && Value=="")
             {
                 return database.Select(Table);
             }
-            else
+            else if(Columns.Count != 0 && Value=="")
             {
                 return database.Select(Table, Columns);
+            }
+            else if(Columns.Count != 0 && Value != "")
+            {
+                return database.Select(Table, Columns, Col, Operation, Value);
+            }
+            else
+            {
+                return Message.WrongSyntax;
             }
             
         }

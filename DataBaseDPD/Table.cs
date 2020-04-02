@@ -96,6 +96,44 @@ namespace DataBaseDPD
             }
             return tuplas;
         }
+        public List<TableRow> getTuples(string nameCol, string operation ,string value)
+        {
+            List<TableRow> tuplas = new List<TableRow>();
+            int pos = head.index(nameCol);
+            if (operation=="=")
+            {
+                foreach (TableRow row in tuples)
+                {
+                    if (row.getItem(pos) == value)
+                    {
+                        tuplas.Add(row);
+                    }
+                }
+            }else if (operation ==">"){
+                foreach (TableRow row in tuples)
+                {
+                    //Lo convierto a entero para que ocupe mucho
+                    if (Convert.ToInt32(row.getItem(pos)) > Convert.ToInt32(value))
+                    {
+                        tuplas.Add(row);
+                    }
+                }
+            }
+            else if (operation == "<")
+            {
+                foreach (TableRow row in tuples)
+                {
+                    //Lo convierto a entero para que ocupe mucho
+                    if (Convert.ToInt32(row.getItem(pos)) < Convert.ToInt32(value))
+                    {
+                        tuplas.Add(row);
+                    }
+                }
+            }
+
+
+            return tuplas;
+        }
         //Modify the column of the tuple spicify with the value specify
         public void modifyTuple(TableRow tuple, string nameCol, string value)
         {

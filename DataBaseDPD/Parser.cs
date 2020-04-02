@@ -17,16 +17,22 @@ namespace DataBaseDPD
 			//Drop Table
 			const string dropTable = @"DROP\s+TABLE\s+(\w+);";
 			// Select
-			const string select1 = @"SELECT\s+([^\)]+)\s+FROM\s+(\w+)\;";
+			const string select1 = @"SELECT\s+([^\)*]+)\s+FROM\s+(\w+)\;";
 			const string select2 = @"SELECT\s+(\*)\s+FROM\s+(\w+);";
 
 			//Update
-			const string update1 = @"UPDATE\s+(\w)\s+SET\s+[(\w)\=(\w)]+\s*\;";
+			const string update1 = @"UPDATE\s+(\w+)\s+SET\s+([\w\s*\,\=\@\.]+)\s+\;";
 
 			//Insert
 			const string insert1 = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\)\;"; //CON TODOS SUS VALUES(1)
 
+
+            /**
+             *Operaciones con Where
+             * **/
 			const string nada = @"CT\s+(\w+)\s+FROM\s";
+
+			const string select3 = @"SELECT\s+([^/)]+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+);";
 
 
 
@@ -76,25 +82,30 @@ namespace DataBaseDPD
 				return new Insert(nameTable, values);
 
 			}
-            //Update solo igualdad de atributos
+            //Update simple
 			match = Regex.Match(query, update1);
 			if (match.Success)
 			{
 				String nombreTabla = match.Groups[1].Value;
 				List<string> columns = CommaSeparatedNames(match.Groups[2].Value);
-				List<string> values = CommaSeparatedNames(match.Groups[3].Value);
-				return new Update(nombreTabla,columns,values);
+				return new Update(nombreTabla,columns);
 
 			}
 
+			/**
+			*Operaciones con Where
+			* **/
 
 
-
-			match = Regex.Match(query, insert1);
+			match = Regex.Match(query, select3);
 			if (match.Success)
 			{
-				//TODO
-				return null;
+				string nombreTabla = match.Groups[2].Value;
+				List<string> columns = CommaSeparatedNames(match.Groups[1].Value);
+                string col = match.Groups[3].Value; ;
+                string operacion = match.Groups[4].Value; ;
+				string value = match.Groups[5].Value; 
+				return new Select(nombreTabla, columns, col ,operacion,value);
 
 			}
 			match = Regex.Match(query, insert1);

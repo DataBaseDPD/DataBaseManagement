@@ -209,10 +209,36 @@ namespace DataBaseDPD
 
 
         //Select with where
-        public string Select(string nameTabla, string columns, string value)
+        public string Select(string nameTable, List<string> columns, string col, string operation, string value)
         {
-            //TODO
-            return "Not implement";
+            Table tab = getTable(nameTable);
+            string type = tab.getTypeColumn(col);
+            if (type =="TEXT")
+            {
+                return Message.WrongSyntax;
+            }
+            else
+            {
+                List<TableRow> tuplas = tab.getTuples(col,operation,value);
+                string result = "[ ";
+                for (int i=0; i < columns.Count; i++)
+                {
+                    if (i ==columns.Count-1 )
+                    {
+                        result += columns[i];
+                    }
+                    else
+                    {
+                        result += columns[i] + ", ";
+                    }
+                    
+                }
+                result += "]";
+                foreach (TableRow row in tuplas) result += row.ToString();
+                return result;
+            }
+
+            
         }
         //Insert with where
         public string Insert(string nameTable, List<string> colNames, string condition)

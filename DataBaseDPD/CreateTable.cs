@@ -17,7 +17,7 @@ namespace DataBaseDPD
         public CreateTable(string table, string data)
         {
             theTable = table;
-            string[] splitParameters = data.Split(',');
+            
 
             string[] split = data.Split(' ');
             for (int i = 0; i < split.Length; i = i + 2)
