@@ -12,6 +12,11 @@ namespace DataBaseDPD
         string Tabla;
         List<string> Values = new List<string>();
         List<string> ColNames = new List<string>();
+        string Val;
+        string ColName;
+        string ColCondition;
+        string Value;
+        string Operation;
        
 
 
@@ -31,11 +36,32 @@ namespace DataBaseDPD
 
 
         }
+        public Update(string tabla, string col, string val, string colCondition, string operacion, string value)
+        {
+            Tabla = tabla;
+            Val = val;
+            ColName = col;
+            ColCondition = colCondition;
+            Operation = operacion;
+            Value = value;
+        }
 
 
         public override string Run(Database database)
         {
-            return database.Update(Tabla, ColNames, Values);
+            if (Operation == "")
+            {
+                return database.Update(Tabla, ColNames, Values);
+            }
+            else if(Operation != "")
+            {
+                return database.Update(Tabla,ColName,Val,ColCondition,Operation,Value);
+            }
+            else
+            {
+                return Message.WrongSyntax;
+            }
+            
         }
 
 

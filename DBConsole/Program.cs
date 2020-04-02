@@ -21,18 +21,24 @@ namespace DBConsole
           
            string query = "CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);";
            string query2 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";//V
+            string query21 = "INSERT INTO MyTable VALUES ('Eva',19,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
+            string query22 = "INSERT INTO MyTable VALUES ('Eva',17,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
 
             string query3 = "DROP TABLE MyTable;";//V
            string query4 = "SELECT Name,Age FROM MyTable;";//V
             string query5 = "SELECT * FROM MyTable;";//V
-            string query6 = "SELECT Name,Age FROM MyTable WHERE Age=18;";
+            string query6 = "SELECT Name,Age FROM MyTable WHERE Age=18;";//V
+
+            string query7 = "UPDATE MyTable SET Name=Paco WHERE Age=18;";
 
            Database db = new Database();
 
 
            db.RunQuery(query);
            db.RunQuery(query2);
-           Console.WriteLine(db.RunQuery(query6));
+            db.RunQuery(query21);
+            db.RunQuery(query22);
+            Console.WriteLine(db.RunQuery(query7));
             
 
 

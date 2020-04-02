@@ -30,9 +30,10 @@ namespace DataBaseDPD
             /**
              *Operaciones con Where
              * **/
-			const string nada = @"CT\s+(\w+)\s+FROM\s";
+			
 
 			const string select3 = @"SELECT\s+([^/)]+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+);";
+			const string update2 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*(\w+);";
 
 
 
@@ -108,11 +109,19 @@ namespace DataBaseDPD
 				return new Select(nombreTabla, columns, col ,operacion,value);
 
 			}
-			match = Regex.Match(query, insert1);
+
+			match = Regex.Match(query, update2);
 			if (match.Success)
 			{
-				//TODO
-				return null;
+				string nombreTabla = match.Groups[1].Value;
+                string col = match.Groups[2].Value;
+				string value = match.Groups[4].Value;
+				string colComparar = match.Groups[5].Value;
+				string operation = match.Groups[6].Value;
+				string val = match.Groups[7].Value;
+				
+
+				return new Update(nombreTabla,col,value,colComparar,operation,val);
 
 			}
 			match = Regex.Match(query, insert1);

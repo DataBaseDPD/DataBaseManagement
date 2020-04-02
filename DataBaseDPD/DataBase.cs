@@ -161,7 +161,7 @@ namespace DataBaseDPD
         }
         
         
-        //Select simple
+        //Select simple <Format>
         public string Select( string nameTable, string column)
         {
             Table tab = getTable(nameTable);
@@ -190,17 +190,24 @@ namespace DataBaseDPD
         
         public string Select(string nameTabla)
         {
-            List<string> tuplas = new List<string>();
+
             Table tab = getTable(nameTabla);
-            tuplas.Add(tab.getHeader().ToString()); //Si se quisiera ver las columnas y su tipo
-            foreach (TableRow tupla in tab.getTuples())
+            List<string> columns = tab.getColNames();
+            string result = "[ ";
+            for (int i = 0; i < columns.Count; i++)
             {
-                tuplas.Add(tupla.ToString());
+                if (i == columns.Count - 1)
+                {
+                    result += columns[i];
+                }
+                else
+                {
+                    result += columns[i] + ", ";
+                }
+
             }
-            string result = "";
-
-            for(int i= 0; i<tuplas.Count;i++) result += tuplas[i] + "\n";
-
+            result += " ]";
+            foreach (TableRow row in tab.getTuples()) result += row.ToString();
             result += "\n";
             return result;
         }
@@ -234,12 +241,34 @@ namespace DataBaseDPD
                     
                 }
                 result += "]";
-                foreach (TableRow row in tuplas) result += row.ToString();
+                foreach(TableRow row in tuplas) result += row.ToString();
                 return result;
             }
 
             
         }
+
+        //Update with where
+        public string Update(string nameTable, string col, string val, string colCondition, string operation, string value)
+        {
+            Table tab = getTable(nameTable);
+            string type = tab.getTypeColumn(colCondition);
+            if (type == "TEXT")
+            {
+                return Message.WrongSyntax;
+            }
+            else
+            {
+                List<TableRow> tuplas = tab.getTuples(colCondition, operation, value);
+                
+                foreach (TableRow row in tuplas)  tab.modifyTuple(row,col,val);
+               
+                return Message.TupleUpdateSuccess;
+            }
+           
+        }
+
+
         //Insert with where
         public string Insert(string nameTable, List<string> colNames, string condition)
         {
@@ -247,11 +276,7 @@ namespace DataBaseDPD
 
             return "Not implement";
         }
-        //Update with where
-        public string Update()
-        {
-            return "Not implement";
-        }
+        
 
 
         /**-------------------------------------------------
