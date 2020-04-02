@@ -13,13 +13,6 @@ namespace TestDataBase
     [TestClass]
     public class UnitTestTable
     {
-<<<<<<< HEAD
-       
-        /**
-=======
-
-        
->>>>>>> 914fef8796279f3c485c852a0c7b6774519f9209
         [TestMethod]
         public void creatTableTest()
         {
@@ -477,11 +470,7 @@ namespace TestDataBase
             Assert.AreEqual(2, loadedTable.getNumRow());
 
         }
-<<<<<<< HEAD
-    **/
-=======
     
 
->>>>>>> 914fef8796279f3c485c852a0c7b6774519f9209
     }
 }
