@@ -21,6 +21,7 @@ namespace DBConsole
            string data = "Name TEXT, Age INT, Address TEXT";
            string query = "CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);";
            string query2 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
+           string query3 = "DROP TABLE MyTable;"
 
            Database db = new Database();
 
