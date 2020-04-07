@@ -27,12 +27,7 @@ namespace DataBaseDPD
 
         public Table getTable(string nameTable)
         {
-            Table tabla;
-            if (!tables.ContainsKey(nameTable))
-            {
-                Console.WriteLine(Message.TableDoesNotExist);
-            }
-            tables.TryGetValue(nameTable, out tabla);
+            tables.TryGetValue(nameTable, out Table tabla);
             return tabla;
         }
         public void addTable(string name, Table tabla)
@@ -81,11 +76,19 @@ namespace DataBaseDPD
         {
             if (!tables.ContainsKey(tableName))
             {
-                Table table = new Table(tableName, colNames,types);
-                table.save();
-                tables.Add(tableName, table);
-    
-                return Message.CreateTableSuccess;
+                if (colNames.Count==types.Count)
+                {
+                    Table table = new Table(tableName, colNames, types);
+                    table.save();
+                    tables.Add(tableName, table);
+
+                    return Message.CreateTableSuccess;
+                }
+                else
+                {
+                    return Message.WrongSyntax;
+                }
+                
             }
             else
             {

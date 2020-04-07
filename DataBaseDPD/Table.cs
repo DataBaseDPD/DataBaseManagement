@@ -44,7 +44,7 @@ namespace DataBaseDPD
             this.addHeader(columns);
             tuples = new List<TableRow>();
 
-            Console.WriteLine(Message.CreateTableSuccess);
+            //Console.WriteLine(Message.CreateTableSuccess);
         }
         //Add the firts row, only the first time with the name of the column and the type of the column
         private void addHeader(List<TableColumn> tableColumns)
@@ -237,7 +237,7 @@ namespace DataBaseDPD
                     }
                 }
                 writer.Close();
-                Console.WriteLine("Saved ...");
+                //Console.WriteLine("Saved ...");
             }
             catch (Exception e)
             {

@@ -470,7 +470,43 @@ namespace TestDataBase
             Assert.AreEqual(2, loadedTable.getNumRow());
 
         }
-    
+
+
+
+
+
+
+
+
+        /**-------------------------------------------------
+        Test de Parser
+        ---------------------------------------------------**/
+
+        /**CreateTAble Probados
+            string query = "CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);";
+            string query2 = "CREATE TABLE Employees(Id INT,Name TEXT,Surname TEXT,Salary DOUBLE);";
+
+            string query3 = "CREATE TABLE MyTable (Name TEXT,Age INT,Address TEXT)";
+            string query5 = "CREATE TABLE MyTable (Name TEXT,Age INT,Address )";
+            string query4 = "CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);";
+
+
+
+
+            insert
+         string q2 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
+            string q3 = "INSERT INTO Employees VALUES (3,'Benito','Kamelas',1100);";
+
+
+            string q4 = "INSERT INTO Employees VALUES (3,'Benito','Kamelas');";
+            string q5 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz','sobra');";
+         *
+         * **/
+
+
+
+
+
 
     }
 }

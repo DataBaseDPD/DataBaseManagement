@@ -13,9 +13,9 @@ namespace DataBaseDPD
 			Match match;
 
 			//Create Table  
-			const string createTable = @"CREATE TABLE\s+(\w+)\s+\(([^\)]+)\)\s*\;";
+			const string createTable = @"CREATE TABLE\s+(\w+)\s*\(([^\)]+)\)\s*\;";
 			//Drop Table
-			const string dropTable = @"DROP\s+TABLE\s+(\w+);";
+			const string dropTable = @"DROP\s+TABLE\s+(\w+)\s*;";
 			// Select
 			const string select1 = @"SELECT\s+([^\)*]+)\s+FROM\s+(\w+)\;";
 			const string select2 = @"SELECT\s+(\*)\s+FROM\s+(\w+);";
@@ -24,7 +24,7 @@ namespace DataBaseDPD
 			const string update1 = @"UPDATE\s+(\w+)\s+SET\s+([\w\s*\,\=\@\.]+)\s+\;";
 
 			//Insert
-			const string insert1 = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\)\;"; //CON TODOS SUS VALUES(1)
+			const string insert1 = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\)\s*;"; //CON TODOS SUS VALUES(1)
 
 
             /**
@@ -47,8 +47,6 @@ namespace DataBaseDPD
 				string data = match.Groups[2].Value;
 				return new CreateTable(nombreTabla, data);
 			}
-
-
             //DropTable //FUNCIONA
 			match = Regex.Match(query, dropTable);
 			if (match.Success)
