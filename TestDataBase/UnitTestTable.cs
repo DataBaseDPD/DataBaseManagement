@@ -494,12 +494,16 @@ namespace TestDataBase
 
 
             insert
-         string q2 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
+            string q2 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
             string q3 = "INSERT INTO Employees VALUES (3,'Benito','Kamelas',1100);";
 
 
             string q4 = "INSERT INTO Employees VALUES (3,'Benito','Kamelas');";
             string q5 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz','sobra');";
+
+
+            update
+            string q6 = "UPDATE Employees_Public SET Name='Maite';"
          *
          * **/
 

@@ -10,33 +10,22 @@ namespace DataBaseDPD
     public class CreateTable : Query
     {
 
-        string theTable;
+        string Table;
         List<string> columnNames = new List<string>();
         List<string> dataType = new List<string>();
 
         public CreateTable(string table, string data)
         {
-            theTable = table;
-            
+            Table = table;
 
-            string[] split = data.Split(' ', ',');
-            if (split.Length%2==0)
+           
+            String[] splitParameters = data.Split(',');
+            foreach (String toSplit in splitParameters)
             {
-                for (int i = 0; i < split.Length; i = i + 2)
-                {
-                    if (split[i] != "")
-                    {
-                        columnNames.Add(split[i]);
-                        dataType.Add(split[i + 1]);
-                    }
-
-                }
+                string trimmedToSplit = toSplit.Trim(' ');
+                columnNames.Add(trimmedToSplit.Split(' ')[0]);
+                dataType.Add(trimmedToSplit.Split(' ')[1]);
             }
-            else
-            {
-                columnNames.Add("null");
-            }
-
 
         }
 
@@ -45,7 +34,7 @@ namespace DataBaseDPD
         {
 
 
-            return bd.CreateTable(theTable, columnNames, dataType);
+            return bd.CreateTable(Table, columnNames, dataType);
 
         }
 

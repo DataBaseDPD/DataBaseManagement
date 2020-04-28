@@ -76,16 +76,22 @@ namespace DBConsole
             Database db = new Database();
 
             string query = "CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);";
-            string query2 = "CREATE TABLE Employees(Id INT,Name TEXT,Surname TEXT,Salary DOUBLE);";
+           
+            string q1 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
+            string q2 = "INSERT INTO MyTable VALUES ('Ramon',26,'Larratxo kalea 23 2. Ezk. 20012 Donostia');";
+            string q3 = "INSERT INTO MyTable VALUES ('Miren',26,'Larratxo kalea 23 2. Ezk. 20012 Donostia');";
 
             db.RunQuery(query);
-            db.RunQuery(query2);
+           
+            db.RunQuery(q1);
+            db.RunQuery(q2);
+            db.RunQuery(q3);
 
 
 
 
 
-
+            db.RunQuery("UPDATE MyTable SET Age=16 WHERE Name='Miren';");
 
 
 

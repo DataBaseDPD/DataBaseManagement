@@ -144,16 +144,19 @@ namespace DataBaseDPD
             if (tables.ContainsKey(nameTable) && colNames.Count == values.Count)
             {
                 Table tab = getTable(nameTable);
+                
                 foreach (TableRow row in tab.getTuples())
                 {
                     for (int i=0;i< colNames.Count;i++)
                     {
-                        tab.modifyTuple(row,colNames[i],values[i] );
+                        if (tab.getColNames().Contains(colNames[i]))
+                            tab.modifyTuple(row, colNames[i], values[i]);
+                        else return Message.WrongSyntax;
                     }
                    
                 }
 
-                return Message.TupleDeleteSuccess;
+                return Message.TupleUpdateSuccess;
 
             }
             else
@@ -254,20 +257,33 @@ namespace DataBaseDPD
         //Update with where
         public string Update(string nameTable, string col, string val, string colCondition, string operation, string value)
         {
-            Table tab = getTable(nameTable);
-            string type = tab.getTypeColumn(colCondition);
-            if (type == "TEXT")
+           
+            if (tables.ContainsKey(nameTable))
             {
-                return Message.WrongSyntax;
+                Table tab = getTable(nameTable);
+                List<TableRow> tuplas;
+
+                if (tab.getColNames().Contains(col) && tab.getColNames().Contains(colCondition))
+                {
+                    tuplas = tab.getTuples(colCondition, operation, value);
+                    string type = tab.getTypeColumn(colCondition);
+
+                   
+                    if (type == "TEXT" && operation == "=")//text could be only equals
+                    {
+                        foreach (TableRow row in tuplas) tab.modifyTuple(row, col, val);
+                    }
+                    else
+                    { 
+                        foreach (TableRow row in tuplas) tab.modifyTuple(row, col, val);
+
+                    }
+                    return Message.TupleUpdateSuccess;
+                }
+
+                else return Message.WrongSyntax;
             }
-            else
-            {
-                List<TableRow> tuplas = tab.getTuples(colCondition, operation, value);
-                
-                foreach (TableRow row in tuplas)  tab.modifyTuple(row,col,val);
-               
-                return Message.TupleUpdateSuccess;
-            }
+            else return Message.WrongSyntax;
            
         }
 

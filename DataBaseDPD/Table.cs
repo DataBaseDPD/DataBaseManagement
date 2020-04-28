@@ -139,6 +139,7 @@ namespace DataBaseDPD
         {
             int pos = head.index(nameCol);
             tuple.setItem(pos,value);
+            save();
         }
         public List<TableRow> getTuples()
         {
@@ -210,7 +211,6 @@ namespace DataBaseDPD
             {
                 //NOSE DONDE PONER LOS ARCHIVOS DEBERIAN ESTAR DENTRO DE DB
                 string fileName =  name + ".txt";
-                Console.WriteLine(fileName);
                 StreamWriter writer = File.CreateText(fileName);
                 //Write the header
                 foreach (string name in getColNames())

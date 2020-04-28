@@ -17,9 +17,15 @@ namespace DataBaseDPD
         string ColCondition;
         string Value;
         string Operation;
-       
 
 
+        public Update(string tabla, string col, string val)
+        {
+            Tabla = tabla;
+            ColNames.Add(col);
+            Values.Add(val);
+            Operation = "";
+        }
         public Update(string nameTable, List<string> datas)
         {
             Tabla = nameTable;
@@ -33,9 +39,11 @@ namespace DataBaseDPD
                 }
 
             }
+            Operation = "";
 
 
         }
+        
         public Update(string tabla, string col, string val, string colCondition, string operacion, string value)
         {
             Tabla = tabla;
@@ -51,10 +59,13 @@ namespace DataBaseDPD
         {
             if (Operation == "")
             {
+                
                 return database.Update(Tabla, ColNames, Values);
+                
             }
             else if(Operation != "")
             {
+               
                 return database.Update(Tabla,ColName,Val,ColCondition,Operation,Value);
             }
             else

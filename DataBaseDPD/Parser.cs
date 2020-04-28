@@ -21,7 +21,7 @@ namespace DataBaseDPD
 			const string select2 = @"SELECT\s+(\*)\s+FROM\s+(\w+);";
 
 			//Update
-			const string update1 = @"UPDATE\s+(\w+)\s+SET\s+([\w\s*\,\=\@\.]+)\s+\;";
+			const string update1 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*([\w\']+)\s*;";//Set one attb of all tuples
 
 			//Insert
 			const string insert1 = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\)\s*;"; //CON TODOS SUS VALUES(1)
@@ -33,7 +33,7 @@ namespace DataBaseDPD
 			
 
 			const string select3 = @"SELECT\s+([^/)]+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+);";
-			const string update2 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*(\w+);";
+			const string update2 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*([\w\']+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+)\s*;";
 
 
 
@@ -85,9 +85,12 @@ namespace DataBaseDPD
 			match = Regex.Match(query, update1);
 			if (match.Success)
 			{
+				
 				String nombreTabla = match.Groups[1].Value;
-				List<string> columns = CommaSeparatedNames(match.Groups[2].Value);
-				return new Update(nombreTabla,columns);
+				string column = match.Groups[2].Value;
+				string value = match.Groups[4].Value;
+				
+				return new Update(nombreTabla, column, value);
 
 			}
 
@@ -118,24 +121,16 @@ namespace DataBaseDPD
 				string operation = match.Groups[6].Value;
 				string val = match.Groups[7].Value;
 				
-
 				return new Update(nombreTabla,col,value,colComparar,operation,val);
 
 			}
-			match = Regex.Match(query, insert1);
+			match = Regex.Match(query, "");
 			if (match.Success)
 			{
 				//TODO
 				return null;
 
 			}
-
-
-
-
-
-
-
 
 
 
