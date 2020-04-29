@@ -90,9 +90,8 @@ namespace DBConsole
 
 
 
-
-            db.RunQuery("UPDATE MyTable SET Age=16 WHERE Name='Miren';");
-
+            Console.WriteLine(db.RunQuery("SELECT Name, Age FROM MyTable WHERE Name='Miren';"));
+           
 
 
         }

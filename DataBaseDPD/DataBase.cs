@@ -180,42 +180,76 @@ namespace DataBaseDPD
         }
         public string Select(string nameTable, List<string> columns)
         {
-            Table tab = getTable(nameTable);
-            
-            string result = "";
-
-            for(int i=0; i < columns.Count; i++)
+            if (tables.ContainsKey(nameTable))
             {
-                result += Select(nameTable, columns[i]);
+                Table tab = getTable(nameTable);
+                List<string> colName = tab.getColNames();
+
+                string result = "[ ";
+                for(int i = 0; i < columns.Count; i++)
+                {
+                    if (i == columns.Count - 1 && colName.Contains(columns[i]))
+                    {
+                        result += columns[i];
+                    }
+                    else if (colName.Contains(columns[i]))
+                    {
+                        result += columns[i] + ", ";
+                    }
+                    else if (!colName.Contains(columns[i])) result += "NOT EXIST, ";
+
+                }
+                result += " ] ";
+                foreach(string col in columns)
+                {
+                    result += "{ ";
+                    if (colName.Contains(col))
+                    {
+                        List<string> column = tab.getColumn(col);
+                        
+                        for (int i=0; i< column.Count;i++ )
+                        {
+                            if (i == column.Count - 1) result += column[i] + " }";
+                            else result += column[i] + ", ";
+                           
+                        }
+                    }
+                    else result += "NULL }";
+                }
                 
+
+                 return result;
             }
-           
-            result += "";
-            return result;
+            else return Message.TableDoesNotExist;
         }
         
         public string Select(string nameTabla)
         {
 
-            Table tab = getTable(nameTabla);
-            List<string> columns = tab.getColNames();
-            string result = "[ ";
-            for (int i = 0; i < columns.Count; i++)
+            if (tables.ContainsKey(nameTabla))
             {
-                if (i == columns.Count - 1)
+                Table tab = getTable(nameTabla);
+                List<string> columns = tab.getColNames();
+                string result = "[ ";
+                for (int i = 0; i < columns.Count; i++)
                 {
-                    result += columns[i];
-                }
-                else
-                {
-                    result += columns[i] + ", ";
-                }
+                    if (i == columns.Count - 1)
+                    {
+                        result += columns[i];
+                    }
+                    else
+                    {
+                        result += columns[i] + ", ";
+                    }
 
+                }
+                result += " ]";
+                foreach (TableRow row in tab.getTuples()) result += row.ToString();
+                result += "\n";
+                return result;
             }
-            result += " ]";
-            foreach (TableRow row in tab.getTuples()) result += row.ToString();
-            result += "\n";
-            return result;
+            else return Message.TableDoesNotExist;
+                
         }
 
 
@@ -224,34 +258,101 @@ namespace DataBaseDPD
         //Select with where
         public string Select(string nameTable, List<string> columns, string col, string operation, string value)
         {
-            Table tab = getTable(nameTable);
-            string type = tab.getTypeColumn(col);
-            if (type =="TEXT")
+            if (tables.ContainsKey(nameTable))
             {
-                return Message.WrongSyntax;
-            }
-            else
-            {
-                List<TableRow> tuplas = tab.getTuples(col,operation,value);
-                string result = "[ ";
-                for (int i=0; i < columns.Count; i++)
+                Table tab = getTable(nameTable);
+                List<string> colNames = tab.getColNames(); 
+                List<TableRow> tuplas;
+
+                if (colNames.Contains(col))
                 {
-                    if (i ==columns.Count-1 )
+                    string type = tab.getTypeColumn(col);
+
+                    if (type == "TEXT" && operation == "=")
                     {
-                        result += columns[i];
+                        tuplas = tab.getTuples(col, operation, value);
+                        int tuplasLenght = tuplas.Count;
+                        string result = "[ ";
+                        for (int i = 0; i < columns.Count; i++)
+                        {
+                            if (i == columns.Count - 1)
+                            {
+                                result += columns[i];
+                            }
+                            else
+                            {
+                                result += columns[i] + ", ";
+                            }
+
+                        }
+                        result += " ]";
+                        int position;
+                        for (int i = 0; i < columns.Count; i++)
+                        {
+                            result += "{ ";
+                            if (colNames.Contains(columns[i]))
+                            {
+                                position = tab.getIndex(columns[i]);
+
+                                foreach (TableRow row in tuplas) result += row.getItem(position);
+
+                                result += " }";
+                            }
+                            else result += "NULL }";
+                        }
+                        return result;
                     }
+                    else if (type == "TEXT" && operation != "=") return Message.WrongSyntax;
                     else
                     {
-                        result += columns[i] + ", ";
-                    }
-                    
-                }
-                result += "]";
-                foreach(TableRow row in tuplas) result += row.ToString();
-                return result;
-            }
+                        tuplas = tab.getTuples(col, operation, value);
+                        int tuplasLenght = tuplas.Count;
+                        string result = "[ ";
+                        for (int i = 0; i < columns.Count; i++)
+                        {
+                            if (i == columns.Count - 1)
+                            {
+                                result += columns[i];
+                            }
+                            else
+                            {
+                                result += columns[i] + ", ";
+                            }
 
-            
+                        }
+                        result += " ] ";
+                        int position;
+                        for (int i = 0; i < columns.Count; i++)
+                        {
+                            result += "{ ";
+                            if (colNames.Contains(columns[i]))
+                            {
+                                position = tab.getIndex(columns[i]);
+
+                                for (int j = 0; j < tuplasLenght; j++)
+                                {
+                                    if (j == tuplasLenght - 1) result += tuplas[j].getItem(position);
+                                    else result += tuplas[j].getItem(position) + ", ";
+                                }
+
+                                result += " }";
+                            }
+                            else result += "NULL }";
+                        }
+                        return result;
+
+                    }
+                
+                
+                   
+                }
+                else return Message.WrongSyntax;
+
+
+            }
+            else return Message.TableDoesNotExist;
+          
+
         }
 
         //Update with where

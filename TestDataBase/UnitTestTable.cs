@@ -504,6 +504,15 @@ namespace TestDataBase
 
             update
             string q6 = "UPDATE Employees_Public SET Name='Maite';"
+
+
+            select
+
+            string q7 = "SELECT * FROM MyTable;";
+            string q8 = "SELECT Name,Age FROM MyTable;";
+            string q9 = "SELECT Name, Age FROM MyTable WHERE Name='Miren';";
+
+
          *
          * **/
 

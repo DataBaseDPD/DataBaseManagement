@@ -17,8 +17,8 @@ namespace DataBaseDPD
 			//Drop Table
 			const string dropTable = @"DROP\s+TABLE\s+(\w+)\s*;";
 			// Select
-			const string select1 = @"SELECT\s+([^\)*]+)\s+FROM\s+(\w+)\;";
-			const string select2 = @"SELECT\s+(\*)\s+FROM\s+(\w+);";
+			const string select1 = @"SELECT\s+([^\)*]+)\s+FROM\s+(\w+)\s*;";
+			const string select2 = @"SELECT\s+(\*)\s+FROM\s+(\w+)\s*;"; //select all elements
 
 			//Update
 			const string update1 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*([\w\']+)\s*;";//Set one attb of all tuples
