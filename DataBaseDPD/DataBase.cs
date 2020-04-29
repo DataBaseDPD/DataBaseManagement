@@ -396,6 +396,38 @@ namespace DataBaseDPD
 
             return "Not implement";
         }
+
+        public string Delete(string nameTable, string col, string operation, string value)
+        {
+            if (tables.ContainsKey(nameTable))
+            {
+                Table tab = getTable(nameTable);
+                List<TableRow> tuplas;
+
+
+                if (tab.getColNames().Contains(col))
+                {
+                    int count = 0;
+                    string type = tab.getTypeColumn(col);
+
+                    if (type == "TEXT" && operation == "=")
+                    {
+                        tuplas = tab.getTuples(col, operation, value);
+                        foreach (TableRow row in tuplas) tab.removeRow(row); count++;
+                    }
+                    else if (type == "TEXT" && operation != "=") return Message.WrongSyntax;
+                    else
+                    {
+                        tuplas = tab.getTuples(col, operation, value);
+                        foreach (TableRow row in tuplas) tab.removeRow(row); count++;
+                    }
+
+                }
+                return Message.TupleDeleteSuccess;
+
+            }
+            else return Message.WrongSyntax;
+        }
         
 
 

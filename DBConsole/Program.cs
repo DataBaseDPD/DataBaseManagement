@@ -16,32 +16,51 @@ namespace DBConsole
             StreamReader file = new StreamReader(inputFile);
             StreamWriter writer = File.CreateText(outputFile);
 
-            writer.Write("\n");
+            
             string line;
+            int count = 1;
+            double totalTime = 0;
 
+            writer.Write("# TEST " + count++);
+            writer.Write("\n");
             while ((line = file.ReadLine()) != null)
             {
                 string result;
                 double seconds;
 
-                writer.Write("\n");
 
+                if (line == "")
+                {
+                    writer.Write("TOTAL TIME: " + totalTime + "s");
+                    writer.Write("\n");
+                    writer.Write("\n");
+                    writer.Write("# TEST "+ count++);
+                    writer.Write("\n");
+                    totalTime = 0;
 
-                DateTime start = DateTime.Now;
-                result = db.RunQuery(line);
-                DateTime end = DateTime.Now;
+                }
+                else
+                {
+                    DateTime start = DateTime.Now;
+                    result = db.RunQuery(line);
+                    DateTime end = DateTime.Now;
 
-                TimeSpan time = end - start;
+                    TimeSpan time = end - start;
 
-                seconds = time.Milliseconds / 1000.0;
+                    seconds = time.Milliseconds / 1000.0;
 
-                writer.Write(result + " ( " + seconds + " )");
-                writer.Write("\n");
+                    writer.Write(result + " ( " + seconds + "s )");
+                    totalTime += seconds;
+                    writer.Write("\n");
+                }
 
                 
 
             }
+            writer.Write("TOTAL TIME: " + totalTime + "s");
             writer.Write("\n");
+            
+
             writer.Close();
             file.Close();
         }
@@ -51,10 +70,11 @@ namespace DBConsole
         enum Parameter { Unset, InputFile, OutputFile };
         static void Main(string[] args)
         {
-            /***
+            
             string inputFile = "input-file.txt";
             string outputFile = "output-file.txt";
             Parameter lastParameter = Parameter.Unset;
+
             foreach (string arg in args)
             {
                 if (arg == "-i") lastParameter = Parameter.InputFile;
@@ -70,28 +90,8 @@ namespace DBConsole
 
             process(inputFile, outputFile);
 
-            **/
-
-
-            Database db = new Database();
-
-            string query = "CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);";
            
-            string q1 = "INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');";
-            string q2 = "INSERT INTO MyTable VALUES ('Ramon',26,'Larratxo kalea 23 2. Ezk. 20012 Donostia');";
-            string q3 = "INSERT INTO MyTable VALUES ('Miren',26,'Larratxo kalea 23 2. Ezk. 20012 Donostia');";
 
-            db.RunQuery(query);
-           
-            db.RunQuery(q1);
-            db.RunQuery(q2);
-            db.RunQuery(q3);
-
-
-
-
-            Console.WriteLine(db.RunQuery("SELECT Name, Age FROM MyTable WHERE Name='Miren';"));
-           
 
 
         }

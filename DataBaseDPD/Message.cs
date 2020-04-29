@@ -6,12 +6,12 @@ namespace DataBaseDPD
 {
     class Message
     {
-        public const string CreateDatabaseSuccess = "Database created ...";
-        public const string CreateTableSuccess = "Table created ...";
+        public const string CreateDatabaseSuccess = "Database created";
+        public const string CreateTableSuccess = "Table created";
 
-        public const string TableLoadSuccess = "Table loaded ...";
+        public const string TableLoadSuccess = "Table loaded";
 
-        public const string OpenDatabaseSuccess = "Database opened ...";
+        public const string OpenDatabaseSuccess = "Database opened";
         public const string DeleteDatabaseSuccess = "Database deleted";
         public const string DeleteTablaSuccess = "Tabla deleted";
         public const string BackupDatabaseSuccess = "Database backed up";

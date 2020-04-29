@@ -77,6 +77,7 @@ namespace DataBaseDPD
         public void removeRow(TableRow row)
         {
             tuples.Remove(row);
+            save();
         }
         public TableRow getFirstRow()
         {

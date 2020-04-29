@@ -59,6 +59,7 @@
     <Compile Include="DropDataBase.cs" />
     <Compile Include="DropTable.cs" />
     <Compile Include="Insert.cs" />
+    <Compile Include="Delete.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -26,13 +26,15 @@ namespace DataBaseDPD
 			//Insert
 			const string insert1 = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\)\s*;"; //CON TODOS SUS VALUES(1)
 
+			//Deleta
 
+			const string delete1 = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+)\s*;";
             /**
              *Operaciones con Where
              * **/
 			
 
-			const string select3 = @"SELECT\s+([^/)]+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+);";
+			const string select3 = @"SELECT\s+([^/)]+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+)\s*;";
 			const string update2 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*([\w\']+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+)\s*;";
 
 
@@ -124,11 +126,14 @@ namespace DataBaseDPD
 				return new Update(nombreTabla,col,value,colComparar,operation,val);
 
 			}
-			match = Regex.Match(query, "");
+			match = Regex.Match(query, delete1);
 			if (match.Success)
 			{
-				//TODO
-				return null;
+				string nombreTabla = match.Groups[1].Value;
+				string col = match.Groups[2].Value;
+				string operation = match.Groups[3].Value;
+				string val = match.Groups[4].Value;
+				return new Delete(nombreTabla,col,operation,val);
 
 			}
 
