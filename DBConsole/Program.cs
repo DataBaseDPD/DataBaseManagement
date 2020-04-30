@@ -11,8 +11,8 @@ namespace DBConsole
 
         public static void process(string inputFile, string outputFile)
         {
-           
-            Database db = new Database();
+
+            Database db;
             StreamReader file = new StreamReader(inputFile);
             StreamWriter writer = File.CreateText(outputFile);
 
@@ -21,8 +21,10 @@ namespace DBConsole
             int count = 1;
             double totalTime = 0;
 
+            db = new Database("db-" + count);
             writer.Write("# TEST " + count++);
             writer.Write("\n");
+            
             while ((line = file.ReadLine()) != null)
             {
                 string result;
@@ -31,12 +33,14 @@ namespace DBConsole
 
                 if (line == "")
                 {
+                    db = new Database("db-" + count);
                     writer.Write("TOTAL TIME: " + totalTime + "s");
                     writer.Write("\n");
                     writer.Write("\n");
                     writer.Write("# TEST "+ count++);
                     writer.Write("\n");
                     totalTime = 0;
+                   
 
                 }
                 else
@@ -70,7 +74,7 @@ namespace DBConsole
         enum Parameter { Unset, InputFile, OutputFile };
         static void Main(string[] args)
         {
-            
+            /**
             string inputFile = "input-file.txt";
             string outputFile = "output-file.txt";
             Parameter lastParameter = Parameter.Unset;
@@ -89,10 +93,13 @@ namespace DBConsole
 
 
             process(inputFile, outputFile);
+            **/
+
+            Database database = new Database("db-1");
+
+           Console.WriteLine(database.getTables().ContainsKey("MyTable"));
 
            
-
-
 
         }
 

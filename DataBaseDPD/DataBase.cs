@@ -10,9 +10,10 @@ namespace DataBaseDPD
 
         //Atributes
         public Dictionary<string, Table> tables;
+        string Name;
         
 
-        string sourceDir = "";
+        string sourceDir = @"../Debug/DataBase/";//Only works in UNIX windows need \
 
 
         //Constructor
@@ -20,6 +21,36 @@ namespace DataBaseDPD
         {
             tables = new Dictionary<string, Table>();
            
+        }
+        //C2 Overload
+        public Database(string name)
+        {
+            Name = name;
+            tables = new Dictionary<string, Table>();
+            sourceDir += Name;
+            try
+            {
+                DirectoryInfo di;
+                // Determine whether the directory exists.
+                if (Directory.Exists(sourceDir))
+                {
+                    //Console.WriteLine("That DataBase exists already.");
+                    loadTables();
+                    return;
+                }
+
+                // Try to create the directory.
+                di = Directory.CreateDirectory(sourceDir);
+                //Console.WriteLine("The DataBase was created successfully at {0}.", Directory.GetCreationTime(sourceDir));
+
+                //Delete the directory.
+                //di.Delete();
+                //Console.WriteLine("The directory was deleted successfully.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+            }
         }
 
 
@@ -45,13 +76,15 @@ namespace DataBaseDPD
 
         public void loadTables()
         {
-            //TODO
-            /**Si se puede recorrer el directoria cargando todas las tablas
-             * pero no estoy seguro de que en el directorio actual sola haya
-             * tablas.txt
-             *
-             * Se cargarian todas al cargar la base de datos
-             * */
+            // Process the list of files found in the directory.
+            string[] files = Directory.GetFiles(sourceDir, "*.txt");
+            for (int i = 0; i < files.Length; i++)
+            {
+                files[i] = Path.GetFileName(files[i]);
+                load(files[i]);
+            }
+               
+           
         }
         /**-------------------------------------------------
       Metodos de respuesta a las queries
@@ -79,7 +112,7 @@ namespace DataBaseDPD
                 if (colNames.Count==types.Count)
                 {
                     Table table = new Table(tableName, colNames, types);
-                    table.save();
+                    table.save(sourceDir);
                     tables.Add(tableName, table);
 
                     return Message.CreateTableSuccess;
@@ -122,7 +155,7 @@ namespace DataBaseDPD
                 if (values.Count == len)
                 {
                     tab.addRow(values);
-                    tab.save();
+                    tab.save(sourceDir);
                     return Message.InsertSuccess;
                 }
                 else
@@ -155,6 +188,7 @@ namespace DataBaseDPD
                     }
                    
                 }
+                tab.save(sourceDir);
 
                 return Message.TupleUpdateSuccess;
 
@@ -258,6 +292,7 @@ namespace DataBaseDPD
         //Select with where
         public string Select(string nameTable, List<string> columns, string col, string operation, string value)
         {
+            //Format is not correct 
             if (tables.ContainsKey(nameTable))
             {
                 Table tab = getTable(nameTable);
@@ -287,18 +322,22 @@ namespace DataBaseDPD
                         }
                         result += " ]";
                         int position;
-                        for (int i = 0; i < columns.Count; i++)
+                        foreach(TableRow row in tuplas)
                         {
                             result += "{ ";
-                            if (colNames.Contains(columns[i]))
+
+                            for (int i = 0; i < columns.Count; i++)
                             {
-                                position = tab.getIndex(columns[i]);
+                                if (colNames.Contains(columns[i]))
+                                {
+                                    position = tab.getIndex(columns[i]);
 
-                                foreach (TableRow row in tuplas) result += row.getItem(position);
+                                    result += row.getItem(position);
 
-                                result += " }";
+                                    result += " }";
+                                }
+                                else result += "NULL }";
                             }
-                            else result += "NULL }";
                         }
                         return result;
                     }
@@ -379,6 +418,7 @@ namespace DataBaseDPD
                         foreach (TableRow row in tuplas) tab.modifyTuple(row, col, val);
 
                     }
+                    tab.save(sourceDir);
                     return Message.TupleUpdateSuccess;
                 }
 
@@ -421,7 +461,7 @@ namespace DataBaseDPD
                         tuplas = tab.getTuples(col, operation, value);
                         foreach (TableRow row in tuplas) tab.removeRow(row); count++;
                     }
-
+                    tab.save(sourceDir);
                 }
                 return Message.TupleDeleteSuccess;
 
@@ -439,9 +479,10 @@ namespace DataBaseDPD
 
         public void remove(string filename)
         {
-            if (File.Exists(filename))
+            string path = Path.Combine(sourceDir, filename);
+            if (File.Exists(path))
             {
-                File.Delete(Path.Combine(sourceDir, filename));
+                File.Delete(path);
             }
 
         }
@@ -453,14 +494,16 @@ namespace DataBaseDPD
             List<TableColumn> columns;
             Table tabla = null;
 
-            string filename = sourceDir + fileName;
-            if (File.Exists(filename))
+            string filename = fileName;
+            string path = Path.Combine(sourceDir, filename);
+
+            if (File.Exists(path))
             {
                 columns = new List<TableColumn>();
 
 
                 //Read first line with the information of columns
-                StreamReader file = new StreamReader(filename);
+                StreamReader file = new StreamReader(path);
                 string head;
                 head = file.ReadLine();
                 string[] header = head.Split(new Char[] { ';' });
@@ -490,9 +533,8 @@ namespace DataBaseDPD
 
                 }
 
-
+                tables.Add(fileName.Substring(0, fileName.Length - 4), tabla);
                 file.Close();
-                Console.WriteLine(Message.TableLoadSuccess);
             }
             else
             {

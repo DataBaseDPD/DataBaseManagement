@@ -77,7 +77,7 @@ namespace DataBaseDPD
         public void removeRow(TableRow row)
         {
             tuples.Remove(row);
-            save();
+           
         }
         public TableRow getFirstRow()
         {
@@ -140,7 +140,7 @@ namespace DataBaseDPD
         {
             int pos = head.index(nameCol);
             tuple.setItem(pos,value);
-            save();
+            
         }
         public List<TableRow> getTuples()
         {
@@ -206,12 +206,12 @@ namespace DataBaseDPD
 
 
         
-        public void save()
+        public void save(string sourceDir)
         {
             try
             {
                 //NOSE DONDE PONER LOS ARCHIVOS DEBERIAN ESTAR DENTRO DE DB
-                string fileName =  name + ".txt";
+                string fileName = sourceDir +"/" +name + ".txt";
                 StreamWriter writer = File.CreateText(fileName);
                 //Write the header
                 foreach (string name in getColNames())
@@ -249,64 +249,7 @@ namespace DataBaseDPD
             
         }
     
-        private Table load( string fileName)
-        {
-            List<TableColumn> columns;
-            Table tabla = null;
-
-            string filename = sourceDir + fileName;
-            if (File.Exists(filename))
-            {
-                columns = new List<TableColumn>();
-                
-
-                //Read first line with the information of columns
-                StreamReader file = new StreamReader(filename);
-                string head;
-                head = file.ReadLine();
-                string[] header = head.Split(new Char[] {';'});
-
-                //Le quito uno por el espacio al final
-                int numCol = ((header.Length-1)/3);
-                for (int i=0; i<numCol;i=i+3)
-                {
-                    columns.Add(new TableColumn(header[i],header[i+1],Convert.ToInt32(header[i+2])));
-                }
-               
-
-
-
-                //Para no guarde el nombre de la tabla con la extencion quito el -> ".txt"
-                tabla = new Table(fileName.Substring(0, fileName.Length - 4), columns);//Mejorable
-                //Read the tuples
-                string line;
-                while ((line = file.ReadLine()) != null)
-                {
-
-                    string[] lineParts = line.Split(',');
-                    if (lineParts.Length == getNumColumn())
-                    {
-                        tabla.addRow(new TableRow(lineParts));
-                    }
-
-                }
-
-
-                file.Close();
-                Console.WriteLine(Message.TableLoadSuccess);
-            }
-            else
-            {
-                Console.WriteLine(Message.TableDoesNotExist);
-            }
-            
-            return tabla;
-        }
-   
         
-        
-
-
     }
 
 }

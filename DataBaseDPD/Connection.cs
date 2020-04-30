@@ -10,8 +10,14 @@ namespace DataBaseDPD
 {
     class Connection
     {
+        public Connection()
+        {
+            //Se deberian cargar los datos de info.txt para verificar que usuario y perimisos tiene
+        }
+        public void Connect(string database, string user, string password )
+        {
 
-        
+        }
 
         
 
