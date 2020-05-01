@@ -48,7 +48,7 @@ namespace Bundler
 
         }
 
-        public static void GetDependencies(string inFolder, string module, ref List<string> dependencyList, bool bRecursive)
+        public static void GetDependencies(string inFolder, string module, ref List<string> dependencyList, bool bRecursive=true)
         {
 
             string depName, modName;
