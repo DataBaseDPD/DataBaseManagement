@@ -83,5 +83,10 @@ namespace DataBaseDPD
         {
             return Tabla;
         }
+
+        public override string Run(Connection connection)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -23,5 +23,10 @@ namespace DataBaseDPD
         {
             throw new NotImplementedException();
         }
+
+        public override string Run(Connection connection)
+        {
+            return connection.DeleteUser(User);
+        }
     }
 }

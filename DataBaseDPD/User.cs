@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace DataBaseDPD
 {
     public class User
     {
-        string user;
-        string passwrd;
-        List<string> profiles;
+        public string user { get; set; }
+        public string passwrd { get; set; }
+        public List<string> profiles { get; set; }
+
+
 
         public User(string usr, string pass)
         {
@@ -17,9 +20,24 @@ namespace DataBaseDPD
            
         }
 
-        public bool isValid(string user , string password)
+        public bool isValid(string usr , string pass)
         {
-            return false;
+            if (this.user == usr && this.passwrd==pass) return true;
+            else return false;
         }
+        public bool isAdmin()
+        {
+            bool isAdmin = false;
+            int i = 0;
+            while (!isAdmin && i<profiles.Count)
+            {
+                if (this.profiles[i] == "admin") isAdmin = true;
+                i++;
+            }
+            return isAdmin;
+        }
+        
+        
+        
     }
 }

@@ -37,5 +37,10 @@ namespace DataBaseDPD
         {
             throw new NotImplementedException();
         }
+
+        public override string Run(Connection connection)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -39,5 +39,10 @@ namespace DataBaseDPD
         {
             throw new NotImplementedException();
         }
+
+        public override string Run(Connection connection)
+        {
+            return connection.AddUser(User,Passwrd,Profile);
+        }
     }
 }

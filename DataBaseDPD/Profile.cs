@@ -6,9 +6,9 @@ namespace DataBaseDPD
     public class Profile
     {
         string Name;
-        public Dictionary<string, Privilege>  privileges;
+        public Dictionary<string, Privilege>  privileges;//Key is name's Table and Value the privileges
 
-        //Los privilegios tendran como clave la tabla y valor los privilegios
+        
 
         public Profile(string name)
         {
@@ -16,9 +16,10 @@ namespace DataBaseDPD
             privileges = new Dictionary<string, Privilege>();
 
         }
-        public void addPrivilege(string tabla, string privi)
+       public Privilege getPrivilege(string tabla)
         {
-           //Si contiene la tabla le hacemos un set sopre el privilegio que se quire cambiar
+            privileges.TryGetValue(tabla, out Privilege priv);
+            return priv;
         }
 
       

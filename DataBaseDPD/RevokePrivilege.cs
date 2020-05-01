@@ -28,5 +28,10 @@ namespace DataBaseDPD
         {
             return Tabla;
         }
+
+        public override string Run(Connection connection)
+        {
+            return connection.RevokePrivilege(Profile,Tabla,Privilege);
+        }
     }
 }

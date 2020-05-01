@@ -24,5 +24,10 @@ namespace DataBaseDPD
         {
             throw new NotImplementedException();
         }
+
+        public override string Run(Connection connection)
+        {
+            return connection.DropProfile(Profile);
+        }
     }
 }
