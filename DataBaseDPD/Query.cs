@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DataBaseDPD
 {
@@ -12,6 +9,8 @@ namespace DataBaseDPD
     {
 
         public abstract String Run(Database database);
+        public abstract PrivilegeType getType();
+        public abstract string getTableName();
 
     }
    

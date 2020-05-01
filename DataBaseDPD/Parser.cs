@@ -38,6 +38,29 @@ namespace DataBaseDPD
 			const string update2 = @"UPDATE\s+(\w+)\s+SET\s+(\w+)\s*(\=)\s*([\w\']+)\s+WHERE\s+(\w+)\s*(=|<|>)\s*([\w\']+)\s*;";
 
 
+			/**-------------------------------------------------
+                Regex de seguridad
+           -----------------------------------------------------**/
+
+            //Create security profile
+			const string createProf = @"CREATE\sSECURITY\sPROFILE\s+(\w+)\s*;";
+
+			//Drop security profile
+			const string dropProf = @"DROP\sSECURITY\sPROFILE\s+(\w+)\s*;";
+
+			//Grant privilege
+			const string grantPriv = @"GRANT\s+(INSERT|DELETE|SELECT|UPDATE)\s+ON\s+(\w+)\s+TO\s+(\w+)\s*;";
+
+			//Revoke privilege
+			const string revPriv = @"REVOKE\s+(INSERT|DELETE|SELECT|UPDATE)\s+ON\s+(\w+)\s+TO\s+(\w+)\s*;";
+
+			//Add user
+			const string addUser = @"ADD\s+USER\s+\(([^/]+)\)\s*;";
+
+			//Delete user
+			const string delUser = @"DELETE\s+USER\s+(\w+)\s*;";
+
+
 
 
 			//CreateTable //FUNCIONA
@@ -135,6 +158,49 @@ namespace DataBaseDPD
 				string val = match.Groups[4].Value;
 				return new Delete(nombreTabla,col,operation,val);
 
+			}
+
+            //------------------------------------------------------
+
+			match = Regex.Match(query,createProf);
+            if(match.Success)
+            {
+				string profile = match.Groups[1].Value;
+				return new CreateProfile(profile);
+            }
+			match = Regex.Match(query, dropProf);
+			if (match.Success)
+			{
+				string profile = match.Groups[1].Value;
+				return new DropProfile(profile);
+			}
+			match = Regex.Match(query, grantPriv);
+			if (match.Success)
+			{
+				string profile = match.Groups[3].Value;
+				string priv = match.Groups[1].Value;
+				string table = match.Groups[2].Value;
+				return new RevokePrivilege(profile,table,priv);
+			}
+			match = Regex.Match(query, revPriv);
+			if (match.Success)
+			{
+				string profile = match.Groups[3].Value;
+				string priv = match.Groups[1].Value;
+				string table = match.Groups[2].Value;
+				return new RevokePrivilege(profile, table, priv);
+			}
+			match = Regex.Match(query, addUser);
+			if (match.Success)
+			{
+				List<string> data = CommaSeparatedNames(match.Groups[1].Value);
+                return new AddUser(data);
+			}
+			match = Regex.Match(query, delUser);
+			if (match.Success)
+			{
+				string user = match.Groups[1].Value;
+				return new DeleteUser(user);
 			}
 
 

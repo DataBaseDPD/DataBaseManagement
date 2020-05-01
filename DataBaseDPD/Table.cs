@@ -14,31 +14,31 @@ namespace DataBaseDPD
         Header head;
         List<TableRow> tuples;
 
-       //PUT FILES IN A DIRECTORY OF DATABASE MISSING
-        string sourceDir= "";
+        //PUT FILES IN A DIRECTORY OF DATABASE MISSING
+        string sourceDir = "";
 
 
 
         //Constructor
-        public Table( string tableName , List<TableColumn> tableColumns )
+        public Table(string tableName, List<TableColumn> tableColumns)
         {
             name = tableName;
             this.addHeader(tableColumns);
             tuples = new List<TableRow>();
-            
 
-           //Console.WriteLine(Message.CreateTableSuccess);
+
+            //Console.WriteLine(Message.CreateTableSuccess);
         }
         //C2 Overload
         public Table(string tableName, List<string> colNames, List<string> types)
         {
             name = tableName;
             List<TableColumn> columns = new List<TableColumn>();
-            if (colNames.Count== types.Count)
+            if (colNames.Count == types.Count)
             {
                 for (int i = 0; i < colNames.Count; i++)
                 {
-                    columns.Add(new TableColumn(colNames[i],types[i], i));
+                    columns.Add(new TableColumn(colNames[i], types[i], i));
                 }
             }
             this.addHeader(columns);
@@ -50,7 +50,7 @@ namespace DataBaseDPD
         private void addHeader(List<TableColumn> tableColumns)
         {
             head = new Header(tableColumns);
-           
+
         }
         public Header getHeader()
         {
@@ -67,17 +67,17 @@ namespace DataBaseDPD
         public void addRow(List<string> values)
         {
             TableRow row = new TableRow(getNumColumn());
-            for (int i=0; i< getNumColumn();i++)
+            for (int i = 0; i < getNumColumn(); i++)
             {
-                row.setItem(i,values[i]);
+                row.setItem(i, values[i]);
             }
             tuples.Add(row);
-            
+
         }
         public void removeRow(TableRow row)
         {
             tuples.Remove(row);
-           
+
         }
         public TableRow getFirstRow()
         {
@@ -90,18 +90,18 @@ namespace DataBaseDPD
             int pos = head.index(nameCol);
             foreach (TableRow row in tuples)
             {
-                if (row.getItem(pos)== value)
+                if (row.getItem(pos) == value)
                 {
                     tuplas.Add(row);
                 }
             }
             return tuplas;
         }
-        public List<TableRow> getTuples(string nameCol, string operation ,string value)
+        public List<TableRow> getTuples(string nameCol, string operation, string value)
         {
             List<TableRow> tuplas = new List<TableRow>();
             int pos = head.index(nameCol);
-            if (operation=="=")
+            if (operation == "=")
             {
                 foreach (TableRow row in tuples)
                 {
@@ -110,7 +110,9 @@ namespace DataBaseDPD
                         tuplas.Add(row);
                     }
                 }
-            }else if (operation ==">"){
+            }
+            else if (operation == ">")
+            {
                 foreach (TableRow row in tuples)
                 {
                     //Lo convierto a entero para que ocupe mucho
@@ -139,8 +141,8 @@ namespace DataBaseDPD
         public void modifyTuple(TableRow tuple, string nameCol, string value)
         {
             int pos = head.index(nameCol);
-            tuple.setItem(pos,value);
-            
+            tuple.setItem(pos, value);
+
         }
         public List<TableRow> getTuples()
         {
@@ -170,8 +172,8 @@ namespace DataBaseDPD
         {
             return null;
         }
-        
-        
+
+
 
         //Info columns
         public List<string> getColNames()
@@ -204,20 +206,18 @@ namespace DataBaseDPD
         Metodos de lectura escritura en archivos
         ---------------------------------------------------**/
 
-
-        
-        public void save(string sourceDir)
+        public void save()
         {
             try
             {
-                //NOSE DONDE PONER LOS ARCHIVOS DEBERIAN ESTAR DENTRO DE DB
-                string fileName = sourceDir +"/" +name + ".txt";
+
+                string fileName = name + ".txt";
                 StreamWriter writer = File.CreateText(fileName);
                 //Write the header
                 foreach (string name in getColNames())
                 {
                     //Add a space at the end i could control it but i'm too tired
-                    writer.Write(name + ";" + getTypeColumn(name) + ";" + getIndex(name)+";");
+                    writer.Write(name + ";" + getTypeColumn(name) + ";" + getIndex(name) + ";");
                 }
                 //Only to format the txt if is the last one add \n new line
                 writer.Write("\n");
@@ -225,8 +225,8 @@ namespace DataBaseDPD
                 {
                     for (int i = 0; i < this.getNumColumn(); i++)
                     {
-                       
-                        if(i != this.getNumColumn() - 1)
+
+                        if (i != this.getNumColumn() - 1)
                         {
                             writer.Write(tuple.getItem(i) + ",");
                         }
@@ -234,7 +234,7 @@ namespace DataBaseDPD
                         {
                             writer.Write(tuple.getItem(i) + "\n");
                         }
-                       
+
                     }
                 }
                 writer.Close();
@@ -246,10 +246,53 @@ namespace DataBaseDPD
                 Console.WriteLine(e.StackTrace);
             }
 
-            
+
         }
-    
-        
+
+        public void save(string sourceDir)
+        {
+            try
+            {
+
+                string fileName = sourceDir + "/" + name + ".txt";
+                StreamWriter writer = File.CreateText(fileName);
+                //Write the header
+                foreach (string name in getColNames())
+                {
+                    //Add a space at the end i could control it but i'm too tired
+                    writer.Write(name + ";" + getTypeColumn(name) + ";" + getIndex(name) + ";");
+                }
+                //Only to format the txt if is the last one add \n new line
+                writer.Write("\n");
+                foreach (TableRow tuple in tuples)
+                {
+                    for (int i = 0; i < this.getNumColumn(); i++)
+                    {
+
+                        if (i != this.getNumColumn() - 1)
+                        {
+                            writer.Write(tuple.getItem(i) + ",");
+                        }
+                        else
+                        {
+                            writer.Write(tuple.getItem(i) + "\n");
+                        }
+
+                    }
+                }
+                writer.Close();
+                //Console.WriteLine("Saved ...");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Not Saved ...");
+                Console.WriteLine(e.StackTrace);
+            }
+
+
+        }
+
+
     }
 
 }

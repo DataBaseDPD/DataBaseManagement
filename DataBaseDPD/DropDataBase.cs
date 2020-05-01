@@ -28,6 +28,14 @@ namespace DataBaseDPD
             return Base;
         }
 
+        public override PrivilegeType getType()
+        {
+            return PrivilegeType.ADMIN;
+        }
 
+        public override string getTableName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

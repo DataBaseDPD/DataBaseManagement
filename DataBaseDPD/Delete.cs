@@ -21,9 +21,18 @@ namespace DataBaseDPD
             value = right;
         }
 
+        public override PrivilegeType getType()
+        {
+            return PrivilegeType.DELETE;
+        }
+
         public override string Run(Database database)
         {
             return database.Delete(Tabla, col , operation, value);
+        }
+        public override string getTableName()
+        {
+            return Tabla;
         }
     }
 }

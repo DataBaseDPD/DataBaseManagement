@@ -95,11 +95,14 @@ namespace DBConsole
             process(inputFile, outputFile);
             **/
 
-            Database database = new Database("db-1");
 
-           Console.WriteLine(database.getTables().ContainsKey("MyTable"));
-
-           
+            Connection con = new Connection();
+            con.Connect("db-1","admin", "admin");
+            if (con.isConnected())
+            {
+                con.RunQuery("");
+            }
+            
 
         }
 

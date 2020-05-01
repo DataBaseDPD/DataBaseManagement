@@ -29,6 +29,10 @@ namespace DataBaseDPD
 
         }
 
+        public override PrivilegeType getType()
+        {
+            return PrivilegeType.ADMIN;
+        }
 
         public override string Run(Database bd)
         {
@@ -37,8 +41,9 @@ namespace DataBaseDPD
             return bd.CreateTable(Table, columnNames, dataType);
 
         }
-
-        
-
+        public override string getTableName()
+        {
+            return Table;
+        }
     }
 }

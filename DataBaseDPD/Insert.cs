@@ -28,11 +28,15 @@ namespace DataBaseDPD
 
         }
 
+        public override PrivilegeType getType()
+        {
+            return PrivilegeType.INSERT;
+        }
+        public override string getTableName()
+        {
+            return Tabla;
+        }
 
     }
-
-
-
-
 
 }

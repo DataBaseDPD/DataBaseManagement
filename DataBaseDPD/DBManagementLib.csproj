@@ -60,6 +60,17 @@
     <Compile Include="DropTable.cs" />
     <Compile Include="Insert.cs" />
     <Compile Include="Delete.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="PrivilegeType.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="CreateProfile.cs" />
+    <Compile Include="SecurityQuery.cs" />
+    <Compile Include="DropProfile.cs" />
+    <Compile Include="GrantPrivilege.cs" />
+    <Compile Include="RevokePrivilege.cs" />
+    <Compile Include="AddUser.cs" />
+    <Compile Include="DeleteUser.cs" />
+    <Compile Include="Privilege.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -75,6 +75,13 @@ namespace DataBaseDPD
             
         }
 
-
-     }
+        public override PrivilegeType getType()
+        {
+            return PrivilegeType.UPDATE;
+        }
+        public override string getTableName()
+        {
+            return Tabla;
+        }
+    }
 }

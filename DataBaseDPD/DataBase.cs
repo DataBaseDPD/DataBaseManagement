@@ -91,18 +91,9 @@ namespace DataBaseDPD
       ---------------------------------------------------**/
         public string RunQuery(string query)
         {
-            
              Query request = Parser.Parse(query);
-             if (request == null)
-             {
-                 return Message.WrongSyntax;
-             }
-             else
-             {
-                 return request.Run(this);
-             }
-            
-           
+             if (request == null) return Message.WrongSyntax;
+             else return request.Run(this);
         }
 
         public string CreateTable(string tableName, List<string> colNames, List<string> types)

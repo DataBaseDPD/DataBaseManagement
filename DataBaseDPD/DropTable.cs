@@ -8,23 +8,31 @@ namespace DataBaseDPD
 	public class DropTable : Query
     {
        
-        string theTable;
+        string Table;
 
         public DropTable(string table)
         {
 
-            theTable = table;
+            Table = table;
 
 
         }
 
+        public override string getTableName()
+        {
+            return Table;
+        }
 
+        public override PrivilegeType getType()
+        {
+            return PrivilegeType.ADMIN;
+        }
 
         public override String Run(Database database)
         {
 
             
-           return database.DropTabla(theTable);
+           return database.DropTabla(Table);
 
 
         }
