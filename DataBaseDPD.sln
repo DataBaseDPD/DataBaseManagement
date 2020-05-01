@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBConsole", "DBConsole\DBCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDataBase", "TestDataBase\TestDataBase.csproj", "{9ED7A0A7-2F14-46E5-9B9D-E5DDE67028C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bundler", "Bundler\Bundler.csproj", "{7DD98E05-BA10-42F4-9129-D2DD9DB4C743}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9ED7A0A7-2F14-46E5-9B9D-E5DDE67028C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ED7A0A7-2F14-46E5-9B9D-E5DDE67028C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ED7A0A7-2F14-46E5-9B9D-E5DDE67028C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DD98E05-BA10-42F4-9129-D2DD9DB4C743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DD98E05-BA10-42F4-9129-D2DD9DB4C743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DD98E05-BA10-42F4-9129-D2DD9DB4C743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DD98E05-BA10-42F4-9129-D2DD9DB4C743}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
