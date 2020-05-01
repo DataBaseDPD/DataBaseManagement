@@ -14,8 +14,8 @@ namespace DataBaseDPD
         Header head;
         List<TableRow> tuples;
 
-        //PUT FILES IN A DIRECTORY OF DATABASE MISSING
-        string sourceDir = "";
+       
+       
 
 
 

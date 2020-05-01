@@ -18,7 +18,7 @@ namespace DataBaseDPD
         }
         public void addPrivilege(string tabla, string privi)
         {
-            if (privileges.ContainsKey(tabla)) ;//Si contiene la tabla le hacemos un set sopre el privilegio que se quire cambiar
+           //Si contiene la tabla le hacemos un set sopre el privilegio que se quire cambiar
         }
 
       
