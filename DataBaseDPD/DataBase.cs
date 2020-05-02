@@ -11,10 +11,10 @@ namespace DataBaseDPD
         //Atributes
         public Dictionary<string, Table> tables;
         string Name;
+
+
+        string sourceDir = PATH.root;
         
-
-        string sourceDir = @"../Debug/DataBase/";//Only works in UNIX windows need \
-
 
         //Constructor
         public Database()

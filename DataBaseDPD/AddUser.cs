@@ -13,9 +13,9 @@ namespace DataBaseDPD
         {
             try
             {
-                User = data[0];
-                Passwrd = data[1];
-                Profile = data[2];
+                User = data[0].Replace("'", "");
+                Passwrd = data[1].Replace("'", "");
+                Profile = data[2].Replace("'", "");
             }
             catch (Exception  e)
             {

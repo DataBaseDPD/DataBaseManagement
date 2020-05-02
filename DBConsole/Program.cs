@@ -12,19 +12,30 @@ namespace DBConsole
         public static void process(string inputFile, string outputFile)
         {
 
-            Database db;
+            Connection con = new Connection();
             StreamReader file = new StreamReader(inputFile);
             StreamWriter writer = File.CreateText(outputFile);
 
             
             string line;
+            string head;
             int count = 1;
             double totalTime = 0;
 
-            db = new Database("db-" + count);
+
+
             writer.Write("# TEST " + count++);
             writer.Write("\n");
-            
+
+            head = file.ReadLine();
+            string[] header = head.Split(new Char[] { ',' });
+
+            //Le quito uno por el espacio al final
+
+
+            writer.Write(con.Connect(header[0], header[1], header[2])); //Puede dar exeption nullpointer
+            writer.Write("\n");
+
             while ((line = file.ReadLine()) != null)
             {
                 string result;
@@ -33,20 +44,31 @@ namespace DBConsole
 
                 if (line == "")
                 {
-                    db = new Database("db-" + count);
+                    
                     writer.Write("TOTAL TIME: " + totalTime + "s");
                     writer.Write("\n");
                     writer.Write("\n");
                     writer.Write("# TEST "+ count++);
                     writer.Write("\n");
                     totalTime = 0;
-                   
+
+                    con.Close();
+
+                    line = file.ReadLine();
+                    header = line.Split(new Char[] { ',' });
+
+                    //Le quito uno por el espacio al final
+
+
+                    writer.Write(con.Connect(header[0], header[1], header[2]));
+                    writer.Write("\n");
+
 
                 }
-                else
+                else if(con.isConnected())
                 {
                     DateTime start = DateTime.Now;
-                    result = db.RunQuery(line);
+                    result = con.RunQuery(line);
                     DateTime end = DateTime.Now;
 
                     TimeSpan time = end - start;
@@ -63,8 +85,8 @@ namespace DBConsole
             }
             writer.Write("TOTAL TIME: " + totalTime + "s");
             writer.Write("\n");
-            
 
+            con.Close();
             writer.Close();
             file.Close();
         }
@@ -74,7 +96,7 @@ namespace DBConsole
         enum Parameter { Unset, InputFile, OutputFile };
         static void Main(string[] args)
         {
-            /**
+            
             string inputFile = "input-file.txt";
             string outputFile = "output-file.txt";
             Parameter lastParameter = Parameter.Unset;
@@ -91,19 +113,11 @@ namespace DBConsole
             Console.WriteLine("Output file: " + outputFile);
 
 
-
+              
             process(inputFile, outputFile);
-            **/
+           
 
-
-            Connection con = new Connection();
-            con.Connect("db-1","admin", "admin");
-            if (con.isConnected())
-            {
-                con.RunQuery("");
-            }
             
-
         }
 
     }

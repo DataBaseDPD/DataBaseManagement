@@ -12,7 +12,8 @@ namespace DataBaseDPD
         public Dictionary<string, Profile> Profiles;//Key profile`s name, value the tables with the privileges
         bool connected;
 
-        string sourceDir = @"../Debug/DataBase/";
+        string sourceDir = PATH.root;
+       
 
         /**
          *Connection Methods
@@ -74,19 +75,39 @@ namespace DataBaseDPD
         {
             Query request = Parser.Parse(query);
             //Data of the request
-            PrivilegeType privRequire = request.getType();
-            string tabla = request.getTableName();
-            //Data user
-            Privilege priv = userPrivilege(tabla);
 
-            if (User.isAdmin() && privRequire != PrivilegeType.ADMIN) return request.Run(this.Db);
-            else if (User.isAdmin() && privRequire == PrivilegeType.ADMIN) return request.Run(this);//Si la query es
-            //de tipo admin se ejecute en Connection no en Database
-            else if (priv.DELETE && privRequire == PrivilegeType.DELETE) return request.Run(this.Db);
-            else if (priv.INSERT && privRequire == PrivilegeType.INSERT) return request.Run(this.Db);
-            else if (priv.SELECT && privRequire == PrivilegeType.SELECT) return request.Run(this.Db);
-            else if (priv.UPDATE && privRequire == PrivilegeType.UPDATE) return request.Run(this.Db);
-            else return Message.SecurityNotSufficientPrivileges;
+            if (request==null)
+            {
+                return Message.WrongSyntax;
+            }
+            else
+            {
+                PrivilegeType privRequire = request.getType();
+                string tabla = request.getTableName();
+
+
+
+
+                if (User.isAdmin() && privRequire == PrivilegeType.ADMIN) return request.Run(this);
+                else if (User.isAdmin() && privRequire == PrivilegeType.OTHER) return request.Run(this.Db);//Si la query es
+                                                                                                           //de tipo admin se ejecute en Connection no en Database
+                else if (User.isAdmin() && privRequire == PrivilegeType.DELETE) return request.Run(this.Db);
+                else if (User.isAdmin() && privRequire == PrivilegeType.INSERT) return request.Run(this.Db);
+                else if (User.isAdmin() && privRequire == PrivilegeType.SELECT) return request.Run(this.Db);
+                else if (User.isAdmin() && privRequire == PrivilegeType.UPDATE) return request.Run(this.Db);
+                else
+                {
+                    //Data user
+                    Privilege priv = userPrivilege(tabla);
+
+                    if (priv.DELETE && privRequire == PrivilegeType.DELETE) return request.Run(this.Db);
+                    else if (priv.INSERT && privRequire == PrivilegeType.INSERT) return request.Run(this.Db);
+                    else if (priv.SELECT && privRequire == PrivilegeType.SELECT) return request.Run(this.Db);
+                    else if (priv.UPDATE && privRequire == PrivilegeType.UPDATE) return request.Run(this.Db);
+                    else return Message.SecurityNotSufficientPrivileges;
+                }
+            }
+            
 
 
         }
@@ -118,13 +139,18 @@ namespace DataBaseDPD
         private Privilege userPrivilege(string nameTable)
         {
             Profile prof;
-            Privilege priv = null;
+            Privilege priv = new Privilege(nameTable);
             foreach (string p in User.profiles)
             {
                 this.Profiles.TryGetValue(p, out prof);
-                if (prof.privileges.ContainsKey(nameTable))
+
+                if (prof!=null)
                 {
-                    prof.privileges.TryGetValue(nameTable, out priv);
+                    if (prof.privileges.ContainsKey(nameTable))
+                    {
+                        prof.privileges.TryGetValue(nameTable, out priv);
+
+                    }
 
                 }
             }
@@ -241,6 +267,7 @@ namespace DataBaseDPD
                 {
 
                     string[] lineParts = line.Split(',');
+                    foreach (string s in lineParts) Console.WriteLine(s);
                     usr = new User(lineParts[0], lineParts[1]);//add user
                     if (lineParts.Length == 3)//add profiles
                         for (int i = 2; i < lineParts.Length; i++) usr.profiles.Add(lineParts[i]);
@@ -347,9 +374,10 @@ namespace DataBaseDPD
                     else if (!priv.UPDATE) writer.Write("-");
 
                 }
-                writer.Close();
+                
 
             }
+            writer.Close();
 
         }
     }

@@ -31,7 +31,7 @@ namespace DataBaseDPD
 
         public override PrivilegeType getType()
         {
-            return PrivilegeType.ADMIN;
+            return PrivilegeType.OTHER;
         }
 
         public override string Run(Database bd)

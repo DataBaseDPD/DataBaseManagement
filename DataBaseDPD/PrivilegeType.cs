@@ -7,6 +7,7 @@ namespace DataBaseDPD
         INSERT,
         SELECT,
         UPDATE,
+        OTHER,
         ADMIN
     }
 }

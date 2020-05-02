@@ -180,7 +180,7 @@ namespace DataBaseDPD
 				string profile = match.Groups[3].Value;
 				string priv = match.Groups[1].Value;
 				string table = match.Groups[2].Value;
-				return new RevokePrivilege(profile,table,priv);
+				return new GrantPrivilege(profile,table,priv);
 			}
 			match = Regex.Match(query, revPriv);
 			if (match.Success)

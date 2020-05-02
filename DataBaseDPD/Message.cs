@@ -20,7 +20,7 @@ namespace DataBaseDPD
         public const string TupleDeleteSuccess = "Tuple(s) deleted";
         public const string TupleUpdateSuccess = "Tuple(s) updated";
 
-        public const string SecurityProfileCreated = "Security profile";
+        public const string SecurityProfileCreated = "Security profile created";
         public const string SecurityUserCreated = "Security user created";
         public const string SecurityProfileDeleted = "Security profile deleted";
         public const string SecurityUserDeleted = "Security user deleted";
