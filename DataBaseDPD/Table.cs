@@ -15,10 +15,6 @@ namespace DataBaseDPD
         List<TableRow> tuples;
 
        
-       
-
-
-
         //Constructor
         public Table(string tableName, List<TableColumn> tableColumns)
         {
