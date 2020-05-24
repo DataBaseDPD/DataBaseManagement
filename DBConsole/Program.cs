@@ -113,11 +113,12 @@ namespace DBConsole
             Console.WriteLine("Output file: " + outputFile);
 
 
-              
-            process(inputFile, outputFile);
-           
 
-            
+            process(inputFile, outputFile);
+
+          
+
+
         }
 
     }
