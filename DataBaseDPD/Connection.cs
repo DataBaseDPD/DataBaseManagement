@@ -12,7 +12,7 @@ namespace DataBaseDPD
         public Dictionary<string, Profile> Profiles;//Key profile`s name, value the tables with the privileges
         bool connected;
 
-        string sourceDir = PATH.root;
+        string sourceDir = PATH.GetPath();
        
 
         /**
@@ -253,7 +253,7 @@ namespace DataBaseDPD
          **/
         public List<User> loadUsers()
         {
-            string path = sourceDir + "users.txt";
+            string path = Path.Combine(sourceDir, "users.txt");
             List<User> users = new List<User>();
 
             if (File.Exists(path))
@@ -277,7 +277,7 @@ namespace DataBaseDPD
             }
             else
             {
-                Console.WriteLine("Users not loaded");
+                Console.WriteLine("Users are empty");
             }
 
             return users;
@@ -288,7 +288,7 @@ namespace DataBaseDPD
             try
             {
 
-                string path = sourceDir + "users.txt";
+                string path = Path.Combine(sourceDir, "users.txt");
                 StreamWriter writer = File.CreateText(path);
                 foreach (User usr in this.Users)
                 {
@@ -309,7 +309,7 @@ namespace DataBaseDPD
         }
         public Dictionary<string, Profile> loadProfiles()
         {
-            string path = sourceDir + "profiles.txt";
+            string path = Path.Combine(sourceDir, "profiles.txt");
 
             Dictionary<string, Profile> profiles = new Dictionary<string, Profile>();
 
@@ -342,14 +342,14 @@ namespace DataBaseDPD
             }
             else
             {
-                Console.WriteLine("Profiles not loaded");
+                Console.WriteLine("Profiles are empty");
             }
 
             return profiles;
         }
         public void saveProfiles()
         {
-            string path = sourceDir + "profiles.txt";
+            string path = Path.Combine(sourceDir, "profiles.txt");
             StreamWriter writer = File.CreateText(path);
 
             Profile prof;

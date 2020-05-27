@@ -13,21 +13,23 @@ namespace DataBaseDPD
         string Name;
 
 
-        string sourceDir = PATH.root;
-        
+        string sourceDir = "";
+
 
         //Constructor
         public Database()
         {
+            sourceDir = PATH.GetPath();
             tables = new Dictionary<string, Table>();
-           
         }
         //C2 Overload
         public Database(string name)
         {
+            sourceDir = PATH.GetPath();
+
             Name = name;
             tables = new Dictionary<string, Table>();
-            sourceDir += Name;
+            sourceDir = Path.Combine(sourceDir, Name);
             try
             {
                 DirectoryInfo di;

@@ -1,16 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+
 
 namespace DataBaseDPD
 {
-    class PATH
+    public class PATH
     {
-        public const string root = @"../Debug/DataBase/";//Only works in UNIX windows need \\
-        public const string users = @"../Debug/DataBase/users.txt";
-        public const string profiles = @"../Debug/DataBase/profiles.txt";
+        public static string GetPath()
+        {
+
+            string currentDirName = Directory.GetCurrentDirectory();
+            string sourceDir = Path.Combine(currentDirName, "DataBase");
+
+            try
+            {
+                DirectoryInfo di;
+
+                if (Directory.Exists(sourceDir))
+                {
+                    return sourceDir;
+                }
+                else
+                {
+                    di = Directory.CreateDirectory(sourceDir);
+                    return sourceDir;
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+                return "The DataBase could not be created";
+            }
+
+            
+           
+        }
+
 
     }
 }
