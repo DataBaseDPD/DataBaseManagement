@@ -9,7 +9,7 @@ namespace DataBaseDPD
     {
 
         //Atributes
-        public Dictionary<string, Table> tables;
+        public Dictionary<string, Table> Tables;
         string Name;
 
 
@@ -20,7 +20,7 @@ namespace DataBaseDPD
         public Database()
         {
             sourceDir = PATH.GetPath();
-            tables = new Dictionary<string, Table>();
+            Tables = new Dictionary<string, Table>();
         }
         //C2 Overload
         public Database(string name)
@@ -28,7 +28,7 @@ namespace DataBaseDPD
             sourceDir = PATH.GetPath();
 
             Name = name;
-            tables = new Dictionary<string, Table>();
+            Tables = new Dictionary<string, Table>();
             sourceDir = Path.Combine(sourceDir, Name);
             try
             {
@@ -60,25 +60,24 @@ namespace DataBaseDPD
 
         public Table getTable(string nameTable)
         {
-            tables.TryGetValue(nameTable, out Table tabla);
+            Tables.TryGetValue(nameTable, out Table tabla);
             return tabla;
         }
         public void addTable(string name, Table tabla)
         {
-            if (!tables.ContainsKey(name))
+            if (!Tables.ContainsKey(name))
             {
-                tables.Add(name,tabla);
+                Tables.Add(name,tabla);
             }
         }
         public Dictionary<string, Table> getTables()
         {
-            return tables;
+            return Tables;
         }
         public string getSourceDir()
         {
             return sourceDir;
         }
-
 
         public void loadTables()
         {
@@ -90,11 +89,12 @@ namespace DataBaseDPD
                 load(files[i]);
             }
                
-           
         }
+
         /**-------------------------------------------------
       Metodos de respuesta a las queries
       ---------------------------------------------------**/
+
         public string RunQuery(string query)
         {
              Query request = Parser.Parse(query);
@@ -104,13 +104,13 @@ namespace DataBaseDPD
 
         public string CreateTable(string tableName, List<string> colNames, List<string> types)
         {
-            if (!tables.ContainsKey(tableName))
+            if (!Tables.ContainsKey(tableName))
             {
                 if (colNames.Count==types.Count)
                 {
                     Table table = new Table(tableName, colNames, types);
                     table.save(sourceDir);
-                    tables.Add(tableName, table);
+                    Tables.Add(tableName, table);
 
                     return Message.CreateTableSuccess;
                 }
@@ -127,25 +127,27 @@ namespace DataBaseDPD
 
 
         }
+
         public string DropTabla(string nameTable)
         {
-            if (!tables.ContainsKey(nameTable))
+            if (!Tables.ContainsKey(nameTable))
             {
                 return Message.TableDoesNotExist;
             }
             else
             {
-                tables.Remove(nameTable);
+                Tables.Remove(nameTable);
                 remove(nameTable+".txt");
                 return Message.DeleteTablaSuccess;
             }
 
            
         }
+
         //Insert simple
         public string Insert(string nameTable,List<string> values)
         {
-            if (tables.ContainsKey(nameTable))
+            if (Tables.ContainsKey(nameTable))
             {
                 Table tab = getTable(nameTable);
                 int len = tab.getNumColumn();
@@ -168,10 +170,11 @@ namespace DataBaseDPD
 
                
         }
+
         //Update some columns
         public string Update(string nameTable, List<string> colNames, List<string> values)
         {
-            if (tables.ContainsKey(nameTable) && colNames.Count == values.Count)
+            if (Tables.ContainsKey(nameTable) && colNames.Count == values.Count)
             {
                 Table tab = getTable(nameTable);
                 
@@ -197,7 +200,6 @@ namespace DataBaseDPD
 
         }
         
-        
         //Select simple <Format>
         public string Select( string nameTable, string column)
         {
@@ -209,9 +211,10 @@ namespace DataBaseDPD
             result += "";
             return result;
         }
+
         public string Select(string nameTable, List<string> columns)
         {
-            if (tables.ContainsKey(nameTable))
+            if (Tables.ContainsKey(nameTable))
             {
                 Table tab = getTable(nameTable);
                 List<string> colName = tab.getColNames();
@@ -257,7 +260,7 @@ namespace DataBaseDPD
         public string Select(string nameTabla)
         {
 
-            if (tables.ContainsKey(nameTabla))
+            if (Tables.ContainsKey(nameTabla))
             {
                 Table tab = getTable(nameTabla);
                 List<string> columns = tab.getColNames();
@@ -283,14 +286,11 @@ namespace DataBaseDPD
                 
         }
 
-
-
-
         //Select with where
         public string Select(string nameTable, List<string> columns, string col, string operation, string value)
         {
             //Format is not correct 
-            if (tables.ContainsKey(nameTable))
+            if (Tables.ContainsKey(nameTable))
             {
                 Table tab = getTable(nameTable);
                 List<string> colNames = tab.getColNames(); 
@@ -395,7 +395,7 @@ namespace DataBaseDPD
         public string Update(string nameTable, string col, string val, string colCondition, string operation, string value)
         {
            
-            if (tables.ContainsKey(nameTable))
+            if (Tables.ContainsKey(nameTable))
             {
                 Table tab = getTable(nameTable);
                 List<TableRow> tuplas;
@@ -425,7 +425,6 @@ namespace DataBaseDPD
            
         }
 
-
         //Insert with where
         public string Insert(string nameTable, List<string> colNames, string condition)
         {
@@ -436,7 +435,7 @@ namespace DataBaseDPD
 
         public string Delete(string nameTable, string col, string operation, string value)
         {
-            if (tables.ContainsKey(nameTable))
+            if (Tables.ContainsKey(nameTable))
             {
                 Table tab = getTable(nameTable);
                 List<TableRow> tuplas;
@@ -485,7 +484,6 @@ namespace DataBaseDPD
         }
        
 
-
         public Table load(string fileName)
         {
             List<TableColumn> columns;
@@ -530,7 +528,7 @@ namespace DataBaseDPD
 
                 }
 
-                tables.Add(fileName.Substring(0, fileName.Length - 4), tabla);
+                Tables.Add(fileName.Substring(0, fileName.Length - 4), tabla);
                 file.Close();
             }
             else
@@ -540,8 +538,6 @@ namespace DataBaseDPD
 
             return tabla;
         }
-
-
 
 
     }

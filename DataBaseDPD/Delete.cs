@@ -9,16 +9,16 @@ namespace DataBaseDPD
     {
 
         String Tabla;
-        String col;
-        String operation;
-        String value;
+        String colCondition;
+        String Operation;
+        String Value;
 
         public Delete(String table, String left, String op, String right)
         {
             Tabla = table;
-            col = left;
-            operation = op;
-            value = right;
+            colCondition = left;
+            Operation = op;
+            Value = right;
         }
 
         public override PrivilegeType getType()
@@ -28,7 +28,7 @@ namespace DataBaseDPD
 
         public override string Run(Database database)
         {
-            return database.Delete(Tabla, col , operation, value);
+            return database.Delete(Tabla, colCondition , Operation, Value);
         }
         public override string getTableName()
         {
