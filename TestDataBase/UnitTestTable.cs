@@ -455,7 +455,7 @@ namespace TestDataBase
         public void CreateTable1()
         {
             Query query = Parser.Parse("CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);");
-            Select selectQuery = query as CreateTable;
+            CreateTable selectQuery = query as CreateTable;
 
             Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
             Assert.IsTrue(selectQuery.columnNames.Contains("Age"));
@@ -469,7 +469,7 @@ namespace TestDataBase
         public void CreateTable2()
         {
             Query query = Parser.Parse("CREATE TABLE Employees(Id INT,Name TEXT,Surname TEXT,Salary DOUBLE);");
-            Select selectQuery = query as CreateTable;
+            CreateTable selectQuery = query as CreateTable;
 
             Assert.IsTrue(selectQuery.columnNames.Contains("Id"));
             Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
@@ -485,7 +485,7 @@ namespace TestDataBase
         public void DropTable()
         {
             Query query = Parser.Parse("DROP TABLE Employees;");
-            Select selectQuery = query as DropTable;
+            DropTable selectQuery = query as DropTable;
 
             Assert.Equals("Employees", selectQuery.Table);
         }
@@ -493,7 +493,7 @@ namespace TestDataBase
         public void Update1()
         {
             Query query = Parser.Parse("UPDATE Employees_Public SET Name='Maite';");
-            Select selectQuery = query as Update;
+            Update selectQuery = query as Update;
 
 
             Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
@@ -504,7 +504,7 @@ namespace TestDataBase
         public void Update2()
         {
             Query query = Parser.Parse("UPDATE Employees_Public SET Name='Maite' WHERE Age=18;");
-            Select selectQuery = query as Update;
+            Update selectQuery = query as Update;
 
 
             Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
@@ -519,7 +519,7 @@ namespace TestDataBase
         {
 
             Query query = Parser.Parse("DELETE FROM MyTable WHERE Age=18;");
-            Select selectQuery = query as Delete;
+            Delete selectQuery = query as Delete;
 
             Assert.Equals("Age", selectQuery.colCondition);
             Assert.Equals("=", selectQuery.Operation);
@@ -532,7 +532,7 @@ namespace TestDataBase
         public void Insert()
         {
             Query query = Parser.Parse("INSERT INTO Employees VALUES (3,'Benito','Kamelas');");
-            Select selectQuery = query as Insert;
+            Insert selectQuery = query as Insert;
 
             Assert.IsTrue(selectQuery.Values.Contains("3"));
             Assert.IsTrue(selectQuery.Values.Contains("'Benito'"));
