@@ -427,7 +427,7 @@ namespace TestDataBase
             Assert.IsTrue(selectQuery.Columns.Contains("Name"));
             Assert.IsTrue(selectQuery.Columns.Contains("Age"));
             Assert.IsTrue(selectQuery.Columns.Contains("Height"));
-            Assert.Equals("People", selectQuery.Table);
+            Assert.AreEqual("People", selectQuery.Table);
         }
         [TestMethod]
         public void Select2()
@@ -435,7 +435,7 @@ namespace TestDataBase
             Query query = Parser.Parse("SELECT * FROM People;");
             Select selectQuery = query as Select;
 
-            Assert.Equals("People", selectQuery.Table);
+            Assert.AreEqual("People", selectQuery.Table);
         }
         [TestMethod]
         public void Select3()
@@ -445,10 +445,10 @@ namespace TestDataBase
 
             Assert.IsTrue(selectQuery.Columns.Contains("Name"));
             Assert.IsTrue(selectQuery.Columns.Contains("Age"));
-            Assert.Equals("Age", selectQuery.Col);
-            Assert.Equals(">", selectQuery.Operation);
-            Assert.Equals("17", selectQuery.Value);
-            Assert.Equals("People", selectQuery.Table);
+            Assert.AreEqual("Age", selectQuery.Col);
+            Assert.AreEqual(">", selectQuery.Operation);
+            Assert.AreEqual("17", selectQuery.Value);
+            Assert.AreEqual("People", selectQuery.Table);
         }
 
         [TestMethod]
@@ -463,7 +463,7 @@ namespace TestDataBase
             Assert.IsTrue(selectQuery.dataType.Contains("TEXT"));
             Assert.IsTrue(selectQuery.dataType.Contains("INT"));
 
-            Assert.Equals("MyTable", selectQuery.Table);
+            Assert.AreEqual("MyTable", selectQuery.Table);
         }
 
         public void CreateTable2()
@@ -479,7 +479,7 @@ namespace TestDataBase
             Assert.IsTrue(selectQuery.dataType.Contains("INT"));
             Assert.IsTrue(selectQuery.dataType.Contains("DOUBLE"));
 
-            Assert.Equals("Employees", selectQuery.Table);
+            Assert.AreEqual("Employees", selectQuery.Table);
         }
         [TestMethod]
         public void DropTable()
@@ -487,7 +487,7 @@ namespace TestDataBase
             Query query = Parser.Parse("DROP TABLE Employees;");
             DropTable selectQuery = query as DropTable;
 
-            Assert.Equals("Employees", selectQuery.Table);
+            Assert.AreEqual("Employees", selectQuery.Table);
         }
         [TestMethod]
         public void Update1()
@@ -498,7 +498,7 @@ namespace TestDataBase
 
             Assert.IsTrue(selectQuery.ColNames.Contains("Name"));
             Assert.IsTrue(selectQuery.Values.Contains("'Maite'"));
-            Assert.Equals("Employees_Public", selectQuery.Tabla);
+            Assert.AreEqual("Employees_Public", selectQuery.Tabla);
         }
         [TestMethod]
         public void Update2()
@@ -509,10 +509,10 @@ namespace TestDataBase
 
             Assert.IsTrue(selectQuery.ColNames.Contains("Name"));
             Assert.IsTrue(selectQuery.Values.Contains("'Maite'"));
-            Assert.Equals("Age", selectQuery.ColCondition);
-            Assert.Equals("=", selectQuery.Operation);
-            Assert.Equals("18", selectQuery.Value);
-            Assert.Equals("Employees_Public", selectQuery.Tabla);
+            Assert.AreEqual("Age", selectQuery.ColCondition);
+            Assert.AreEqual("=", selectQuery.Operation);
+            Assert.AreEqual("18", selectQuery.Value);
+            Assert.AreEqual("Employees_Public", selectQuery.Tabla);
         }
         [TestMethod]
         public void Delete()
@@ -521,11 +521,10 @@ namespace TestDataBase
             Query query = Parser.Parse("DELETE FROM MyTable WHERE Age=18;");
             Delete selectQuery = query as Delete;
 
-            Assert.Equals("Age", selectQuery.colCondition);
-            Assert.Equals("=", selectQuery.Operation);
-            Assert.Equals("18", selectQuery.Value);
-
-            Assert.Equals("MyTable", selectQuery.Tabla);
+            Assert.AreEqual("Age", selectQuery.colCondition);
+            Assert.AreEqual("=", selectQuery.Operation);
+            Assert.AreEqual("18", selectQuery.Value);
+            Assert.AreEqual("MyTable", selectQuery.Tabla);
 
         }
         [TestMethod]
@@ -537,7 +536,7 @@ namespace TestDataBase
             Assert.IsTrue(selectQuery.Values.Contains("3"));
             Assert.IsTrue(selectQuery.Values.Contains("'Benito'"));
             Assert.IsTrue(selectQuery.Values.Contains("'Kamelas'"));
-            Assert.Equals("Employees", selectQuery.Tabla);
+            Assert.AreEqual("Employees", selectQuery.Tabla);
         }
 
         /**-------------------------------------------------
