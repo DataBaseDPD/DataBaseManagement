@@ -74,6 +74,10 @@ namespace DataBaseDPD
         {
             return tables;
         }
+        public string getSourceDir()
+        {
+            return sourceDir;
+        }
 
 
         public void loadTables()

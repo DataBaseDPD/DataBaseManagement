@@ -6,12 +6,15 @@ namespace DataBaseDPD
 {
     public class PATH
     {
+        //Here we gonna create the FileSystem where we save our DataBase
         public static string GetPath()
         {
-
+            //First we get the current application directory
             string currentDirName = Directory.GetCurrentDirectory();
             string sourceDir = Path.Combine(currentDirName, "DataBase");
 
+
+            //Then check if the file already exist if not we'll create it
             try
             {
                 DirectoryInfo di;

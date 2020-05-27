@@ -10,17 +10,17 @@ namespace DataBaseDPD
     public class Table
     {
         //Atributes
-        string name;
-        Header head;
-        List<TableRow> tuples;
+        string TableName;
+        Header Head;
+        List<TableRow> Tuples;
 
        
         //Constructor
         public Table(string tableName, List<TableColumn> tableColumns)
         {
-            name = tableName;
+            TableName = tableName;
             this.addHeader(tableColumns);
-            tuples = new List<TableRow>();
+            Tuples = new List<TableRow>();
 
 
             //Console.WriteLine(Message.CreateTableSuccess);
@@ -28,7 +28,7 @@ namespace DataBaseDPD
         //C2 Overload
         public Table(string tableName, List<string> colNames, List<string> types)
         {
-            name = tableName;
+            TableName = tableName;
             List<TableColumn> columns = new List<TableColumn>();
             if (colNames.Count == types.Count)
             {
@@ -38,19 +38,19 @@ namespace DataBaseDPD
                 }
             }
             this.addHeader(columns);
-            tuples = new List<TableRow>();
+            Tuples = new List<TableRow>();
 
             //Console.WriteLine(Message.CreateTableSuccess);
         }
         //Add the firts row, only the first time with the name of the column and the type of the column
         private void addHeader(List<TableColumn> tableColumns)
         {
-            head = new Header(tableColumns);
+            Head = new Header(tableColumns);
 
         }
         public Header getHeader()
         {
-            return head;
+            return Head;
         }
 
 
@@ -58,7 +58,7 @@ namespace DataBaseDPD
         //Row's methods
         public void addRow(TableRow row)
         {
-            tuples.Add(row);
+            Tuples.Add(row);
         }
         public void addRow(List<string> values)
         {
@@ -67,24 +67,24 @@ namespace DataBaseDPD
             {
                 row.setItem(i, values[i]);
             }
-            tuples.Add(row);
+            Tuples.Add(row);
 
         }
         public void removeRow(TableRow row)
         {
-            tuples.Remove(row);
+            Tuples.Remove(row);
 
         }
         public TableRow getFirstRow()
         {
-            return tuples.First();
+            return Tuples.First();
         }
         //Return the tuples with the spicify value
         public List<TableRow> getTuples(string nameCol, string value)
         {
             List<TableRow> tuplas = new List<TableRow>();
-            int pos = head.index(nameCol);
-            foreach (TableRow row in tuples)
+            int pos = Head.index(nameCol);
+            foreach (TableRow row in Tuples)
             {
                 if (row.getItem(pos) == value)
                 {
@@ -96,10 +96,10 @@ namespace DataBaseDPD
         public List<TableRow> getTuples(string nameCol, string operation, string value)
         {
             List<TableRow> tuplas = new List<TableRow>();
-            int pos = head.index(nameCol);
+            int pos = Head.index(nameCol);
             if (operation == "=")
             {
-                foreach (TableRow row in tuples)
+                foreach (TableRow row in Tuples)
                 {
                     if (row.getItem(pos) == value)
                     {
@@ -109,7 +109,7 @@ namespace DataBaseDPD
             }
             else if (operation == ">")
             {
-                foreach (TableRow row in tuples)
+                foreach (TableRow row in Tuples)
                 {
                     //Lo convierto a entero para que ocupe mucho
                     if (Convert.ToInt32(row.getItem(pos)) > Convert.ToInt32(value))
@@ -120,7 +120,7 @@ namespace DataBaseDPD
             }
             else if (operation == "<")
             {
-                foreach (TableRow row in tuples)
+                foreach (TableRow row in Tuples)
                 {
                     //Lo convierto a entero para que ocupe mucho
                     if (Convert.ToInt32(row.getItem(pos)) < Convert.ToInt32(value))
@@ -136,21 +136,21 @@ namespace DataBaseDPD
         //Modify the column of the tuple spicify with the value specify
         public void modifyTuple(TableRow tuple, string nameCol, string value)
         {
-            int pos = head.index(nameCol);
+            int pos = Head.index(nameCol);
             tuple.setItem(pos, value);
 
         }
         public List<TableRow> getTuples()
         {
-            return tuples;
+            return Tuples;
         }
         public List<string> getColumn(string colName)
         {
             List<string> column = new List<string>();
 
-            int pos = head.index(colName);
+            int pos = Head.index(colName);
 
-            foreach (TableRow row in tuples)
+            foreach (TableRow row in Tuples)
             {
                 column.Add(row.getItem(pos));
             }
@@ -160,7 +160,7 @@ namespace DataBaseDPD
         }
         public void removeTuple(TableRow row)
         {
-            tuples.Remove(row);
+            Tuples.Remove(row);
         }
 
         //Not implement
@@ -174,27 +174,27 @@ namespace DataBaseDPD
         //Info columns
         public List<string> getColNames()
         {
-            return head.colNames();
+            return Head.colNames();
         }
         public int getNumColumn()
         {
-            return head.len();
+            return Head.len();
         }
         public int getNumRow()
         {
-            return tuples.Count;
+            return Tuples.Count;
         }
         public string getTypeColumn(int posColumn)
         {
-            return head.type(posColumn);
+            return Head.type(posColumn);
         }
         public string getTypeColumn(string nameColumn)
         {
-            return head.type(nameColumn);
+            return Head.type(nameColumn);
         }
         public int getIndex(string nameColumn)
         {
-            return head.index(nameColumn);
+            return Head.index(nameColumn);
         }
 
 
@@ -202,56 +202,13 @@ namespace DataBaseDPD
         Metodos de lectura escritura en archivos
         ---------------------------------------------------**/
 
-        public void save()
-        {
-            try
-            {
-
-                string fileName = name + ".txt";
-                StreamWriter writer = File.CreateText(fileName);
-                //Write the header
-                foreach (string name in getColNames())
-                {
-                    //Add a space at the end i could control it but i'm too tired
-                    writer.Write(name + ";" + getTypeColumn(name) + ";" + getIndex(name) + ";");
-                }
-                //Only to format the txt if is the last one add \n new line
-                writer.Write("\n");
-                foreach (TableRow tuple in tuples)
-                {
-                    for (int i = 0; i < this.getNumColumn(); i++)
-                    {
-
-                        if (i != this.getNumColumn() - 1)
-                        {
-                            writer.Write(tuple.getItem(i) + ",");
-                        }
-                        else
-                        {
-                            writer.Write(tuple.getItem(i) + "\n");
-                        }
-
-                    }
-                }
-                writer.Close();
-                //Console.WriteLine("Saved ...");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Not Saved ...");
-                Console.WriteLine(e.StackTrace);
-            }
-
-
-        }
 
         public void save(string sourceDir)
         {
             try
             {
-
-                string fileName = sourceDir + "/" + name + ".txt";
-                StreamWriter writer = File.CreateText(fileName);
+                string path = Path.Combine(sourceDir, TableName + ".txt");
+                StreamWriter writer = File.CreateText(path);
                 //Write the header
                 foreach (string name in getColNames())
                 {
@@ -260,7 +217,7 @@ namespace DataBaseDPD
                 }
                 //Only to format the txt if is the last one add \n new line
                 writer.Write("\n");
-                foreach (TableRow tuple in tuples)
+                foreach (TableRow tuple in Tuples)
                 {
                     for (int i = 0; i < this.getNumColumn(); i++)
                     {
