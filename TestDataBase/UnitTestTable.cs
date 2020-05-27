@@ -438,9 +438,11 @@ namespace TestDataBase
             columns.Add(col2);
             columns.Add(col3);
 
-            Table tabla = new Table("tablaTest", columns);
-            tabla.save();
             Database db = new Database();
+
+            Table tabla = new Table("tablaTest", columns);
+            tabla.save(db.getSourceDir());
+            
             Table loadedTable = db.load("tablaTest.txt");
 
             Assert.AreEqual(0, loadedTable.getNumRow());
@@ -456,14 +458,16 @@ namespace TestDataBase
             columns.Add(col2);
             columns.Add(col3);
 
+            Database db = new Database();
+
             Table tabla = new Table("tablaTest", columns);
 
             tabla.addRow(new TableRow(new string[3] { "01", "david", "david@email.com" }));
             tabla.addRow(new TableRow(new string[3] { "02", "domenico", "domenico@email.com" }));
 
-            tabla.save();
+            tabla.save(db.getSourceDir());
 
-            Database db = new Database();
+            
 
             Table loadedTable = db.load("tablaTest.txt");
           
