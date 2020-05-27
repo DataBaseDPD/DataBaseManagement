@@ -496,7 +496,7 @@ namespace TestDataBase
             Update selectQuery = query as Update;
 
 
-            Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
+            Assert.IsTrue(selectQuery.ColNames.Contains("Name"));
             Assert.IsTrue(selectQuery.Values.Contains("'Maite'"));
             Assert.Equals("Employees_Public", selectQuery.Tabla);
         }
@@ -507,9 +507,9 @@ namespace TestDataBase
             Update selectQuery = query as Update;
 
 
-            Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
+            Assert.IsTrue(selectQuery.ColNames.Contains("Name"));
             Assert.IsTrue(selectQuery.Values.Contains("'Maite'"));
-            Assert.Equals("Age", selectQuery.colCondition);
+            Assert.Equals("Age", selectQuery.ColCondition);
             Assert.Equals("=", selectQuery.Operation);
             Assert.Equals("18", selectQuery.Value);
             Assert.Equals("Employees_Public", selectQuery.Tabla);
