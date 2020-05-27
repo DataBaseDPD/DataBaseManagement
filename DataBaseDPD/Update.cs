@@ -41,7 +41,6 @@ namespace DataBaseDPD
             }
             Operation = "";
 
-
         }
         
         public Update(string tabla, string col, string val, string colCondition, string operacion, string value)
