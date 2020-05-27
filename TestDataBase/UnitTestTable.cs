@@ -334,7 +334,82 @@ namespace TestDataBase
         ---------------------------------------------------**/
 
         [TestMethod]
-        public void creatDataBase()
+        public void creatDataBaseTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void creatDataBaseTest2()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void getTableTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void addTableTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void getTablesTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void loadTablesTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void CreateTableTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void DropTableTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void InsertTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void UpdateTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void UpdateTest2()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void SelectTest()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void SelectTest2()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void SelectTest3()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void SelectTest4()
+        {
+            //TODO
+        }
+        [TestMethod]
+        public void DeleteTest()
         {
             //TODO
         }
@@ -343,8 +418,137 @@ namespace TestDataBase
         Test de Parser
         ---------------------------------------------------**/
 
+        [TestMethod]
+        public void Select1()
+        {
+            Query query = Parser.Parse("SELECT Name, Age, Height FROM People;");
+            Select selectQuery = query as Select;
+
+            Assert.IsTrue(selectQuery.Columns.Contains("Name"));
+            Assert.IsTrue(selectQuery.Columns.Contains("Age"));
+            Assert.IsTrue(selectQuery.Columns.Contains("Height"));
+            Assert.Equals("People", selectQuery.Table);
+        }
+        [TestMethod]
+        public void Select2()
+        {
+            Query query = Parser.Parse("SELECT * FROM People;");
+            Select selectQuery = query as Select;
+
+            Assert.Equals("People", selectQuery.Table);
+        }
+        [TestMethod]
+        public void Select3()
+        {
+            Query query = Parser.Parse("SELECT Name, Age FROM People WHERE Age>17;");
+            Select selectQuery = query as Select;
+
+            Assert.IsTrue(selectQuery.Columns.Contains("Name"));
+            Assert.IsTrue(selectQuery.Columns.Contains("Age"));
+            Assert.Equals("Age", selectQuery.Col);
+            Assert.Equals(">", selectQuery.Operation);
+            Assert.Equals("17", selectQuery.Value);
+            Assert.Equals("People", selectQuery.Table);
+        }
+
+        [TestMethod]
+        public void CreateTable1()
+        {
+            Query query = Parser.Parse("CREATE TABLE MyTable (Name TEXT, Age INT, Address TEXT);");
+            Select selectQuery = query as CreateTable;
+
+            Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
+            Assert.IsTrue(selectQuery.columnNames.Contains("Age"));
+            Assert.IsTrue(selectQuery.columnNames.Contains("Address"));
+            Assert.IsTrue(selectQuery.dataType.Contains("TEXT"));
+            Assert.IsTrue(selectQuery.dataType.Contains("INT"));
+
+            Assert.Equals("MyTable", selectQuery.Table);
+        }
+
+        public void CreateTable2()
+        {
+            Query query = Parser.Parse("CREATE TABLE Employees(Id INT,Name TEXT,Surname TEXT,Salary DOUBLE);");
+            Select selectQuery = query as CreateTable;
+
+            Assert.IsTrue(selectQuery.columnNames.Contains("Id"));
+            Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
+            Assert.IsTrue(selectQuery.columnNames.Contains("Surname"));
+            Assert.IsTrue(selectQuery.columnNames.Contains("Salary"));
+            Assert.IsTrue(selectQuery.dataType.Contains("TEXT"));
+            Assert.IsTrue(selectQuery.dataType.Contains("INT"));
+            Assert.IsTrue(selectQuery.dataType.Contains("DOUBLE"));
+
+            Assert.Equals("Employees", selectQuery.Table);
+        }
+        [TestMethod]
+        public void DropTable()
+        {
+            Query query = Parser.Parse("DROP TABLE Employees;");
+            Select selectQuery = query as DropTable;
+
+            Assert.Equals("Employees", selectQuery.Table);
+        }
+        [TestMethod]
+        public void Update1()
+        {
+            Query query = Parser.Parse("UPDATE Employees_Public SET Name='Maite';");
+            Select selectQuery = query as Update;
 
 
+            Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
+            Assert.IsTrue(selectQuery.Values.Contains("'Maite'"));
+            Assert.Equals("Employees_Public", selectQuery.Tabla);
+        }
+        [TestMethod]
+        public void Update2()
+        {
+            Query query = Parser.Parse("UPDATE Employees_Public SET Name='Maite' WHERE Age=18;");
+            Select selectQuery = query as Update;
+
+
+            Assert.IsTrue(selectQuery.columnNames.Contains("Name"));
+            Assert.IsTrue(selectQuery.Values.Contains("'Maite'"));
+            Assert.Equals("Age", selectQuery.colCondition);
+            Assert.Equals("=", selectQuery.Operation);
+            Assert.Equals("18", selectQuery.Value);
+            Assert.Equals("Employees_Public", selectQuery.Tabla);
+        }
+        [TestMethod]
+        public void Delete()
+        {
+
+            Query query = Parser.Parse("DELETE FROM MyTable WHERE Age=18;");
+            Select selectQuery = query as Delete;
+
+            Assert.Equals("Age", selectQuery.colCondition);
+            Assert.Equals("=", selectQuery.Operation);
+            Assert.Equals("18", selectQuery.Value);
+
+            Assert.Equals("MyTable", selectQuery.Tabla);
+
+        }
+        [TestMethod]
+        public void Insert()
+        {
+            Query query = Parser.Parse("INSERT INTO Employees VALUES (3,'Benito','Kamelas');");
+            Select selectQuery = query as Insert;
+
+            Assert.IsTrue(selectQuery.Values.Contains("3"));
+            Assert.IsTrue(selectQuery.Values.Contains("'Benito'"));
+            Assert.IsTrue(selectQuery.Values.Contains("'Kamelas'"));
+            Assert.Equals("Employees", selectQuery.Tabla);
+        }
+
+        /**-------------------------------------------------
+        Test de RunQueries
+        ---------------------------------------------------**/
+
+        [TestMethod]
+        public void RunSelectTest()
+        {
+            //TODO
+        }
 
     }
 }
