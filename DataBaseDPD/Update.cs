@@ -9,14 +9,14 @@ namespace DataBaseDPD
     public class Update : Query
 
     {
-        string Tabla;
-        List<string> Values = new List<string>();
-        List<string> ColNames = new List<string>();
-        string Val;
-        string ColName;
-        string ColCondition;
-        string Value;
-        string Operation;
+        public string Tabla;
+        public List<string> Values = new List<string>();
+        public List<string> ColNames = new List<string>();
+        public string Val;
+        public string ColName;
+        public string ColCondition;
+        public string Value;
+        public string Operation;
 
 
         public Update(string tabla, string col, string val)

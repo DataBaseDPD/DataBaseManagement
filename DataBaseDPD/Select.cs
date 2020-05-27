@@ -7,11 +7,11 @@ namespace DataBaseDPD
     public class Select : Query
 
     {
-        string Table;
-        List<string> Columns = new List<string>();
-        string Col;
-        string Operation;
-        string Value ="";
+        public string Table;
+        public List<string> Columns = new List<string>();
+        public string Col;
+        public string Operation;
+        public string Value ="";
 
         public Select(string nameTable, List<string> column) {
             Table = nameTable;

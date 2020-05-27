@@ -8,10 +8,10 @@ namespace DataBaseDPD
     public class Delete : Query
     {
 
-        String Tabla;
-        String colCondition;
-        String Operation;
-        String Value;
+        public string Tabla;
+        public string colCondition;
+        public string Operation;
+        public string Value;
 
         public Delete(String table, String left, String op, String right)
         {

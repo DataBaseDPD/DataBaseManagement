@@ -8,8 +8,8 @@ namespace DataBaseDPD
     public class Insert : Query
     {
 
-        List<string> Values = new List<string>();
-        string Tabla { get; }
+        public List<string> Values = new List<string>();
+        public string Tabla { get; }
 
 
         //Todas las columnnas

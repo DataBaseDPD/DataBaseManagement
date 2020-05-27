@@ -10,9 +10,9 @@ namespace DataBaseDPD
     public class CreateTable : Query
     {
 
-        string Table;
-        List<string> columnNames = new List<string>();
-        List<string> dataType = new List<string>();
+        public string Table;
+        public List<string> columnNames = new List<string>();
+        public List<string> dataType = new List<string>();
 
         public CreateTable(string table, string data)
         {

@@ -7,8 +7,8 @@ namespace DataBaseDPD
 	
 	public class DropTable : Query
     {
-       
-        string Table;
+
+        public string Table;
 
         public DropTable(string table)
         {
