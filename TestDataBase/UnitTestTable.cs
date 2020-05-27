@@ -507,8 +507,8 @@ namespace TestDataBase
             Update selectQuery = query as Update;
 
 
-            Assert.IsTrue(selectQuery.ColNames.Contains("Name"));
-            Assert.IsTrue(selectQuery.Values.Contains("'Maite'"));
+            Assert.AreEqual("Name",selectQuery.ColNames);
+            Assert.AreEqual("'Maite'",selectQuery.Val);
             Assert.AreEqual("Age", selectQuery.ColCondition);
             Assert.AreEqual("=", selectQuery.Operation);
             Assert.AreEqual("18", selectQuery.Value);
