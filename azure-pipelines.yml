@@ -37,6 +37,7 @@ steps:
     replaceExistingArchive: true
     verbose: true
 - task: GitHubRelease@1
+  displayName: 'Create GitHub Release'
   inputs:
     gitHubConnection: 'Azure-Zip'
     repositoryName: '$(Build.Repository.Name)'
@@ -46,3 +47,5 @@ steps:
     tagPattern: 'releaze-v[0-9]*\S*'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
+    assets: |
+      $(Build.ArtifactStagingDirectory)/*.exe
