@@ -44,8 +44,8 @@ steps:
     action: 'create'
     target: '$(Build.SourceVersion)'
     tagSource: 'gitTag'
-    tagPattern: 'releaze-v[0-9]*\S*'
+    tagPattern: 'release-v[0-9]*\S*'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
-    assets: |
-      $(Build.ArtifactStagingDirectory)/*.exe
+    assets: '$(Build.ArtifactStagingDirectory)/*.exe'
+    tag: 'manual'
