@@ -40,7 +40,7 @@ steps:
   inputs:
     gitHubConnection: 'github.com_davidneak'
     repositoryName: 'DataBaseDPD/DataBaseManagement'
-    action: 'create'
+    action: 'edit'
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
     tag: 'manual'
