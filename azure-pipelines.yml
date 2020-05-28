@@ -28,14 +28,6 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-    verbose: true
 - task: GitHubRelease@1
   inputs:
     gitHubConnection: 'github.com_davidneak'
@@ -45,10 +37,10 @@ steps:
     tagSource: 'userSpecifiedTag'
     tag: 'manual'
     assets: |
-      '$(Build.ArtifactStagingDirectory)..\s\DBConsole\obj\Release\DBConsole.exe'
-      '$(Build.ArtifactStagingDirectory)..\s\DataBaseDPD\bin\Release\DataBaseDPD.dll'
-      '$(Build.ArtifactStagingDirectory)..\s\Client\bin\Release\netcoreapp3.1\Client.exe'
-      '$(Build.ArtifactStagingDirectory)..\s\Client\bin\Release\netcoreapp3.1\Client.dll'
-      '$(Build.ArtifactStagingDirectory)..\s\Bundler2\bin\Release\Bundler2.exe'
+      '$(Build.Repository.LocalPath)\DBConsole\obj\Release\DBConsole.exe'
+      '$(Build.Repository.LocalPath)\DataBaseDPD\bin\Release\DataBaseDPD.dll'
+      '$(Build.Repository.LocalPath)\Client\bin\Release\netcoreapp3.1\Client.exe'
+      '$(Build.Repository.LocalPath)\Client\bin\Release\netcoreapp3.1\Client.dll'
+      '$(Build.Repository.LocalPath)\Bundler2\bin\Release\Bundler2.exe'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
