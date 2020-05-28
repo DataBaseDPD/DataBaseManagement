@@ -37,10 +37,7 @@ steps:
     tagSource: 'userSpecifiedTag'
     tag: 'manual'
     assets: |
-      $(Build.Repository.LocalPath)\DBConsole\obj\Release\DBConsole.exe
-      $(Build.Repository.LocalPath)\DataBaseDPD\bin\Release\DataBaseDPD.dll
-      $(Build.Repository.LocalPath)\Client\bin\Release\netcoreapp3.1\Client.exe
-      $(Build.Repository.LocalPath)\Client\bin\Release\netcoreapp3.1\Client.dll
-      $(Build.Repository.LocalPath)\Bundler2\bin\Release\Bundler2.exe
+      $(Build.Repository.LocalPath)\DBConsole\obj\Release\*
+      $(Build.Repository.LocalPath)\Client\bin\Release\*
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
