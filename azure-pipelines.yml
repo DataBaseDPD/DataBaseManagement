@@ -10,6 +10,10 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  MajorVersion: 1
+  MinorVersion: 0
+  InitialReleaseTagNumber: 1
+  IncrementReleaseTagNumber: $[counter(variables['InitialReleaseTagNumber'], 0)]
 
 steps:
 - task: NuGetToolInstaller@1
@@ -46,4 +50,5 @@ steps:
     assets: '$(Build.ArtifactStagingDirectory)/DBConsole.exe'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
+    tag: v$(MajorVersion).$(MinorVersion).$(IncrementReleaseTagNumber)
     
