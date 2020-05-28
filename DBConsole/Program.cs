@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using DataBaseDPD;
 
 namespace DBConsole
@@ -8,117 +10,128 @@ namespace DBConsole
     class Program
     {
 
-
-        public static void process(string inputFile, string outputFile)
+        static void Main()
         {
-
-            Connection con = new Connection();
-            StreamReader file = new StreamReader(inputFile);
-            StreamWriter writer = File.CreateText(outputFile);
-
-            
-            string line;
-            string head;
-            int count = 1;
-            double totalTime = 0;
+            TcpListener server = null;
 
 
-
-            writer.Write("# TEST " + count++);
-            writer.Write("\n");
-
-            head = file.ReadLine();
-            string[] header = head.Split(new Char[] { ',' });
-
-            //Le quito uno por el espacio al final
-
-
-            writer.Write(con.Connect(header[0], header[1], header[2])); //Puede dar exeption nullpointer
-            writer.Write("\n");
-
-            while ((line = file.ReadLine()) != null)
+            try
             {
-                string result;
-                double seconds;
+               
+                Int32 port = 1200;
+                string ip = "127.0.0.1";
+                IPAddress localAddr = IPAddress.Parse(ip);
+
+                Byte[] bytes = new Byte[256];
+                String data = null;
+                String input = null;
+                bool isCorrectIpAndPort = false;
 
 
-                if (line == "")
+                server = new TcpListener(localAddr, port);
+
+                //connect to bd storage
+                Connection con = new Connection();
+
+
+                // Start listening for client requests.
+                server.Start();
+
+
+                //TcpClient client = server.AcceptTcpClient();
+
+                TcpClient client = new TcpClient();
+
+
+                NetworkStream stream = client.GetStream();
+
+
+                input = null;
+                int j;
+
+                // Process the first input of the client to check if all is correct
+                while ((j = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
+                    // Translate data bytes to a ASCII string.
+                    input = Encoding.ASCII.GetString(bytes, 0, j);
+
+
+                    byte[] msg = Encoding.ASCII.GetBytes(input);
+
+
+
+                    if (port == 0 && ip == "") isCorrectIpAndPort = true;
+
+                    //Try to connect to DataBase
+                    //Parameter: Database, user, password
+                    con.Connect("","","");
+
+                    // Send back a response.
+                    stream.Write(msg, 0, msg.Length);
                     
-                    writer.Write("TOTAL TIME: " + totalTime + "s");
-                    writer.Write("\n");
-                    writer.Write("\n");
-                    writer.Write("# TEST "+ count++);
-                    writer.Write("\n");
-                    totalTime = 0;
-
-                    con.Close();
-
-                    line = file.ReadLine();
-                    header = line.Split(new Char[] { ',' });
-
-                    //Le quito uno por el espacio al final
-
-
-                    writer.Write(con.Connect(header[0], header[1], header[2]));
-                    writer.Write("\n");
-
-
                 }
-                else if(con.isConnected())
+
+
+
+                if (con.isConnected()&& isCorrectIpAndPort)
                 {
-                    DateTime start = DateTime.Now;
-                    result = con.RunQuery(line);
-                    DateTime end = DateTime.Now;
+                    Console.WriteLine("Connected!");
+                    // Enter the listening loop.
+                    while (true)
+                    {
+                        Console.Write("Waiting for a response... ");
 
-                    TimeSpan time = end - start;
+                        data = null;
+                        int i;
 
-                    seconds = time.Milliseconds / 1000.0;
+                        // Loop to receive all the data sent by the client.
+                        while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                        {
+                            // Translate data bytes to a ASCII string.
+                            data = Encoding.ASCII.GetString(bytes, 0, i);
 
-                    writer.Write(result + " ( " + seconds + "s )");
-                    totalTime += seconds;
-                    writer.Write("\n");
+
+                            byte[] msg = Encoding.ASCII.GetBytes(data);
+
+                            //process the queries over database
+                            string response = con.RunQuery("");
+
+
+                            // Send back a response.
+                            stream.Write(msg, 0, msg.Length);
+                            
+                        }
+
+                    }
+
+
+                }
+                else
+                {
+                    Console.WriteLine("Not connected!");
+                    con.Close();
                 }
 
-                
-
             }
-            writer.Write("TOTAL TIME: " + totalTime + "s");
-            writer.Write("\n");
-
-            con.Close();
-            writer.Close();
-            file.Close();
-        }
-
-
-        //minisql-tester.exe -i input-file.txt -o output-file.txt
-        enum Parameter { Unset, InputFile, OutputFile };
-        static void Main(string[] args)
-        {
-            
-            string inputFile = "input-file.txt";
-            string outputFile = "output-file.txt";
-            Parameter lastParameter = Parameter.Unset;
-
-            foreach (string arg in args)
+            catch (SocketException e)
             {
-                if (arg == "-i") lastParameter = Parameter.InputFile;
-                else if (arg == "-o") lastParameter = Parameter.OutputFile;
-                else if (lastParameter == Parameter.InputFile) inputFile = arg;
-                else if (lastParameter == Parameter.OutputFile) outputFile = arg;
+                Console.WriteLine("SocketException: {0}", e);
+            }
+            finally
+            {
+                // Stop listening for new clients.
+                server.Stop();
+                
             }
 
-            Console.WriteLine("Input file: " + inputFile);
-            Console.WriteLine("Output file: " + outputFile);
 
 
 
-            process(inputFile, outputFile);
-
-
-           
         }
+
+
+
+
 
     }
 }
