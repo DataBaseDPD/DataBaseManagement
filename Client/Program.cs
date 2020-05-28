@@ -117,7 +117,7 @@ namespace Client
             dataName = "NoName";
 
 
-            //Wre create the database name , so therefore , we try to creation this at the server
+            //We create the database name , so therefore , we try to creation this at the server
             Console.WriteLine("Wait a moment please, sending the request to server...");
 
             return SendNewDB(dataName, message);
@@ -191,13 +191,13 @@ namespace Client
             tcpClient.Close();
 
             // If Server sends "createdDataBase", database is created
-            if (Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Substring(0, 15) == "createdDataBase")
+            if (Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Substring(0, 15) == "createDB")
             {
                 return true;
             }
 
-            // If Server sends "processSQLOK", processate is done
-            if (Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Substring(0, 12) == "The process SQl its Ok")
+            // If Server sends "sqlOK", processate is done
+            if (Encoding.ASCII.GetString(bytesToRead, 0, bytesRead).Substring(0, 12) == "sqlOK")
             {
                 return true;
             }
@@ -210,60 +210,110 @@ namespace Client
             Console.WriteLine();
             bool login = true;
             bool database = true;
+            bool finish = true;
+           
             
-            
-            //Users
-            while (login)
+            do
             {
-                Console.WriteLine("Elige una opción"+"\n1.-Login"+"\n2.-Crete New User"+"\n3.-HELP"+"\n4.-Exit");
-                String s1 = null;
-                s1 = Console.ReadKey().ToString();
-                
-                switch (s1)
+                //Users
+                while (login)
                 {
-                    case "1":
-                        if (Login(false))
-                        {
+                    Console.WriteLine("Elige una opción" + "\n1.-Login" + "\n2.-Crete New User" + "\n3.-HELP" + "\n4.-Exit");
+                    String s1 = null;
+                    s1 = Console.ReadKey().ToString();
+
+                    switch (s1)
+                    {
+                        case "1":
+                            if (Login(false))
+                            {
+                                login = false;
+                                Console.WriteLine("Login Successfull");
+                            }
+                            else
+                            {
+                                Console.WriteLine(Error + " " + "Probably your dates are wrong or the database  doesn't work ");
+
+                            }
+
+                            break;
+
+                        case "2":
+                            if (Login(true))
+                            {
+                                login = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine(Error + "" + "Probably your dates are wrong or the database  doesn't work");
+                            }
+                            break;
+
+                        case "3":
+                            Console.WriteLine("1.-If you have an account you can try to access at the database");
+                            Console.WriteLine("2.-If you don't have any account, you can do a new account whit new user and password ");
+                            break;
+
+                        case "4":
+                            Console.WriteLine("Now we finished the conection");
+                            break;
+
+                        default:
+                            Console.WriteLine(Error + "You dont");
                             login = false;
-                            Console.WriteLine("Login Successfull");
-                        }
-                        else
-                        {
-                            Console.WriteLine(Error + " " + "Probably your dates are wrong or the database  doesn't work ");
+                            finish = false;
+                            break;
+                    }
 
-                        }
+                }
+                //database
+                while (database)
+                {
+                    Console.WriteLine("Elige una opción" + "\n1.-Show all databases" + "\n2.-Create DataBase" + "\n3.-Txt File" + "\n4.-Exit");
+                    String s2 = null;
+                    s2 = Console.ReadKey().ToString();
+                    switch (s2)
+                    {
+                        case "1":
+                            if (dataBase("showDataBase"))
+                            {
 
-                    break;
+                                database = false;
+                                Console.WriteLine("Succes");
+                            }
+                            else
+                            {
+                                Console.WriteLine(Error);
+                            }
+                            break;
+                        case "2":
+                            if (dataBase("createDB"))
+                            {
+                                Console.WriteLine("Success database created");
 
-                    case "2":
-                        if (Login(true))
-                        {
-                            login = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine(Error+""+ "Probably your dates are wrong or the database  doesn't work");
-                        }
-                        break;
+                            }
+                            break;
+                        case "3":
+                            if (sql("sqlOK"))
+                            {
+                                Console.WriteLine("Success sql");
+                                database = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine(Error);
+                            }
+                            break;
+                        case "4":
+                            Console.WriteLine("leave, please press a key");
+                            database = false;
+                            finish = false;
+                            break;
+                    }
 
-                    case "3":
-                        Console.WriteLine("1.-If you have an account you can try to access at the database");
-                        Console.WriteLine("2.-If you don't have any account, you can do a new account whit new user and password ");
-                    break;
-
-                    case "4":
-                        Console.WriteLine("Now we finished the conection");
-                    break;
-                   
-                    default:
-                        Console.WriteLine(Error +"You dont" );
-                        login = false;
-                    break;
                 }
 
-            }
-
-            
+            } while (finish);
         }
     }
 }
