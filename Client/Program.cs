@@ -7,9 +7,9 @@ namespace Client
     {
 
 
-        public static string Error = "Error";
+        public static string Error = "Fatal Error...";
         public static string userDataBase = "";
-
+        
 
 
         //This method treats passwords
@@ -206,7 +206,59 @@ namespace Client
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Welcome to DatabaseDPD software");
+            Console.WriteLine();
+            bool login = true;
+            bool database = true;
+            
+            
+            //Users
+            while (login)
+            {
+                Console.WriteLine("Elige una opción"+"\n1.-Login"+"\n2.-Crete New User"+"\n3.-Information"+"\n4.-Exit");
+
+                String s1 = null;
+                s1 = Console.ReadKey().ToString();
+                
+                switch (s1)
+                {
+                    case "1":
+                        if (Login(true))
+                        {
+                            Console.WriteLine(Error + " "+ "");
+                        }
+                        else
+                        {
+                            login = false;
+
+                        }
+
+                    break;
+
+                    case "2":
+                        if (Login(false))
+                        {
+
+                        }
+                        break;
+
+                    case "3":
+                        Console.WriteLine();
+                    break;
+
+                    case "4":
+                        Console.WriteLine("Now we finished the conection");
+                    break;
+                   
+                    default:
+                        Console.WriteLine(Error +"You dont" );
+                        login = false;
+                    break;
+                }
+
+            }
+
+            
         }
     }
 }
