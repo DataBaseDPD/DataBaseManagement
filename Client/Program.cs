@@ -215,35 +215,40 @@ namespace Client
             //Users
             while (login)
             {
-                Console.WriteLine("Elige una opción"+"\n1.-Login"+"\n2.-Crete New User"+"\n3.-Information"+"\n4.-Exit");
-
+                Console.WriteLine("Elige una opción"+"\n1.-Login"+"\n2.-Crete New User"+"\n3.-HELP"+"\n4.-Exit");
                 String s1 = null;
                 s1 = Console.ReadKey().ToString();
                 
                 switch (s1)
                 {
                     case "1":
-                        if (Login(true))
+                        if (Login(false))
                         {
-                            Console.WriteLine(Error + " "+ "");
+                            login = false;
+                            Console.WriteLine("Login Successfull");
                         }
                         else
                         {
-                            login = false;
+                            Console.WriteLine(Error + " " + "Probably your dates are wrong or the database  doesn't work ");
 
                         }
 
                     break;
 
                     case "2":
-                        if (Login(false))
+                        if (Login(true))
                         {
-
+                            login = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine(Error+""+ "Probably your dates are wrong or the database  doesn't work");
                         }
                         break;
 
                     case "3":
-                        Console.WriteLine();
+                        Console.WriteLine("1.-If you have an account you can try to access at the database");
+                        Console.WriteLine("2.-If you don't have any account, you can do a new account whit new user and password ");
                     break;
 
                     case "4":
