@@ -116,9 +116,8 @@ namespace DBConsole
 
             process(inputFile, outputFile);
 
-          
 
-
+           
         }
 
     }
