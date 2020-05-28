@@ -130,7 +130,7 @@ namespace Client
             TcpClient tcpClient;
             try
             {
-                tcpClient = new TcpClient("127.0.0.1", 0000);// If you need to change ip and port, please change here
+                tcpClient = new TcpClient("127.0.0.1", 1200);// If you need to change ip and port, please change here
                 Console.WriteLine("Credentials sent to server");
 
             }
@@ -171,7 +171,7 @@ namespace Client
             try
             {
 
-                tcpClient = new TcpClient("127.0.0.1", 0000); // If you need to change ip and port, please change here
+                tcpClient = new TcpClient("127.0.0.1", 1200); // If you need to change ip and port, please change here
                 Console.WriteLine("dataBaseName" + dataBaseName + "send to server");
             }
             catch
