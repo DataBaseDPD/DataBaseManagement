@@ -44,6 +44,11 @@ steps:
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
     tag: 'manual'
-    assets: 'D:\a\1\s\Bundler2\bin\Release\Bundler2.exe'
+    assets: |
+      'D:\a\1\s\DBConsole\obj\Release\DBConsole.exe'
+      'D:\a\1\s\DataBaseDPD\bin\Release\DataBaseDPD.dll'
+      'D:\a\1\s\Client\bin\Release\netcoreapp3.1\Client.exe'
+      'D:\a\1\s\Client\bin\Release\netcoreapp3.1\Client.dll'
+      'D:\a\1\s\Bundler2\bin\Release\Bundler2.exe'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
