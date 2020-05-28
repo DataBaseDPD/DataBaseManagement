@@ -28,14 +28,6 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-    verbose: true
 - task: GitHubRelease@1
   inputs:
     gitHubConnection: 'github.com_davidneak'
@@ -44,6 +36,8 @@ steps:
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
     tag: 'manual'
-    assets: '$(Build.ArtifactStagingDirectory)/DBConsole.exe'
+    assets: |
+      $(Build.Repository.LocalPath)\DBConsole\obj\Release\*
+      $(Build.Repository.LocalPath)\Client\bin\Release\*
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
