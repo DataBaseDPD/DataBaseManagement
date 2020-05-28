@@ -10,10 +10,6 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  MajorVersion: 1
-  MinorVersion: 0
-  InitialReleaseTagNumber: 1
-  IncrementReleaseTagNumber: $[counter(variables['InitialReleaseTagNumber'], 0)]
 
 steps:
 - task: NuGetToolInstaller@1
@@ -40,15 +36,3 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
     verbose: true
-- task: GitHubRelease@1
-  inputs:
-    gitHubConnection: 'github.com_davidneak'
-    repositoryName: 'DataBaseDPD/DataBaseManagement'
-    action: 'create'
-    target: '$(Build.SourceVersion)'
-    tagSource: manual
-    assets: '$(Build.ArtifactStagingDirectory)/DBConsole.exe'
-    changeLogCompareToRelease: 'lastFullRelease'
-    changeLogType: 'commitBased'
-    tag: v$(MajorVersion).$(MinorVersion).$(IncrementReleaseTagNumber)
-    
