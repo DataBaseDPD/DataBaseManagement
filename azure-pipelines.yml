@@ -36,10 +36,15 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
     verbose: true
-- task: GithubRelease@0 
-  displayName: 'Create GitHub Release'      
+- task: GitHubRelease@1
   inputs:
-    gitHubConnection: 'Azure-zip'
-    repositoryName: 'DataBaseDPD'           
-    assets: $(Build.ArtifactStagingDirectory)/*.exe
+    gitHubConnection: 'Azure-Zip'
+    repositoryName: 'DataBaseDPD/DataBaseManagement'
+    action: 'create'
+    target: '$(Build.SourceVersion)'
+    tagSource: 'gitTag'
+    title: 'release'
+    assets: '$(Build.ArtifactStagingDirectory)/DBConsole.exe'
+    changeLogCompareToRelease: 'lastFullRelease'
+    changeLogType: 'commitBased'
     
