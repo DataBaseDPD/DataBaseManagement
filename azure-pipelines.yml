@@ -44,6 +44,6 @@ steps:
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
     tag: 'manual'
-    assets: '$(Build.ArtifactStagingDirectory)/*.exe'
+    assets: '$(Build.ArtifactStagingDirectory)/Release'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
