@@ -13,7 +13,7 @@ namespace DataBaseDPD
         bool connected;
 
         string sourceDir = PATH.GetPath();
-       
+
 
         /**
          *Connection Methods
@@ -59,13 +59,15 @@ namespace DataBaseDPD
             return connected;
         }
 
-        public void Close()
+      
+        public void Close()    
         {
             saveUsers();
             saveProfiles();
             User = null;
             Db = null;
             connected = false;
+            
         }
 
 
@@ -76,7 +78,7 @@ namespace DataBaseDPD
             Query request = Parser.Parse(query);
             //Data of the request
 
-            if (request==null)
+            if (request == null)
             {
                 return Message.WrongSyntax;
             }
@@ -88,13 +90,13 @@ namespace DataBaseDPD
 
 
 
-                if (User.isAdmin() && privRequire == PrivilegeType.ADMIN) return request.Run(this);
-                else if (User.isAdmin() && privRequire == PrivilegeType.OTHER) return request.Run(this.Db);//Si la query es
-                                                                                                           //de tipo admin se ejecute en Connection no en Database
-                else if (User.isAdmin() && privRequire == PrivilegeType.DELETE) return request.Run(this.Db);
-                else if (User.isAdmin() && privRequire == PrivilegeType.INSERT) return request.Run(this.Db);
-                else if (User.isAdmin() && privRequire == PrivilegeType.SELECT) return request.Run(this.Db);
-                else if (User.isAdmin() && privRequire == PrivilegeType.UPDATE) return request.Run(this.Db);
+                if (this.User.isAdmin() && privRequire == PrivilegeType.ADMIN) return request.Run(this);
+                else if (this.User.isAdmin() && privRequire == PrivilegeType.OTHER) return request.Run(this.Db);//Si la query es
+                                                                                                                //de tipo admin se ejecute en Connection no en Database
+                else if (this.User.isAdmin() && privRequire == PrivilegeType.DELETE) return request.Run(this.Db);
+                else if (this.User.isAdmin() && privRequire == PrivilegeType.INSERT) return request.Run(this.Db);
+                else if (this.User.isAdmin() && privRequire == PrivilegeType.SELECT) return request.Run(this.Db);
+                else if (this.User.isAdmin() && privRequire == PrivilegeType.UPDATE) return request.Run(this.Db);
                 else
                 {
                     //Data user
@@ -107,7 +109,7 @@ namespace DataBaseDPD
                     else return Message.SecurityNotSufficientPrivileges;
                 }
             }
-            
+
 
 
         }
@@ -144,7 +146,7 @@ namespace DataBaseDPD
             {
                 this.Profiles.TryGetValue(p, out prof);
 
-                if (prof!=null)
+                if (prof != null)
                 {
                     if (prof.privileges.ContainsKey(nameTable))
                     {
@@ -241,12 +243,11 @@ namespace DataBaseDPD
                     else if (privilege == "SELECT") priv.SELECT = false;
                     else if (privilege == "UPDATE") priv.UPDATE = false;
                 }
-               
+
                 return Message.SecurityPrivilegeRevoked;
             }
             else return Message.SecurityProfileDoesNotExist;
         }
-
 
         /**
          * File Methods
@@ -255,31 +256,39 @@ namespace DataBaseDPD
         {
             string path = Path.Combine(sourceDir, "users.txt");
             List<User> users = new List<User>();
-
-            if (File.Exists(path))
+            try
             {
-                StreamReader file = new StreamReader(path);
-
-                User usr;
-                string line;
-
-                while ((line = file.ReadLine()) != null)
+                if (File.Exists(path))
                 {
+                    StreamReader file = new StreamReader(path);
 
-                    string[] lineParts = line.Split(',');
-                    foreach (string s in lineParts) Console.WriteLine(s);
-                    usr = new User(lineParts[0], lineParts[1]);//add user
-                    if (lineParts.Length == 3)//add profiles
-                        for (int i = 2; i < lineParts.Length; i++) usr.profiles.Add(lineParts[i]);
-                    users.Add(usr);
+                    User usr;
+                    string line;
+
+                    while ((line = file.ReadLine()) != null)
+                    {
+
+                        string[] lineParts = line.Split(',');
+                        //foreach (string s in lineParts) Console.WriteLine(s);
+                        if (lineParts.Length > 1)
+                        {
+                            usr = new User(lineParts[0], lineParts[1]);//add user
+                            if (lineParts.Length == 3)//add profiles
+                                for (int i = 2; i < lineParts.Length; i++) usr.profiles.Add(lineParts[i]);
+                            users.Add(usr);
+                        }
+                    }
+                    file.Close();
                 }
-                file.Close();
+                else
+                {
+                    Console.WriteLine("Users are empty");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("Users are empty");
+                Console.WriteLine(e.ToString());
             }
-
             return users;
 
         }
@@ -325,6 +334,7 @@ namespace DataBaseDPD
                 {
 
                     string[] lineParts = line.Split(';');
+                    //Console.WriteLine(lineParts.Length);
                     prof = new Profile(lineParts[0]);
                     for (int i = 1; i < lineParts.Length; i = i + 5)
                     {
@@ -374,7 +384,7 @@ namespace DataBaseDPD
                     else if (!priv.UPDATE) writer.Write("-");
 
                 }
-                
+
 
             }
             writer.Close();
@@ -382,3 +392,4 @@ namespace DataBaseDPD
         }
     }
 }
+

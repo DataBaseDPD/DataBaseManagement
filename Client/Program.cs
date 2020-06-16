@@ -1,44 +1,39 @@
 ﻿using System;
-using System.Text;
-using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
+
 namespace Client
 {
-    class Program
+    class MainClass
     {
+
+
         static String Connect(String message)
         {
             try
             {
-                //Create a TCP Client
-                //Note , for this client to work you need to haave a TcpServer
-                //connected to same address as specified by the server, port
-                //combination
+
                 Int32 port = 13000;
                 String server = "127.0.0.1";
                 TcpClient client = new TcpClient(server, port);
 
-                //Translate the passed message into ASCII and store it as a Byte arry
+
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
 
-                //Get a client stream for reading and writing 
                 NetworkStream stream = client.GetStream();
 
-                //send the message to the conected Tcp server
+
                 stream.Write(data, 0, data.Length);
 
                 Console.WriteLine("Sent: {0}", message);
 
-                //Recive the TcpServer.response.
 
-                //Buffer to store the response bytes
                 data = new Byte[256];
 
-                //String to store the response ASCII representation
+
                 String responseData = String.Empty;
 
-                //Read the first Batch of the TcpServer response bytes
+
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                 Console.WriteLine("Received: {0}", responseData);
@@ -64,23 +59,24 @@ namespace Client
             Console.Read();
             return null;
         }
-
-
-        public static void Main(string[] args)
+        public static List<string> ReadConnection()
         {
 
-            
             Console.Write("Connect: ");
             string connection = Console.ReadLine();
-            //We need put data information whit comas
+
             List<string> result = new List<string>();
             string[] separate = connection.Split(',');
             for (int i = 0; i < separate.Length; i++)
             {
                 result.Add(separate[i].Trim(' '));
             }
-            string message = string.Format("<Open Database={0} User={1} Password={2}/>", result[0], result[1], result[2]);
-            //start connection TcpClient
+            return result;
+        }
+        public static void ProcessQuery(List<string> connection_data)
+        {
+            string message = string.Format("<Open Database={0} User={1} Password={2}/>", connection_data[0], connection_data[1], connection_data[2]);
+
             String res = Connect(message);
 
             if (res.Equals("<Success/>"))
@@ -99,10 +95,19 @@ namespace Client
                 }
 
             }
+        }
+
+
+        public static void Main(string[] args)
+        {
+
+            List<string> connection_data = ReadConnection();
+
+            if (connection_data.Count > 1) ProcessQuery(connection_data);
+            else Console.WriteLine("Please introduce the correct format {database},{user},{password}");
 
 
 
         }
     }
-
 }
